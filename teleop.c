@@ -18,8 +18,6 @@ task driveControl () {
 	while (true) {
 		getJoystickSettings(joystick);
 	}
-
-	
 }
 
 
