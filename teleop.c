@@ -15,14 +15,13 @@
 task driveControl() {
 	while (true) {
 		getJoystickSettings(joystick);
-		if (joystick.joy1_y1 > 10 || joystick.joy1_y1 < -10) {
+		if ((joystick.joy1_y1 > 10 || joystick.joy1_y1 < -10) || (joystick.joy1_y2 > 10 || joystick.joy1_y2 < -10)) {
 				motor[motorBL] = joystick.joy1_y1 / 1.28;
 				motor[motorFL] = joystick.joy1_y1 / 1.28;
-		}
-		if (joystick.joy2_y2 > 10 || joystick.joy2_y2 < 10){
 				motor[motorBR] = joystick.joy1_y2 / 1.28;
 				motor[motorFR] = joystick.joy1_y2 / 1.28;
 		}
+		
 
 	}
 }
