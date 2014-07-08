@@ -35,6 +35,7 @@ void stopMotors() {
 void drive(int power, int time) {
 	time1[T1] = 0;
 	HTGYROstartCal(SENSOR_GYRO);
+	heading = 0;
 	while (time1[T1] < time) {
 		heading += valInRange(HTGYROreadRot(SENSOR_GYRO), 2.0) * (float)(time1[T1] / 1000.0);
 		if (!isInRange(heading, 0, 2.0)) {
