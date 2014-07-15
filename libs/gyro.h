@@ -32,12 +32,13 @@ void stopMotors() {
 	motor[motorBR] = 0;
 }
 
-void drive(int power, int time) {
-	time1[T1] = 0;
+void drive(int power, long time) {
+	ClearTimer(T1);
 	HTGYROstartCal(SENSOR_GYRO);
 	heading = 0;
 	while (time1[T1] < time) {
-		heading += valInRange(HTGYROreadRot(SENSOR_GYRO), 2.0) * (float)(time1[T1] / 1000.0);
+		heading += valInRange(HTGYROreadRot(SENSOR_GYRO), 2.0) * (float)(20 / 1000.0);
+
 		if (!isInRange(heading, 0, 2.0)) {
 			if (heading > 0)
 				setMotors(power - 20 * getDriveDir(power), power);
@@ -46,7 +47,8 @@ void drive(int power, int time) {
 		}
 		else
 			setMotors(power, power);
-		wait1Msec(10);
+
+		wait1Msec(20);
 	}
 	stopMotors();
 }
