@@ -1,6 +1,7 @@
 #include "libs/drivers/hitechnic-gyro.h";
 
 float heading = 0;
+int encoder = 0;
 
 float valInRange(float val, float threshold = 1.0) {
 	return abs(val) <= threshold ? 0 : val;
@@ -34,23 +35,48 @@ void stopMotors() {
 
 void moveTo(int power, int deg, int time = 6000) {
 	heading = 0;
+	encoder = 0;
 	ClearTimer(T1);
 	HTGYROstartCal(SENSOR_GYRO);
-	while (time1[T1] < time) {
-		heading += valInRange(HTGYROreadRot(SENSOR_GYRO), 2.0) * (float)(20 / 1000.0);
 
-		if (isInRange(heading, 0, 1.0)) {
-			setMotors(power, power);
-		}
-		else {
-			if (heading > 0)
-				setMotors((power / 4) * getDriveDir(power), power);
-			else
-				setMotors(power, (power / 4) * getDriveDir(power));
-		}
+	if (deg > 0) {
+		while (time1[T1] < time && deg < encoder) {
+			heading += valInRange(HTGYROreadRot(SENSOR_GYRO), 2.0) * (float)(20 / 1000.0);
+			encoder = (nMotorEncoder[motrBL] + nMotorEncoder[motorBR]) / 2;
 
-		wait1Msec(20);
+			if (isInRange(heading, 0, 1.0)) {
+				setMotors(power, power);
+			}
+			else {
+				if (heading > 0)
+					setMotors((power / 4) * getDriveDir(power), power);
+				else
+					setMotors(power, (power / 4) * getDriveDir(power));
+			}
+
+			wait1Msec(20);
+		}
 	}
+
+	else {
+		while (time1[T1] < time && deg < encoder) {
+			heading += valInRange(HTGYROreadRot(SENSOR_GYRO), 2.0) * (float)(20 / 1000.0);
+			encoder = (nMotorEncoder[motrBL] + nMotorEncoder[motorBR]) / 2;
+
+			if (isInRange(heading, 0, 1.0)) {
+				setMotors(power, power);
+			}
+			else {
+				if (heading > 0)
+					setMotors((power / 4) * getDriveDir(power), power);
+				else
+					setMotors(power, (power / 4) * getDriveDir(power));
+			}
+
+			wait1Msec(20);
+		}
+	}
+
 	stopMotors();
 }
 
