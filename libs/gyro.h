@@ -37,12 +37,16 @@ void moveTo(int power, int deg, int time = 6000) {
 
 	if (deg > 0) {
 		while (time1[T1] < time && deg < encoder) {
+			// Reads gyros rate of turn, mulitplies it by the time passed (20ms), and adds it to the current heading
 			heading += valInRange(HTGYROreadRot(SENSOR_GYRO), 2.0) * (float)(20 / 1000.0);
 			encoder = (nMotorEncoder[motrBL] + nMotorEncoder[motorBR]) / 2;
 
+			// Checks if the gyro is outside of the specified threshold (1.0)
 			if (isInRange(heading, 0, 1.0)) {
 				setMotors(power, power);
 			}
+
+			// If not, lower the speed of the required side of the robot to adjust back to 0
 			else {
 				if (heading > 0)
 					setMotors((power / 4) * getDriveDir(power), power);
@@ -56,12 +60,16 @@ void moveTo(int power, int deg, int time = 6000) {
 
 	else {
 		while (time1[T1] < time && deg < encoder) {
+			// Reads gyros rate of turn, mulitplies it by the time passed (20ms), and adds it to the current heading
 			heading += valInRange(HTGYROreadRot(SENSOR_GYRO), 2.0) * (float)(20 / 1000.0);
 			encoder = (nMotorEncoder[motrBL] + nMotorEncoder[motorBR]) / 2;
 
+			// Checks if the gyro is outside of the specified threshold (1.0)
 			if (isInRange(heading, 0, 1.0)) {
 				setMotors(power, power);
 			}
+
+			// If not, lower the speed of the required side of the robot to adjust back to 0
 			else {
 				if (heading > 0)
 					setMotors((power / 4) * getDriveDir(power), power);
