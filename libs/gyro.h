@@ -15,10 +15,6 @@ int getDriveDir(int power) {
 	return (power > 0) ? 1 : (power < 0) ? -1 : 0;
 }
 
-int getTurnPower(int power) {
-	return (power < 0) ? power - 50 : (power > 0) ? power + 50 : 0;
-}
-
 void setMotors(int left, int right) {
 	motor[motorFL] = left;
 	motor[motorBL] = left;
