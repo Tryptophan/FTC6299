@@ -1,5 +1,5 @@
 #include "libs/drivers/hitechnic-gyro.h";
-// Gyro Stabalization Psuedocode
+
 float heading = 0;
 
 float valInRange(float val, float threshold = 1.0) {
