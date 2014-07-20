@@ -32,7 +32,7 @@ void stopMotors() {
 	motor[motorBR] = 0;
 }
 
-void drive(int power, long time) {
+void moveTo(int power, int deg, int time = 6000) {
 	heading = 0;
 	ClearTimer(T1);
 	HTGYROstartCal(SENSOR_GYRO);
@@ -55,43 +55,45 @@ void drive(int power, long time) {
 }
 
 void turn(int power, int deg, int time = 2000) {
-	time1[T1] = 0;
+	heading = 0;
+	ClearTimer(T1);
 	if (deg > 0) {
 		while (time1[T1] < time && heading < deg) {
-			heading += HTGYROreadRot(SENSOR_GYRO) * (float)(time1[T1] / 1000.0);
+			heading += HTGYROreadRot(SENSOR_GYRO) * (float)(20 / 1000.0);
 			setMotors(power, -power);
-			wait1Msec(10);
+			wait1Msec(20);
 		}
 	}
 
 	else {
 		while (time1[T1] < time && heading < deg) {
-			heading += HTGYROreadRot(SENSOR_GYRO) * (float)(time1[T1] / 1000.0);
+			heading += HTGYROreadRot(SENSOR_GYRO) * (float)(20 / 1000.0);
 			setMotors(-power, power);
-			wait1Msec(10);
+			wait1Msec(20);
 		}
 	}
 	stopMotors();
 }
 
 void arcTurn(int power, int deg, int time = 2000) {
-	time1[T1] = 0;
+	heading = 0;
+	ClearTimer(T1);
 
 	// Forward arcTurn
 	if (power > 0) {
 		if (deg > 0) {
 			while (time1[T1] < time && heading < deg) {
-				heading += HTGYROreadRot(SENSOR_GYRO) * (float)(time1[T1] / 1000.0);
+				heading += HTGYROreadRot(SENSOR_GYRO) * (float)(20 / 1000.0);
 				setMotors(power, 0);
-				wait1Msec(10);
+				wait1Msec(20);
 			}
 		}
 
 		else {
 			while (time1[T1] < time && heading > deg) {
-				heading += HTGYROreadRot(SENSOR_GYRO) * (float)(time1[T1] / 1000.0);
+				heading += HTGYROreadRot(SENSOR_GYRO) * (float)(20 / 1000.0);
 				setMotors(0, power);
-				wait1Msec(10);
+				wait1Msec(20);
 			}
 		}
 	}
@@ -100,17 +102,17 @@ void arcTurn(int power, int deg, int time = 2000) {
 	else {
 		if (deg > 0) {
 			while (time1[T1] < time && heading > deg) {
-				heading += HTGYROreadRot(SENSOR_GYRO) * (float)(time1[T1] / 1000.0);
+				heading += HTGYROreadRot(SENSOR_GYRO) * (float)(20 / 1000.0);
 				setMotors(power, 0);
-				wait1Msec(10);
+				wait1Msec(20);
 			}
 		}
 
 		else {
 			while (time1[T1] < time && heading < deg) {
-				heading += HTGYROreadRot(SENSOR_GYRO) * (float)(time1[T1] / 1000.0);
+				heading += HTGYROreadRot(SENSOR_GYRO) * (float)(20 / 1000.0);
 				setMotors(0, power);
-				wait1Msec(10);
+				wait1Msec(20);
 			}
 		}
 	}
