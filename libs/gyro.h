@@ -39,7 +39,7 @@ void moveTo(int power, int deg, int time = 6000) {
 		while (time1[T1] < time && deg < encoder) {
 			// Reads gyros rate of turn, mulitplies it by the time passed (20ms), and adds it to the current heading
 			heading += valInRange(HTGYROreadRot(SENSOR_GYRO), 2.0) * (float)(20 / 1000.0);
-			encoder = (nMotorEncoder[motrBL] + nMotorEncoder[motorBR]) / 2;
+			encoder = (nMotorEncoder[motorBL] + nMotorEncoder[motorBR]) / 2;
 
 			// Checks if the gyro is outside of the specified threshold (1.0)
 			if (isInRange(heading, 0, 1.0)) {
@@ -62,7 +62,7 @@ void moveTo(int power, int deg, int time = 6000) {
 		while (time1[T1] < time && deg < encoder) {
 			// Reads gyros rate of turn, mulitplies it by the time passed (20ms), and adds it to the current heading
 			heading += valInRange(HTGYROreadRot(SENSOR_GYRO), 2.0) * (float)(20 / 1000.0);
-			encoder = (nMotorEncoder[motrBL] + nMotorEncoder[motorBR]) / 2;
+			encoder = (nMotorEncoder[motorBL] + nMotorEncoder[motorBR]) / 2;
 
 			// Checks if the gyro is outside of the specified threshold (1.0)
 			if (isInRange(heading, 0, 1.0)) {

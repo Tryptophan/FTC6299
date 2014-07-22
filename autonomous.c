@@ -12,7 +12,7 @@
 #include "libs/gyro.h" ;
 
 task main(){
-	drive(30, 10000);
+	moveTo(30, 720);
 
 	while(true){}
 }
