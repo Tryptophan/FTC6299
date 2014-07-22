@@ -12,7 +12,7 @@
 #include "libs/gyro.h" ;
 
 task main(){
-	turn(30, 90);
+	arcTurn(-50, 90);
 
 	while(true){}
 }

@@ -81,13 +81,17 @@ void moveTo(int power, float threshold = 2.0, long time = 30000) {
 	stopMotors();
 }
 
-void turn(int power, int deg) {
+void turn(int power, int deg, int time = 2000) {
+	// 90 Degree Modifier
 	int modifier = deg * 7/9;
 	deg = modifier;
+
 	heading = 0;
+	ClearTimer(T1);
 	HTGYROstartCal(SENSOR_GYRO);
+
 	if (deg > 0) {
-		while (heading < deg) {
+		while (time1[T1] < time && heading < deg) {
 			heading += HTGYROreadRot(SENSOR_GYRO) * (float)(20 / 1000.0);
 			setMotors(power, -power);
 			wait1Msec(20);
@@ -95,7 +99,7 @@ void turn(int power, int deg) {
 	}
 
 	else {
-		while (heading < deg) {
+		while (time1[T1] < time && heading < deg) {
 			heading += HTGYROreadRot(SENSOR_GYRO) * (float)(20 / 1000.0);
 			setMotors(-power, power);
 			wait1Msec(20);
@@ -107,6 +111,7 @@ void turn(int power, int deg) {
 void arcTurn(int power, int deg, int time = 2000) {
 	heading = 0;
 	ClearTimer(T1);
+	HTGYROstartCal(SENSOR_GYRO);
 
 	// Forward arcTurn
 	if (power > 0) {
