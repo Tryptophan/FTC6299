@@ -1,7 +1,6 @@
-#include "libs/drivers/hitechnic-gyro.h";
+#include "drivers/hitechnic-gyro.h";
 
 float heading = 0;
-int encoder = 0;
 
 float valInRange(float val, float threshold = 1.0) {
 	return abs(val) <= threshold ? 0 : val;
@@ -13,6 +12,10 @@ bool isInRange(float heading, float targetHeading, float threshold = 1.0) {
 
 int getDriveDir(int power) {
 	return (power > 0) ? 1 : (power < 0) ? -1 : 0;
+}
+
+int getEncoderAverage(int leftMotor, int rightMotor) {
+	return (leftMotor == 0) ?	rightMotor : (rightMotor == 0) ? leftMotor : (leftMotor + rightMotor) / 2;
 }
 
 void setMotors(int left, int right) {
@@ -29,13 +32,13 @@ void stopMotors() {
 	motor[motorBR] = 0;
 }
 
-void moveTo(int power, float threshold = 2.0, long time = 30000) {
+void moveTo(int power, int deg, float threshold = 2.0, long time = 30000) {
 	heading = 0;
 	ClearTimer(T1);
 	HTGYROstartCal(SENSOR_GYRO);
 
 	if (power > 0) {
-		while (time1[T1] < time) {
+		while (time1[T1] < time && getEncoderAverage(nMotorEncoder[motorBL], nMotorEncoder[motorBR])) {
 			// Reads gyros rate of turn, mulitplies it by the time passed (20ms), and adds it to the current heading
 			heading += valInRange(HTGYROreadRot(SENSOR_GYRO), threshold) * (float)(20 / 1000.0);
 
@@ -57,7 +60,7 @@ void moveTo(int power, float threshold = 2.0, long time = 30000) {
 	}
 
 	else {
-		while (time1[T1] < time) {
+		while (time1[T1] < time && getEncoderAverage(nMotorEncoder[motorBL], nMotorEncoder[motorBR])) {
 			// Reads gyros rate of turn, mulitplies it by the time passed (20ms), and adds it to the current heading
 			heading += valInRange(HTGYROreadRot(SENSOR_GYRO), threshold) * (float)(20 / 1000.0);
 
