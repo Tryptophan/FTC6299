@@ -31,7 +31,7 @@
  *
  * License: You may use this code as you wish, provided you give credit where its due.
  *
- * THIS CODE WILL ONLY WORK WITH ROBOTC VERSION 3.59 AND HIGHER. 
+ * THIS CODE WILL ONLY WORK WITH ROBOTC VERSION 3.59 AND HIGHER.
 
  * \author Xander Soldaat (xander_at_botbench.com)
  * \date 20 February 2011
@@ -72,7 +72,7 @@ float HTGYRO_offsets[][] = {{620.0, 620.0, 620.0, 620.0}, /*!< Array for offset 
 float HTGYROreadRot(tSensors link) {
   // Make sure the sensor is configured as type sensorRawValue
   if (SensorType[link] != sensorAnalogInactive) {
-    SetSensorType(link, sensorAnalogInactive);
+    setSensorType(link, sensorAnalogInactive);
     wait1Msec(100);
   }
 
@@ -102,7 +102,7 @@ float HTGYROstartCal(tSensors link) {
 
   // Make sure the sensor is configured as type sensorRawValue
   if (SensorType[link] != sensorAnalogInactive) {
-    SetSensorType(link, sensorAnalogInactive);
+    setSensorType(link, sensorAnalogInactive);
     wait1Msec(100);
   }
 

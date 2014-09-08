@@ -1,9 +1,9 @@
-#include "drivers/hitechnic-gyro.h";
+#include "drivers\hitechnic-gyro.h";
 
 float heading = 0;
 
 float valInRange(float val, float threshold = 1.0) {
-	return abs(val) <= threshold ? 0 : val;
+return abs(val) <= threshold ? 0 : val;
 }
 
 bool isInRange(float heading, float targetHeading, float threshold = 1.0) {
@@ -11,11 +11,11 @@ bool isInRange(float heading, float targetHeading, float threshold = 1.0) {
 }
 
 int getDriveDir(int power) {
-	return (power > 0) ? 1 : (power < 0) ? -1 : 0;
+return (power > 0) ? 1 : (power < 0) ? -1 : 0;
 }
 
 int getEncoderAverage(int leftMotor, int rightMotor) {
-	return (leftMotor == 0) ?	rightMotor : (rightMotor == 0) ? leftMotor : (leftMotor + rightMotor) / 2;
+return (leftMotor == 0) ?	rightMotor : (rightMotor == 0) ? leftMotor : (leftMotor + rightMotor) / 2;
 }
 
 void setMotors(int left, int right) {
@@ -36,7 +36,7 @@ void moveTo(int power, int deg, float threshold = 2.0, long time = 30000) {
 	heading = 0;
 	nMotorEncoder[motorBL] = 0;
 	nMotorEncoder[motorBR] = 0;
-	ClearTimer(T1);
+	clearTimer(T1);
 	HTGYROstartCal(SENSOR_GYRO);
 
 	if (power > 0) {
@@ -92,7 +92,7 @@ void turn(int power, int deg, int time = 2000) {
 	deg = modifier;
 
 	heading = 0;
-	ClearTimer(T1);
+	clearTimer(T1);
 	HTGYROstartCal(SENSOR_GYRO);
 
 	if (deg > 0) {
@@ -115,7 +115,7 @@ void turn(int power, int deg, int time = 2000) {
 
 void arcTurn(int power, int deg, int time = 2000) {
 	heading = 0;
-	ClearTimer(T1);
+	clearTimer(T1);
 	HTGYROstartCal(SENSOR_GYRO);
 
 	// Forward arcTurn
