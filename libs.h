@@ -34,6 +34,8 @@ void stopMotors() {
 
 void moveTo(int power, int deg, float threshold = 2.0, long time = 30000) {
 	heading = 0;
+	nMotorEncoder[motorBL] = 0;
+	nMotorEncoder[motorBR] = 0;
 	ClearTimer(T1);
 	HTGYROstartCal(SENSOR_GYRO);
 
