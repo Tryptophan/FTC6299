@@ -33,6 +33,7 @@ task driveControl() {
 }
 
 task main () {
+	//waitforStart();
 	startTask(driveControl);
 	while(true){}
 }
