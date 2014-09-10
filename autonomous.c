@@ -1,5 +1,9 @@
 #pragma config(Hubs,  S1, HTMotor,  HTMotor,  HTMotor,  none)
+#pragma config(Sensor, S1,     ,               sensorI2CMuxController)
 #pragma config(Sensor, S2,     SENSOR_GYRO,    sensorI2CHiTechnicGyro)
+#pragma config(Motor,  motorA,           ,             tmotorNXT, openLoop, encoder)
+#pragma config(Motor,  motorB,           ,             tmotorNXT, openLoop, encoder)
+#pragma config(Motor,  motorC,           ,             tmotorNXT, openLoop, encoder)
 #pragma config(Motor,  mtr_S1_C1_1,     motorFL,       tmotorTetrix, openLoop, reversed, encoder)
 #pragma config(Motor,  mtr_S1_C1_2,     motorBL,       tmotorTetrix, openLoop, reversed)
 #pragma config(Motor,  mtr_S1_C2_1,     motorFR,       tmotorTetrix, openLoop, encoder)
@@ -11,7 +15,7 @@
 #include "libs.h";
 
 task main(){
-	moveTo(40, 5000);
+	moveTo(20, 1000, 2.0, 5000);
 
 	while(true){}
 }
