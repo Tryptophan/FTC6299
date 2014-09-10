@@ -15,7 +15,7 @@
 #include "libs.h";
 
 task main(){
-	moveTo(20, 1000, 2.0, 5000);
+	moveTo(20, 10000, 2.0, 5000);
 
 	while(true){}
 }

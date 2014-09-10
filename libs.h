@@ -53,10 +53,13 @@ void moveTo(int power, int deg, float threshold = 2.0, long time = 30000) {
 			// If not, lower the speed of the required side of the robot to adjust back to 0
 			else {
 				if (heading > 0)
-					setMotors((power / 4) * getDriveDir(power), power);
-				else
+					//setMotors((power / 4) * getDriveDir(power), power);
 					setMotors(power, (power / 4) * getDriveDir(power));
-			}
+				else
+					//setMotors(power, (power / 4) * getDriveDir(power));
+					setMotors((power / 4) * getDriveDir(power), power);
+
+				}
 
 			wait1Msec(20);
 		}
