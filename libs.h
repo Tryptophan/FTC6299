@@ -37,10 +37,11 @@ void moveTo(int power, int deg, float threshold = 2.0, long time = 30000) {
 	nMotorEncoder[motorBL] = 0;
 	nMotorEncoder[motorBR] = 0;
 	clearTimer(T1);
+	wait1Msec(500);
 	HTGYROstartCal(SENSOR_GYRO);
+	wait1Msec(500);
 
 	if (power > 0) {
-		nxtDisplayCenteredTextLine(0, "%2i", getEncoderAverage(nMotorEncoder[motorFL], nMotorEncoder[motorBL]));
 		while (time1[T1] < time && getEncoderAverage(nMotorEncoder[motorFL], nMotorEncoder[motorBL]) < deg) {
 			// Reads gyros rate of turn, mulitplies it by the time passed (20ms), and adds it to the current heading
 			heading += valInRange(HTGYROreadRot(SENSOR_GYRO), threshold) * (float)(20 / 1000.0);
@@ -52,14 +53,13 @@ void moveTo(int power, int deg, float threshold = 2.0, long time = 30000) {
 
 			// If not, lower the speed of the required side of the robot to adjust back to 0
 			else {
-				if (heading > 0)
-					//setMotors((power / 4) * getDriveDir(power), power);
-					setMotors(power, (power / 4) * getDriveDir(power));
-				else
-					//setMotors(power, (power / 4) * getDriveDir(power));
+				if (heading > 0) {
 					setMotors((power / 4) * getDriveDir(power), power);
-
 				}
+				else {
+					setMotors(power, (power / 4) * getDriveDir(power));
+				}
+			}
 
 			wait1Msec(20);
 		}
