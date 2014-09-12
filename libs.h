@@ -70,7 +70,7 @@ void moveTo(int power, int deg, float threshold = 2.0, long time = 5000) {
 	else {
 		while (time1[T1] < time && getEncoderAverage(nMotorEncoder[motorFL], nMotorEncoder[motorFR]) > deg) {
 			// Reads gyros rate of turn, mulitplies it by the time passed (20ms), and adds it to the current heading
-				heading += valInRange(HTGYROreadRot(SENSOR_GYRO), threshold) * (float)(20 / 1000.0);
+			heading += valInRange(HTGYROreadRot(SENSOR_GYRO), threshold) * (float)(20 / 1000.0);
 
 			// Checks if the gyro is outside of the specified threshold (1.0)
 			if (isInRange(heading, 0, threshold)) {
@@ -96,8 +96,14 @@ void moveTo(int power, int deg, float threshold = 2.0, long time = 5000) {
 
 void turn(int power, int deg, int time = 5000) {
 	// 90 Degree Modifier
-	int modifier = deg * 8/9;
-	deg = modifier;
+	if (deg == 90) {
+		int modifier = deg * 8/9;
+		deg = modifier;
+	}
+	else if (deg == 45) {
+		int modifier = deg * 7/9;
+		deg = modifier;
+	}
 
 	heading = 0;
 
