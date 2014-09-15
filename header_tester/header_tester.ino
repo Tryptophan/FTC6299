@@ -1,10 +1,9 @@
-#include<Wire.h>
-#include<Timer-master/Timer.h>
+#include"Wire.h"
+#include"Timer.h"
 
 const int MPU=0x68;  // I2C address of the MPU-6050
 
-int heading = 0; 
-Timer t = 0; 
+int heading, GyX; 
 
 void setup()
 {
@@ -25,7 +24,7 @@ void loop()
   t.run(); 
 }
 
-void getHeading(int time)
+int getHeading(int time)
 {
   t.restartTimer(); 
   while(t < time)
