@@ -17,10 +17,10 @@
 task main(){
 	//turn(10, 45);
 	//moveTo(20, 100000, 0.8, 100000);
-	//turn(20, -90);
+	//turn(10, -90);
 	//turn(10, 90);
 	//moveTo(20, 5000, 0.8, 10000);
-	arcTurn(20, 90);
+	arcTurn(-20, -90);
 
 	while(true){}
 }

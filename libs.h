@@ -62,7 +62,6 @@ void moveTo(int power, int deg, float threshold = 2.0, long time = 5000) {
 					setMotors(power, (power / 4) * getDriveDir(power));
 				}
 			}
-
 			wait1Msec(20);
 		}
 	}
@@ -97,13 +96,13 @@ void moveTo(int power, int deg, float threshold = 2.0, long time = 5000) {
 void turn(int power, int deg, int time = 5000) {
 
 	// 90 Degree Modifier
-	if (deg == 90) {
+	if (abs(deg) == 90) {
 		int modifier = deg * 8/9;
 		deg = modifier;
 	}
 
 	// 45 Degree Modifier
-	else if (deg == 45) {
+	else if (abs(deg) == 45) {
 		int modifier = deg * 7/9;
 		deg = modifier;
 	}
@@ -117,7 +116,7 @@ void turn(int power, int deg, int time = 5000) {
 	clearTimer(T1);
 
 	if (deg > 0) {
-		while (time1[T1] < time && heading < deg) {
+		while (time1[T1] < time && abs(heading) < abs(deg)) {
 			heading += HTGYROreadRot(SENSOR_GYRO) * (float)(20 / 1000.0);
 			setMotors(power, -power);
 			wait1Msec(20);
@@ -125,34 +124,38 @@ void turn(int power, int deg, int time = 5000) {
 	}
 
 	if (deg < 0) {
-		while (time1[T1] < time && heading > deg) {
-			heading += HTGYROreadRot(SENSOR_GYRO) * (float)(20 / 1000.0);
+		while (time1[T1] < time && abs(heading) < abs(deg)) {
+		heading += HTGYROreadRot(SENSOR_GYRO) * (float)(20 / 1000.0);
 			setMotors(-power, power);
 			wait1Msec(20);
 		}
 	}
+
 	stopMotors();
 }
 
 void arcTurn(int power, int deg, int time = 2000) {
-if (deg == 90) {
+
+	// 90 Degree Modifier
+	if (abs(deg) == 90) {
 		int modifier = deg * 8/9;
 		deg = modifier;
 	}
 
 	// 45 Degree Modifier
-	else if (deg == 45) {
+	else if (abs(deg) == 45) {
 		int modifier = deg * 7/9;
 		deg = modifier;
 	}
-heading = 0;
+
+	heading = 0;
 	clearTimer(T1);
 	HTGYROstartCal(SENSOR_GYRO);
 
 	// Forward arcTurn
 	if (power > 0) {
 		if (deg > 0) {
-			while (time1[T1] < time && heading < deg) {
+			while (time1[T1] < time && abs(heading) < abs(deg)) {
 				heading += HTGYROreadRot(SENSOR_GYRO) * (float)(20 / 1000.0);
 				setMotors(power, 0);
 				wait1Msec(20);
@@ -160,7 +163,7 @@ heading = 0;
 		}
 
 		else {
-			while (time1[T1] < time && heading > deg) {
+			while (time1[T1] < time && abs(heading) < abs(deg)) {
 				heading += HTGYROreadRot(SENSOR_GYRO) * (float)(20 / 1000.0);
 				setMotors(0, power);
 				wait1Msec(20);
@@ -171,7 +174,7 @@ heading = 0;
 	// Backward arcTurn (flips inequalities)
 	else {
 		if (deg > 0) {
-			while (time1[T1] < time && heading > deg) {
+			while (time1[T1] < time && abs(heading) < abs(deg)) {
 				heading += HTGYROreadRot(SENSOR_GYRO) * (float)(20 / 1000.0);
 				setMotors(power, 0);
 				wait1Msec(20);
@@ -179,7 +182,7 @@ heading = 0;
 		}
 
 		else {
-			while (time1[T1] < time && heading < deg) {
+			while (time1[T1] < time && abs(heading) < abs(deg)) {
 				heading += HTGYROreadRot(SENSOR_GYRO) * (float)(20 / 1000.0);
 				setMotors(0, power);
 				wait1Msec(20);
