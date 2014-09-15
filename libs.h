@@ -15,7 +15,13 @@ int getDriveDir(int power) {
 }
 
 int getEncoderAverage(int leftMotor, int rightMotor) {
-	return (leftMotor == 0) ?	rightMotor : (rightMotor == 0) ? leftMotor : (leftMotor + rightMotor) / 2;
+	if (abs(leftMotor) < 3) {
+		return rightMotor;
+	}
+	else {
+		return leftMotor;
+	}
+	return (leftMotor + rightMotor) / 2;
 }
 
 void setMotors(int left, int right) {
@@ -45,6 +51,7 @@ void moveTo(int power, int deg, float threshold = 2.0, long time = 5000) {
 
 	if (power > 0) {
 		while (time1[T1] < time && getEncoderAverage(nMotorEncoder[motorFL], nMotorEncoder[motorBL]) < deg) {
+			displayCenteredBigTextLine(3, "%2i", getEncoderAverage(nMotorEncoder[motorFL], nMotorEncoder[motorBL]));
 			// Reads gyros rate of turn, mulitplies it by the time passed (20ms), and adds it to the current heading
 			heading += valInRange(HTGYROreadRot(SENSOR_GYRO), threshold) * (float)(20 / 1000.0);
 
