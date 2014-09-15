@@ -4,6 +4,7 @@
 const int MPU=0x68;  // I2C address of the MPU-6050
 
 int heading, GyX; 
+Timer t; 
 
 void setup()
 {
@@ -21,15 +22,17 @@ void setup()
 void loop()
 {
   GyX=Wire.read()<<8|Wire.read();  // 0x43 (GYRO_XOUT_H) & 0x44 (GYRO_XOUT_L)
-  t.run(); 
+  Serial.print(getHeading);
 }
 
-int getHeading(int time)
+int getHeading()
 {
-  t.restartTimer(); 
-  while(t < time)
+  heading = 0;
+  while(true)
   {
-    heading += GyX * (float) (250/1000); 
+    heading += GyX * (float) (20/1000);
+    delay(20);
   }
+  return heading;
 }
 
