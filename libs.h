@@ -95,17 +95,8 @@ void moveTo(int power, int deg, float threshold = 2.0, long time = 5000) {
 }
 
 void turn(int power, int deg, int time = 5000) {
-	// 90 Degree Modifier
-	if (deg == 90) {
-		int modifier = deg * 8/9;
-		deg = modifier;
-	}
-	else if (deg == 45) {
-		int modifier = deg * 7/9;
-		deg = modifier;
-	}
 
-	heading = 0;
+	heading = deg;
 
 	wait1Msec(500);
 	HTGYROstartCal(SENSOR_GYRO);
