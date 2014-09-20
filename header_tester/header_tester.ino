@@ -2,8 +2,8 @@
 
 const int MPU=0x68;  // I2C address of the MPU-6050 
 #define MPU6050_GYRO_ZOUT_H        0x47   // R
-int heading = 0; 
-int GyZ; 
+float heading = 0; 
+int GyZ, val; 
 
 void setup(){
   Wire.begin();
@@ -20,15 +20,17 @@ void loop()
   Wire.write(0x47);  // starting with register 0x3B (ACCEL_XOUT_H)
   Wire.endTransmission(false);
   Wire.requestFrom(MPU,2,true);  // request a total of 14 registers
-  GyZ=Wire.read()<<8|Wire.read();  // 0x47 (GYRO_ZOUT_H) & 0x48 (GYRO_ZOUT_L)
-  Serial.println(" | GyZ = "); Serial.println(GyZ);
+
+  Serial.println(" | val = "); Serial.println(val);
   Serial.println(getHeading());
-  delay(300);
+  delay(20);
 }
 
 int getHeading()
-{
-  heading += GyZ * (float) (20/1000);
+{  
+  GyZ=Wire.read()<<8|Wire.read();  // 0x47 (GYRO_ZOUT_H) & 0x48 (GYRO_ZOUT_L)
+  val = GyZ / 250;
+  heading += val * (float) (20/1000);
   return heading;
   delay(20);
 }
