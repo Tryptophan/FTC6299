@@ -4,5 +4,7 @@
 
 task main()
 {
+	//uninstall, delete anything left over in Program files,
+	//and reinstall. ughhh.
 
 }
