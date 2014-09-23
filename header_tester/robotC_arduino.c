@@ -1,6 +1,6 @@
 #pragma config(Sensor, S1,     HTSPB,                sensorI2CCustom9V)
 
-#include "HTSPB-driver.h"
+#include "hitechnic-superpro.h"
 
 task main()
 {
