@@ -123,7 +123,7 @@ bool HTSPBwriteIO(tSensors link, ubyte mask) {
 }
 
 //Method added by hand to send a strobe to the SuperPro
-bool HTSPBwriteIO(tSensors link, ubyte mask) {
+bool HTSPBwriteStrobe(tSensors link, ubyte mask) {
   memset(HTSPB_I2CRequest, 0, sizeof(tByteArray));
 
   HTSPB_I2CRequest[0] = 3;                         // Message size
