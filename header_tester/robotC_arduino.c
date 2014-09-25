@@ -9,20 +9,30 @@ command 3: receive the heading from the arduino (output)
 
 */
 
+int result;
+
 //sends a command to the Arduino over S0-3, and gets data from B0-7
-unsigned char sendArduinoCommand(unsigned char command, usigned char data)
+unsigned int sendArduinoCommand(unsigned char command, usigned char data)
 {
-	if(command < 3)
+	if(command < 2)
+	{
 		HTSPBsetupIO(HTSPB, 0xFF); //sets B0-7 to output ????
+		HTSBwriteStrobe(HTSPB, command); // send the command via S0-3
+	}
 	else
+	{
 		HTSPBsetupIO(HTSPB, 0x00); // sets BO-7 to input
-	HTSBwriteStrobe(HTSPB, command); // send the command via S0-3
-	int result = HTSPBreadIO(HTSPB, 0xFF);
+		result = HTSPBreadIO(HTSPB, 0xFF);
+	}
 	return result;
 }
 
 task main()
 {
+	while(true)
+	{
+		writeDebugStreamLine(result);
+	}
 	//uninstall, delete anything left over in Program files,
 	//and reinstall. ughhh.
 
