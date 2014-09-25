@@ -1,12 +1,21 @@
+#include <Wire.h>
+
 #define DATA_PIN_0 8 //Ports 8 - 13 as well as A0/1 are data pins
 #define DATA_WIDTH 8
 #define CMD_PIN_0 4 //Ports 4 - 7 are command pins
 #define WR_INT 3 //The "WR" port on SP for sending pulse is port 3 on Arduino
 
-int command, data, request, heading, zRaw;
+int command, data, request, heading, GyZ;
+const int MPU = 0x68;
 
 void setup()
 {
+  Wire.begin();
+  Wire.beginTransmission(MPU);
+  Wire.write(0x6B); //PWR_MGMT register
+  Wire.write(0); //Wakes up the gyro
+  Wire.endTransmission(true);
+  Serial.begin(9600);
 }
 
 void hiSP()
@@ -32,7 +41,7 @@ void hiSP()
         data = heading;
         break;
       case 4:
-        data = zRaw; 
+        data = GyZ; 
         break;
     }
     
@@ -57,5 +66,9 @@ void hiSP()
 void loop()
 {
   attachInterrupt(WR_INT, hiSP, RISING);
+  Wire.beginTransmission(MPU);
+  Wire.write(0x47);
+  Wire.requestFrom(MPU,2, true);
+  GyZ=Wire.read() <<8 | Wire.read();
 }
 
