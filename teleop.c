@@ -20,14 +20,13 @@
 #include "JoystickDriver.c";
 task flipperFlapper(){
 	while(true){
-		if(joy1Btn(01) == 1)
+		while(joy1Btn(01) == 1)
 			servo[flip] = 0;
-		if(joy1Btn(02) == 1)
-			servo[flip] = 255;
+		while(joy1Btn(02) == 1)
+			servo[flip] = 200;
 		servo[flip] = 127;
 	  wait10Msec(1);
-	 }
-
+	}
 }
 task driveControl() {
 	while (true) {
