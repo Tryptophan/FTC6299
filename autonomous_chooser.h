@@ -1,7 +1,6 @@
 #include "drivers\JoystickDriver.c";
 
-int i, j, delay = 0;
-int park = 0;
+int i, j, suspend = 0;
 string sides[3] = {"Auto", "Right", "Left"};
 string side = sides[0];
 
@@ -41,13 +40,13 @@ void toggleSubMenu(int dir) {
 		case 1 :
 			// Select Right
 			if (dir == 1) {
-				delay++;
+				suspend++;
 				wait1Msec(250);
 			}
 
 			// Select Left
-			else if (dir == 2 && delay > 0) {
-				delay--;
+			else if (dir == 2 && suspend > 0) {
+				suspend--;
 				wait1Msec(250);
 			}
 			break;
@@ -83,31 +82,28 @@ task chooser() {
 
 		if (toggle == 0) {
 			nxtDisplayString(0, "*Pgm: %s", file);
-			nxtDisplayString(1, " Delay: %2i", delay);
+			nxtDisplayString(1, " Delay: %2i", suspend);
 			nxtDisplayString(2, " Side: %s", side);
 
 			nxtDisplayString(4, " NXT Batt: %3f", (float)nAvgBatteryLevel / 1000);
 			nxtDisplayString(5, " EXT Batt: %3f", (float)externalBattery / 1000);
-			nxtDisplayString(6, " SMUX Batt: %4s", smuxPower);
 		}
 		else if (toggle == 1) {
 			nxtDisplayString(0, " Pgm: %s", file);
-			nxtDisplayString(1, "*Delay: %2i", delay);
+			nxtDisplayString(1, "*Delay: %2i", suspend);
 			nxtDisplayString(2, " Side: %s", side);
 
 			nxtDisplayString(4, " NXT Batt: %3f", (float)nAvgBatteryLevel / 1000);
 			nxtDisplayString(5, " EXT Batt: %3f", (float)externalBattery / 1000);
-			nxtDisplayString(6, " SMUX Batt: %4s", smuxPower);
 		}
 
 		else if (toggle == 2) {
 			nxtDisplayString(0, " Pgm: %s", file);
-			nxtDisplayString(1, " Delay: %2i", delay);
+			nxtDisplayString(1, " Delay: %2i", suspend);
 			nxtDisplayString(2, "*Side: %s", side);
 
 			nxtDisplayString(4, " NXT Batt: %3f", (float)nAvgBatteryLevel / 1000);
 			nxtDisplayString(5, " EXT Batt: %3f", (float)externalBattery / 1000);
-			nxtDisplayString(6, " SMUX Batt: %4s", smuxPower);
 		}
 		wait1Msec(5);
 		eraseDisplay();

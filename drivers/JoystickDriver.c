@@ -15,19 +15,32 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#if (defined(NXT) || defined(TETRIX)) && defined(_Target_Robot_) && !defined(NaturalLanguage)
-#pragma autoStartTasks        // Automatically start this task when the main user program starts.
-#elif (defined(VEX2) || defined(NXT) || defined(TETRIX)) && defined(_Target_VirtWorld_)
-//Virtual Worlds - No need to use most of this driver, so don't start the ReadMsgFromPC task.
-#elif defined(NaturalLanguage)
-//Manually Start for Natural Language - Otherwise, ReadMsgFromPC will never let the NL program end.
-#elif (defined(NXT) || defined(TETRIX)) && defined(_Target_Emulator_)
-  #warning "This driver may not work with 'Emulator'."
-#else
-  #error "This driver is not supported on this platform."
-#endif
-
 #pragma systemFile
+
+#if defined(_Target_Robot_)
+
+	#if defined(NaturalLanguage)
+		// Manually Start for Natural Language - Otherwise, ReadMsgFromPC will never let the NL program end.
+	#elif (defined(NXT) || defined(EV3))
+		#pragma autoStartTasks        // Automatically start this task when the main user program starts.
+	#endif
+
+#elif defined(_Target_VirtWorld_)
+
+	#if defined(NaturalLanguage)
+		// Manually Start for Natural Language - Otherwise, ReadMsgFromPC will never let the NL program end.
+	#elif defined(VexIQ) || defined(VEX2) || defined(NXT) || defined(EV3)
+		// Virtual Worlds - No need to use most of this driver, so don't start the ReadMsgFromPC task.
+	#endif
+
+#elif defined(_Target_Emulator_)
+
+	#if (defined(NXT) || defined(EV3))
+	  #warning "This driver may not work with 'Emulator'."
+	#else
+	  #error "This driver is not supported on this platform."
+	#endif
+#endif
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -42,36 +55,37 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #if defined(_Target_Robot_)
-typedef struct
-{
-  bool    UserMode;          // Autonomous or Telep-Operated mode
-  bool    StopPgm;           // Stop program
 
-  short   joy1_x1;           // -128 to +127
-  short   joy1_y1;           // -128 to +127
-  short   joy1_x2;           // -128 to +127
-  short   joy1_y2;           // -128 to +127
-  short   joy1_Buttons;      // Bit map for 12-buttons
-  short   joy1_TopHat;       // value -1 = not pressed, otherwise 0 to 7 for selected "octant".
+	typedef struct TJoystick
+	{
+	  bool    UserMode;          // Autonomous or Telep-Operated mode
+	  bool    StopPgm;           // Stop program
 
-  short   joy2_x1;           // -128 to +127
-  short   joy2_y1;           // -128 to +127
-  short   joy2_x2;           // -128 to +127
-  short   joy2_y2;           // -128 to +127
-  short   joy2_Buttons;      // Bit map for 12-buttons
-  short   joy2_TopHat;       // value -1 = not pressed, otherwise 0 to 7 for selected "octant".
-} TJoystick;
-TJoystick joystick;      // User defined variable access
+	  short   joy1_x1;           // -128 to +127
+	  short   joy1_y1;           // -128 to +127
+	  short   joy1_x2;           // -128 to +127
+	  short   joy1_y2;           // -128 to +127
+	  short   joy1_Buttons;      // Bit map for 12-buttons
+	  short   joy1_TopHat;       // value -1 = not pressed, otherwise 0 to 7 for selected "octant".
+
+	  short   joy2_x1;           // -128 to +127
+	  short   joy2_y1;           // -128 to +127
+	  short   joy2_x2;           // -128 to +127
+	  short   joy2_y2;           // -128 to +127
+	  short   joy2_Buttons;      // Bit map for 12-buttons
+	  short   joy2_TopHat;       // value -1 = not pressed, otherwise 0 to 7 for selected "octant".
+	} TJoystick;
+
+	TJoystick joystick;      // User defined variable access
 
 #else
-TPCJoystick joystick;
+
+	TPCJoystick joystick;
+
 #endif
 
-
 #if defined(hasJoystickMessageOpcodes)
-intrinsic void getJoystickSettings(TJoystick &joystick)
-asm(opcdSystemFunctions, byte(sysFuncGetJoysticks),
-variableRefRAM(joystick));
+	intrinsic void getJoystickSettings(TJoystick &joystick) asm(opcdSystemFunctions, byte(sysFuncGetJoysticks), variableRefRAM(joystick));
 #endif
 
 
@@ -82,23 +96,25 @@ variableRefRAM(joystick));
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #if defined(_Target_Robot_)
-#define getJoystickSettings(joystick) 	memcpy(joystick, joystickCopy, sizeof(joystick))
 
-short joy1Btn(int btn)
-{   return ((joystick.joy1_Buttons & (1 << (btn - 1))) != 0);  }
-short joy2Btn(int btn)
-{   return ((joystick.joy2_Buttons & (1 << (btn - 1))) != 0);  }
+	#define getJoystickSettings(joystick) 	memcpy(joystick, joystickCopy, sizeof(joystick))
+
+	short joy1Btn(int btn)
+	{   return ((joystick.joy1_Buttons & (1 << (btn - 1))) != 0);  }
+	short joy2Btn(int btn)
+	{   return ((joystick.joy2_Buttons & (1 << (btn - 1))) != 0);  }
 
 #else
 
-#define getJoystickSettings getPCJoystickSettings
-short joy1Btn(int btn)
-{   return ((joystick.joy1_Buttons & (1 << (btn - 1))) != 0);  }
+	#define getJoystickSettings getPCJoystickSettings
+	short joy1Btn(int btn)
+	{   return ((joystick.joy1_Buttons & (1 << (btn - 1))) != 0);  }
+
 #endif
 
 
 // Code Below Does Not Apply to Virtual/Emulator Robots
-#if (defined(NXT) || defined(TETRIX)) && defined(_Target_Robot_)
+#if (defined(NXT) || defined(EV3)) && defined(_Target_Robot_)
 const TMailboxIDs kJoystickQueueID = mailbox1;
 TJoystick joystickCopy;  // Internal buffer to hold the last received message from the PC. Do not use
 
@@ -122,6 +138,8 @@ bool bDisconnected = false;
 bool bOverrideJoystickDisabling = false;
 long nNoMessageCounterLimit = 750;
 long nNoMessageCounter = 0;
+
+#if defined(NXT) //|| defined(EV3)
 task readMsgFromPC()
 {
   bool bMsgFound;
@@ -253,25 +271,34 @@ task readMsgFromPC()
     releaseCPU(); // end of critical section
   }
 }
+#elif defined(EV3)
+
+	#warning " Joystick support for EV3 not yet available"
+
+	task readMsgFromPC()
+	{
+		return;
+	}
+
+#endif
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 //
 //                                        displayDiagnostics
 //
-// THis task will display diagnostic information about a TETRIX robot on the NXT LCD.
+// This task will display diagnostic information about a TETRIX robot on the NXT LCD.
 //
 // If you want to use the LCD for your own debugging use, call the function
 // "disableDiagnosticsDisplay()
 //
 ///////////////////////////////////////////////////////////////////////////////////////////
 
+#if defined(Tetrix) && defined(_Target_Robot_)
 
 bool bDisplayDiagnostics = true;  // Set to false in user program to disable diagnostic display
 
 void getUserControlProgram(string& sFileName);
-
-#if defined(TETRIX) && defined(_Target_Robot_)
 
 void disableDiagnosticsDisplay()
 {
@@ -288,25 +315,26 @@ task displayDiagnostics()
   {
     if (bDisplayDiagnostics)
     {
-    	getJoystickSettings(joystick);                   //Update variables with current joystick values
-      /*nxtDisplayTextLine(6, "Teleop FileName:");
-      nxtDisplayTextLine(7, sFileName);
+      displayTextLine(6, "Teleop FileName:");
+      displayTextLine(7, sFileName);
+
+      getJoystickSettings(joystick);                   //Update variables with current joystick values
 
       if (joystick.StopPgm)
-        nxtDisplayCenteredTextLine(1, "Wait for Start");
+        displayCenteredTextLine(1, "Wait for Start");
       else if (joystick.UserMode)
-        nxtDisplayCenteredTextLine(1, "TeleOp Running");
+        displayCenteredTextLine(1, "TeleOp Running");
       else
-        nxtDisplayCenteredTextLine(1, "Auton Running");
+        displayCenteredTextLine(1, "Auton Running");
 
       if ( externalBatteryAvg < 0)
-        nxtDisplayTextLine(3, "Ext Batt: OFF");       //External battery is off or not connected
+        displayTextLine(3, "Ext Batt: OFF");       //External battery is off or not connected
       else
-        nxtDisplayTextLine(3, "Ext Batt:%4.1f V", externalBatteryAvg / (float) 1000);
+        displayTextLine(3, "Ext Batt:%4.1f V", externalBatteryAvg / (float) 1000);
 
-      nxtDisplayTextLine(4, "NXT Batt:%4.1f V", nAvgBatteryLevel / (float) 1000);   // Display NXT Battery Voltage
+      displayTextLine(4, "NXT Batt:%4.1f V", nAvgBatteryLevel / (float) 1000);   // Display NXT Battery Voltage
 
-      nxtDisplayTextLine(5, "FMS Msgs: %d", ntotalMessageCount);   // Display Count of FMS messages*/
+      displayTextLine(5, "FMS Msgs: %d", ntotalMessageCount);   // Display Count of FMS messages
     }
 
     wait1Msec(200);
@@ -323,13 +351,13 @@ task displayDiagnostics()
 // Note that the filename includes the ".rxe" (robot executable file) file extension.
 //
 ///////////////////////////////////////////////////////////////////////////////////////////
-#endif
+
 string kConfigName = "FTCConfig.txt";
 
 void getUserControlProgram(string& sFileName)
 {
   byte   nParmToReadByte[2];
-  int    nFileSize;
+  short    nFileSize;
   TFileIOResult nIoResult;
   TFileHandle hFileHandle;
 
@@ -352,7 +380,7 @@ void getUserControlProgram(string& sFileName)
 
     nFileExtPosition = strlen(sFileName) - 4;
     if (nFileExtPosition > 0)
-      StringDelete(sFileName, nFileExtPosition, 4);
+      stringDelete(sFileName, nFileExtPosition, 4);
   }
   Close(hFileHandle, nIoResult);
   return;
@@ -380,6 +408,6 @@ void waitForStart()
   return;
 }
 
-
+#endif
 
 #endif
