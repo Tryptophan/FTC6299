@@ -8,10 +8,10 @@
 #pragma config(Motor,  mtr_S1_C2_1,     motorBL,       tmotorTetrix, openLoop, reversed)
 #pragma config(Motor,  mtr_S1_C2_2,     motorBR,       tmotorTetrix, openLoop)
 #pragma config(Motor,  mtr_S1_C3_1,     motorH,        tmotorTetrix, openLoop)
-#pragma config(Motor,  mtr_S1_C3_2,     motorI,        tmotorTetrix, openLoop)
+#pragma config(Motor,  mtr_S1_C3_2,     flip,          tmotorTetrix, openLoop)
 #pragma config(Servo,  srvo_S3_C1_1,    servoL,               tServoStandard)
 #pragma config(Servo,  srvo_S3_C1_2,    servoR,               tServoStandard)
-#pragma config(Servo,  srvo_S3_C1_3,    flip,                 tServoContinuousRotation)
+#pragma config(Servo,  srvo_S3_C1_3,    servo3,               tServoNone)
 #pragma config(Servo,  srvo_S3_C1_4,    servo4,               tServoNone)
 #pragma config(Servo,  srvo_S3_C1_5,    servo5,               tServoNone)
 #pragma config(Servo,  srvo_S3_C1_6,    servo6,               tServoNone)
@@ -19,12 +19,18 @@
 
 #include "JoystickDriver.c";
 task flipperFlapper(){
+	bool move = false;
 	while(true){
-		while(joy1Btn(01) == 1)
-			servo[flip] = 0;
-		while(joy1Btn(02) == 1)
-			servo[flip] = 200;
-		servo[flip] = 127;
+		if(joy1Btn(01) == 1 && !move){
+			move = true;
+			wait10Msec(75);
+			while(move && joy1Btn(01) == 0){
+				motor[flip] = 100;
+			}
+			move = false;
+			wait10Msec(75);
+		}
+		motor[flip] = 0;
 	  wait10Msec(1);
 	}
 }
