@@ -288,14 +288,14 @@ bool writeI2C(tSensors link, tByteArray &request, tByteArray &reply, int replyle
 	    eraseDisplay();
 	    //nxtDisplayCenteredTextLine(0, "3rd Party Driver");
 	    //nxtDisplayCenteredTextLine(1, "ERROR");
-	    nxtDisplayCenteredTextLine(2, "You have not");
-	    nxtDisplayCenteredTextLine(3, "setup the sensor");
-	    nxtDisplayCenteredTextLine(4, "port correctly. ");
-	    nxtDisplayCenteredTextLine(5, "Please refer to");
-	    nxtDisplayCenteredTextLine(6, "one of the");
-	    nxtDisplayCenteredTextLine(7, "examples.");
-	    wait1Msec(10000);
-	    stopAllTasks();
+	    //nxtDisplayCenteredTextLine(2, "You have not");
+	    //nxtDisplayCenteredTextLine(3, "setup the sensor");
+	    //nxtDisplayCenteredTextLine(4, "port correctly. ");
+	    //nxtDisplayCenteredTextLine(5, "Please refer to");
+	    //nxtDisplayCenteredTextLine(6, "one of the");
+	    //nxtDisplayCenteredTextLine(7, "examples.");
+	    //wait1Msec(10000);
+	    //stopAllTasks();
   }
 #endif
 
