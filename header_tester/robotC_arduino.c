@@ -12,7 +12,7 @@ command 3: receive the heading from the arduino (output)
 int result;
 
 //sends a command to the Arduino over S0-3, and gets data from B0-7
-unsigned char sendArduinoCommand(unsigned char command, unsigned char data)
+unsigned char sendArduinoCommand(unsigned char command)
 {
 	if(command < 2)
 	{
@@ -29,10 +29,7 @@ unsigned char sendArduinoCommand(unsigned char command, unsigned char data)
 
 task main()
 {
-	while(true)
-	{
-		//writeDebugStreamLine(result);
-	}
+	sendArduinoCommand(1);
 	//uninstall, delete anything left over in Program files,
 	//and reinstall. ughhh.
 
