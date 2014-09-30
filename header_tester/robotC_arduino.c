@@ -30,12 +30,6 @@ unsigned char sendArduinoCommand(unsigned char command)
 
 task main()
 {
-	while(true)
-	{
-		sendArduinoCommand(1);
-	}
-
-	//uninstall, delete anything left over in Program files,
-	//and reinstall. ughhh.
-
+	wait10Msec(1000);
+	sendArduinoCommand(1);
 }
