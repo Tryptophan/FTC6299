@@ -1,6 +1,6 @@
 #include "drivers\JoystickDriver.c";
 
-int i, j, suspend = 0;
+int i, j, park, suspend = 0;
 string sides[3] = {"Auto", "Right", "Left"};
 string side = sides[0];
 

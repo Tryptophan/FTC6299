@@ -14,15 +14,26 @@
 
 #include "libs.h";
 #include "autonomous_chooser.h";
+#include "autonomous_methods.h";
+#include "drivers\JoystickDriver.c";
 
 task main(){
-	//turn(10, 45);
-	moveTo(20, 5000, 0.8);
-	//turn(10, -90);
-	//turn(10, 90);
-	//moveTo(20, 5000, 0.8, 10000);
-	arcTurn(20, -90);
-	moveTo(20, 2000, 0.8);
 
+	startTask(chooser);
+	waitForStart();
+
+	stopTask(chooser);
+
+
+
+	// Set and run desired autonomous program
+	switch(i) {
+		case 0 :
+			autonomous(suspend, park);
+			break;
+		case 1 :
+			autoFrontDump(suspend);
+			break;
+}
 	while(true){}
 }

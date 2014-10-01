@@ -307,7 +307,7 @@ void disableDiagnosticsDisplay()
 
 task displayDiagnostics()
 {
-  string sFileName;
+/*  string sFileName;
   bNxtLCDStatusDisplay = true;
   getUserControlProgram(sFileName);
 
@@ -315,30 +315,30 @@ task displayDiagnostics()
   {
     if (bDisplayDiagnostics)
     {
-      displayTextLine(6, "Teleop FileName:");
-      displayTextLine(7, sFileName);
+     // displayTextLine(6, "Teleop FileName:");
+     // displayTextLine(7, sFileName);
 
       getJoystickSettings(joystick);                   //Update variables with current joystick values
 
       if (joystick.StopPgm)
-        displayCenteredTextLine(1, "Wait for Start");
+       // displayCenteredTextLine(1, "Wait for Start");
       else if (joystick.UserMode)
-        displayCenteredTextLine(1, "TeleOp Running");
+        //displayCenteredTextLine(1, "TeleOp Running");
       else
-        displayCenteredTextLine(1, "Auton Running");
+        //displayCenteredTextLine(1, "Auton Running");
 
       if ( externalBatteryAvg < 0)
-        displayTextLine(3, "Ext Batt: OFF");       //External battery is off or not connected
+        //displayTextLine(3, "Ext Batt: OFF");       //External battery is off or not connected
       else
-        displayTextLine(3, "Ext Batt:%4.1f V", externalBatteryAvg / (float) 1000);
+        //displayTextLine(3, "Ext Batt:%4.1f V", externalBatteryAvg / (float) 1000);
 
-      displayTextLine(4, "NXT Batt:%4.1f V", nAvgBatteryLevel / (float) 1000);   // Display NXT Battery Voltage
+      //displayTextLine(4, "NXT Batt:%4.1f V", nAvgBatteryLevel / (float) 1000);   // Display NXT Battery Voltage
 
-      displayTextLine(5, "FMS Msgs: %d", ntotalMessageCount);   // Display Count of FMS messages
+      //displayTextLine(5, "FMS Msgs: %d", ntotalMessageCount);   // Display Count of FMS messages
     }
 
     wait1Msec(200);
-  }
+  } */
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////

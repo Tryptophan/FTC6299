@@ -1,5 +1,6 @@
 #include "drivers\hitechnic-gyro.h";
 #include "drivers\hitechnic-irseeker-v2.h"
+
 float heading = 0;
 
 float valInRange(float val, float threshold = 1.0) {
