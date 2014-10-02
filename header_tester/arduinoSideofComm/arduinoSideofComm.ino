@@ -6,7 +6,7 @@
 #define CMD_WIDTH 4 //Width of command pins
 #define WR_INT 1 //The "WR" port on SP for sending pulse is port 3 on Arduino
 
-int command, data, request, heading, GyZ;
+volatile int command, data, request, heading, GyZ; //volatile b/c used in interrupt and main loop
 const int MPU = 0x68;
 int led = 13;
 
@@ -47,7 +47,7 @@ void hiSP()
         data = GyZ;
         break;
     }
-    
+
     for (int i = 0; i < DATA_WIDTH; i++)
     {
       pinMode(DATA_PIN_0 + i, OUTPUT);
@@ -82,5 +82,6 @@ void loop()
     digitalWrite(led, HIGH);
     delay(1000);
   }
+  request = 0;
 }
 

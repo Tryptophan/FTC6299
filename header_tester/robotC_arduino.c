@@ -22,7 +22,9 @@ unsigned char sendArduinoCommand(unsigned char command)
 	}
 	else
 	{
-		HTSPBsetupIO(HTSPB, 0x00); // sets BO-7 to input
+		HTSPBsetupIO(HTSPB, 0xFF); //sets B0-7 to output
+		HTSPBwriteStrobe(HTSPB, command); // send the command via S0-3
+		HTSPBsetupIO(HTSPB, 0x00); // sets BO-7 to input so that it can receive
 		result = HTSPBreadIO(HTSPB, 0xFF);
 		return result;
 	}
@@ -31,5 +33,5 @@ unsigned char sendArduinoCommand(unsigned char command)
 task main()
 {
 	wait10Msec(1000);
-	sendArduinoCommand(1);
+	sendArduinoCommand(3);
 }
