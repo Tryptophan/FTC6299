@@ -4,7 +4,7 @@
 #define DATA_WIDTH 8
 #define CMD_PIN_0 4 //Ports 4 - 7 are command pins
 #define CMD_WIDTH 4 //Width of command pins
-#define WR_INT 3 //The "WR" port on SP for sending pulse is port 3 on Arduino
+#define WR_INT 1 //The "WR" port on SP for sending pulse is port 3 on Arduino
 
 int command, data, request, heading, GyZ;
 const int MPU = 0x68;
@@ -71,7 +71,6 @@ void hiSP()
 
 void loop()
 {
-  request = 0; // be warned- could have reperscussions
   Wire.beginTransmission(MPU);
   Wire.write(0x47);
   Wire.requestFrom(MPU,2, true);

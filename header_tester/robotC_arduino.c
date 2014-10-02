@@ -12,12 +12,12 @@ command 3: receive the heading from the arduino (output)
 
 int result;
 
-//sends a command to the Arduino over S0-3, and gets data from B0-7
+//sends a command to the Arduino over S0-3, and gets data frorm B0-7
 unsigned char sendArduinoCommand(unsigned char command)
 {
 	if(command < 2)
 	{
-		HTSPBsetupIO(HTSPB, 0xFF); //sets B0-7 to output ????
+		HTSPBsetupIO(HTSPB, 0xFF); //sets B0-7 to output
 		HTSPBwriteStrobe(HTSPB, command); // send the command via S0-3
 	}
 	else
