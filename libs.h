@@ -199,3 +199,14 @@ void arcTurn(int power, int deg, int time = 2000) {
 	}
 	stopMotors();
 }
+
+void latch(bool position) {
+	if (position) {
+		servo[servoL] = 250;
+		servo[servoR] = 0;
+	}
+	if (!position) {
+		servo[servoL] = 100;
+		servo[servoR] = 140;
+	}
+}

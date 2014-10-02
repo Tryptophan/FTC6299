@@ -81,29 +81,29 @@ task chooser() {
 		}
 
 		if (toggle == 0) {
-			nxtDisplayString(0, "*Pgm: %s", file);
-			nxtDisplayString(1, " Delay: %2i", suspend);
-			nxtDisplayString(2, " Side: %s", side);
+			displayTextLine(0, "*Pgm: %s", file);
+			displayTextLine(1, " Delay: %2i", suspend);
+			displayTextLine(2, " Side: %s", side);
 
-			nxtDisplayString(4, " NXT Batt: %3f", (float)nAvgBatteryLevel / 1000);
-			nxtDisplayString(5, " EXT Batt: %3f", (float)externalBattery / 1000);
+			displayTextLine(4, " NXT Batt: %3f", (float)nAvgBatteryLevel / 1000);
+			displayTextLine(5, " EXT Batt: %3f", (float)externalBattery / 1000);
 		}
 		else if (toggle == 1) {
-			nxtDisplayString(0, " Pgm: %s", file);
-			nxtDisplayString(1, "*Delay: %2i", suspend);
-			nxtDisplayString(2, " Side: %s", side);
+			displayTextLine(0, " Pgm: %s", file);
+			displayTextLine(1, "*Delay: %2i", suspend);
+			displayTextLine(2, " Side: %s", side);
 
-			nxtDisplayString(4, " NXT Batt: %3f", (float)nAvgBatteryLevel / 1000);
-			nxtDisplayString(5, " EXT Batt: %3f", (float)externalBattery / 1000);
+			displayTextLine(4, " NXT Batt: %3f", (float)nAvgBatteryLevel / 1000);
+			displayTextLine(5, " EXT Batt: %3f", (float)externalBattery / 1000);
 		}
 
 		else if (toggle == 2) {
-			nxtDisplayString(0, " Pgm: %s", file);
-			nxtDisplayString(1, " Delay: %2i", suspend);
-			nxtDisplayString(2, "*Side: %s", side);
+			displayTextLine(0, " Pgm: %s", file);
+			displayTextLine(1, " Delay: %2i", suspend);
+			displayTextLine(2, "*Side: %s", side);
 
-			nxtDisplayString(4, " NXT Batt: %3f", (float)nAvgBatteryLevel / 1000);
-			nxtDisplayString(5, " EXT Batt: %3f", (float)externalBattery / 1000);
+			displayTextLine(4, " NXT Batt: %3f", (float)nAvgBatteryLevel / 1000);
+			displayTextLine(5, " EXT Batt: %3f", (float)externalBattery / 1000);
 		}
 		wait1Msec(5);
 		eraseDisplay();
