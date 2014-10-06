@@ -48,6 +48,7 @@ void hiSP()
         break;
     }
 
+//Does this work
     for (int i = 0; i < DATA_WIDTH; i++)
     {
       pinMode(DATA_PIN_0 + i, OUTPUT);
@@ -60,7 +61,7 @@ void hiSP()
         digitalWrite(DATA_PIN_0 + i, LOW);
       }
     }
-    
+
     //reset the pins to input after sending the data- allows to receive new comamnds
     for (int i = 0; i < DATA_WIDTH; i++)
     {
@@ -71,16 +72,12 @@ void hiSP()
 
 void loop()
 {
-  if (request == 1)
+  if (command == 3)
   {
     digitalWrite(led, LOW);
     delay(1000);
     digitalWrite(led, HIGH);
     delay(1000);
-  }
-  if (command == 3)
-  {
-    Serial.print("Got command");
   }
   request = 0;
 }
