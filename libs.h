@@ -210,3 +210,7 @@ void latch(bool position) {
 		servo[servoR] = 140;
 	}
 }
+
+int getIR(){
+	return HTIRS2readACDir(SENSOR_IR);
+}
