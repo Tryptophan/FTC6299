@@ -29,6 +29,7 @@
 task main(){
 
 	startTask(chooser);
+	initializeRobot();
 	waitForStart();
 
 	stopTask(chooser);

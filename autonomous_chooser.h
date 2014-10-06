@@ -4,7 +4,7 @@ int i, j, park, suspend = 0;
 string sides[3] = {"Auto", "Right", "Left"};
 string side = sides[0];
 
-string programs[3] = {"Autonomous", "autoBDump", "autoFDump"};
+string programs[3] = {"Autonomous", "autoBDump", "test"};
 string file = programs[0];
 
 int toggle = 0;
