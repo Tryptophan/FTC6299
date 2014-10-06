@@ -44,7 +44,7 @@ void hiSP()
         data = heading;
         break;
       case 3:
-        data = GyZ;
+        data = 3;
         break;
     }
 
@@ -71,16 +71,16 @@ void hiSP()
 
 void loop()
 {
-  Wire.beginTransmission(MPU);
-  Wire.write(0x47);
-  Wire.requestFrom(MPU,2, true);
-  GyZ=Wire.read() <<8 | Wire.read();
   if (request == 1)
   {
     digitalWrite(led, LOW);
     delay(1000);
     digitalWrite(led, HIGH);
     delay(1000);
+  }
+  if (command == 3)
+  {
+    Serial.print("Got command");
   }
   request = 0;
 }
