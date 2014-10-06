@@ -214,3 +214,16 @@ void latch(bool position) {
 int getIR(){
 	return HTIRS2readACDir(SENSOR_IR);
 }
+
+void moveIrUp(int speed, int IR,){
+	while(getIR() < IR){
+		setMotors(speed,speed);
+	}
+	stopMotors();
+}
+void moveIrDown(int speed, int IR){
+	while(getIR() < IR){
+		setMotors(speed,speed);
+	}
+	stopMotors();
+}

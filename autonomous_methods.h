@@ -16,12 +16,10 @@ void autonomous(int suspend, int park) {
 
 void autoFrontDump(int suspend) {
 	wait10Msec(suspend * 100);
-	/*turn(25,180);
-	moveTo(40, 500, 0.8); */
-	playSound(soundException);
+
 }
 
 void test(int suspend){
 	wait10Msec(suspend * 100);
-	playSound(soundDownwardTones);
+
 }
