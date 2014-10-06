@@ -43,6 +43,8 @@ task main(){
 			break;
 		case 1 :
 			autoFrontDump(suspend);
+		case 2 :
+			test(suspend);
 			break;
 }
 	while(true){}

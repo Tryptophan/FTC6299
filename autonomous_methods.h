@@ -23,5 +23,5 @@ void autoFrontDump(int suspend) {
 
 void test(int suspend){
 	wait10Msec(suspend * 100);
-	playSound(soundBeepBeep);
+	playSound(soundDownwardTones);
 }
