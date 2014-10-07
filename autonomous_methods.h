@@ -1,16 +1,18 @@
 #include "libs.h";
 
-string smuxPower = "Bad";
-
 void initializeRobot() {
 	nVolume = 4;
 }
 
 // Finds the ir beacon, dumps the block, and parks on the ramp
-void autonomous(int suspend, int park) {
+void bare(int suspend, int begin) {
 	wait10Msec(suspend * 100);
-	/*moveTo(40, 500, 0.8);
-	turn(25, 90); */
+	if (begin == 1){
+		playSound(soundBeepBeep);
+	}
+	if (begin == 0){
+		playSound(soundDownwardTones);
+	}
 	playSound(soundBeepBeep);
 }
 

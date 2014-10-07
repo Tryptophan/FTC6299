@@ -39,7 +39,7 @@ task main(){
 	// Set and run desired autonomous program
 	switch(i) {
 		case 0 :
-			autonomous(suspend, park);
+			bare(suspend, begin);
 			break;
 		case 1 :
 			autoFrontDump(suspend);

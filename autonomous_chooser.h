@@ -1,7 +1,7 @@
 #include "drivers\JoystickDriver.c";
 
-int i, j, park, suspend = 0;
-string sides[3] = {"Auto", "Right", "Left"};
+int i, j, begin, suspend = 0;
+string sides[2] = {"Ramp", "Zone"};
 string side = sides[0];
 
 string programs[3] = {"Autonomous", "autoBDump", "test"};
@@ -56,6 +56,7 @@ void toggleSubMenu(int dir) {
 			if (dir == 1 && j < 2) {
 				j++;
 				side = sides[j];
+				begin++;
 				wait1Msec(250);
 			}
 
@@ -63,6 +64,7 @@ void toggleSubMenu(int dir) {
 			else if (dir == 2 && j > 0) {
 				j--;
 				side = sides[j];
+				begin--;
 				wait1Msec(250);
 			}
 			break;
