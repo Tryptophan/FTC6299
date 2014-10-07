@@ -15,17 +15,12 @@ int result;
 //sends a command to the Arduino over S0-3, and gets data frorm B0-7
 unsigned char sendArduinoCommand(unsigned char command)
 {
-	if(command < 2)
-	{
 		HTSPBsetupIO(HTSPB, 0xFF); //sets B0-7 to output
 		HTSPBwriteStrobe(HTSPB, command); // send the command via S0-3
-	}
-	else
+	if (command >= 2)
 	{
-		HTSPBsetupIO(HTSPB, 0xFF); //sets B0-7 to output
-		HTSPBwriteStrobe(HTSPB, command); // send the command via S0-3
 		HTSPBsetupIO(HTSPB, 0x00); // sets BO-7 to input so that it can receive
-		result = HTSPBreadIO(HTSPB, 0xFF);
+		result = HTSPBreadIO(HTSPB, 0xFF); //Do they read in the same order as Arduino sends?
 		return result;
 	}
 }

@@ -103,7 +103,6 @@ ubyte HTSPBreadIO(tSensors link, ubyte mask) {
   return HTSPB_I2CReply[0] & mask;
 }
 
-
 /**
  * Write the values the digital outpus as specified by the mask.
  * @param link the HTSPB port number
