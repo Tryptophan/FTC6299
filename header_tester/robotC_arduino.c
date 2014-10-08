@@ -27,6 +27,8 @@ unsigned char sendArduinoCommand(unsigned char command)
 
 task main()
 {
-	wait1Msec(1000);
-	sendArduinoCommand(3);
+	while(true){
+		wait1Msec(1000);
+		sendArduinoCommand(3);
+	}
 }

@@ -3,6 +3,7 @@
 #include <MPU6050_6Axis_MotionApps20.h>
 #include <MPU6050.h>
 
+//Check to see if interrupt ports match the DMP6
 #define DATA_PIN_0 8 //Ports 8 - 13 as well as A0/1 are data pins
 #define DATA_WIDTH 8
 #define CMD_PIN_0 4 //Ports 4 - 7 are command pins
@@ -12,7 +13,7 @@
 volatile int command, data, request, heading, GyZ; //volatile b/c used in interrupt and main loop
 const int MPU = 0x68;
 int led = 13;
-MPU6050 mpu;
+MPU6050 mpu;//why won't it accept this?
 
 void setup()
 {
@@ -52,7 +53,7 @@ void hiSP()
         break;
     }
 
-//Does this work
+//Does this work; no it doesn't
     for (int i = 0; i < DATA_WIDTH; i++)
     {
       pinMode(DATA_PIN_0 + i, OUTPUT);
@@ -77,7 +78,7 @@ void hiSP()
 void loop()
 {
   
-  if (command == 3)
+  if (request == 1 && command == 3)
   {
     digitalWrite(led, LOW);
     delay(1000);
@@ -85,4 +86,3 @@ void loop()
   }
   request = 0;
 }
-
