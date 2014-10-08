@@ -33,31 +33,33 @@ task flipperFlapper(){
 task driveControl() {
 	bool slowmo = false;
 	while (true) {
-			getJoystickSettings(joystick);
-			if ((abs(joystick.joy1_y1) > 10 || abs(joystick.joy1_y2) > 10) && !slowmo) {
-					motor[motorFL] = joystick.joy1_y1 / 1.28;
-					motor[motorBL] = joystick.joy1_y1 / 1.28;
-					motor[motorFR] = joystick.joy1_y2 / 1.28;
-					motor[motorBR] = joystick.joy1_y2 / 1.28;
-			}
-			if ((abs(joystick.joy1_y1) > 10 || abs(joystick.joy1_y2) > 10) && slowmo) {
-					motor[motorFL] = joystick.joy1_y1 / 2.28;
-					motor[motorBL] = joystick.joy1_y1 / 2.28;
-					motor[motorFR] = joystick.joy1_y2 / 2.28;
-					motor[motorBR] = joystick.joy1_y2 / 2.28;
-			}
-			if (joystick.joy1_TopHat == 0)
-				slowmo = false;
-			if (joystick.joy1_TopHat == 4)
-				slowmo = true;
-			else {
-				motor[motorFL] = 0;
-				motor[motorBL] = 0;
-				motor[motorFR] = 0;
-				motor[motorBR] = 0;
-			}
+		getJoystickSettings(joystick);
+		if ((abs(joystick.joy1_y1) > 10 || abs(joystick.joy1_y2) > 10) && !slowmo) {
+				motor[motorFL] = joystick.joy1_y1 / 1.28;
+				motor[motorBL] = joystick.joy1_y1 / 1.28;
+				motor[motorFR] = joystick.joy1_y2 / 1.28;
+				motor[motorBR] = joystick.joy1_y2 / 1.28;
+		}
+		if ((abs(joystick.joy1_y1) > 10 || abs(joystick.joy1_y2) > 10) && slowmo) {
+				motor[motorFL] = joystick.joy1_y1 / 1.7;
+				motor[motorBL] = joystick.joy1_y1 / 1.7;
+				motor[motorFR] = joystick.joy1_y2 / 1.7;
+				motor[motorBR] = joystick.joy1_y2 / 1.7;
+		}
+		else {
+			motor[motorFL] = 0;
+			motor[motorBL] = 0;
+			motor[motorFR] = 0;
+			motor[motorBR] = 0;
+		}
+		if (joystick.joy1_TopHat == 0) {
+			slowmo = false;
+		}
+		if (joystick.joy1_TopHat == 4) {
+			slowmo = true;
 		}
 	}
+}
 
 task servos()
 {
