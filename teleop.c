@@ -40,11 +40,11 @@ task driveControl() {
 				motor[motorFR] = joystick.joy1_y2 / 1.28;
 				motor[motorBR] = joystick.joy1_y2 / 1.28;
 		}
-		if ((abs(joystick.joy1_y1) > 10 || abs(joystick.joy1_y2) > 10) && slowmo) {
-				motor[motorFL] = joystick.joy1_y1 / 1.7;
-				motor[motorBL] = joystick.joy1_y1 / 1.7;
-				motor[motorFR] = joystick.joy1_y2 / 1.7;
-				motor[motorBR] = joystick.joy1_y2 / 1.7;
+		else if ((abs(joystick.joy1_y1) > 10 || abs(joystick.joy1_y2) > 10) && slowmo) {
+				motor[motorFL] = joystick.joy1_y1 / 5.28;
+				motor[motorBL] = joystick.joy1_y1 / 5.28;
+				motor[motorFR] = joystick.joy1_y2 / 5.28;
+				motor[motorBR] = joystick.joy1_y2 / 5.28;
 		}
 		else {
 			motor[motorFL] = 0;
