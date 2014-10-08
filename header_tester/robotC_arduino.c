@@ -21,12 +21,12 @@ unsigned char sendArduinoCommand(unsigned char command)
 	{
 		HTSPBsetupIO(HTSPB, 0x00); // sets BO-7 to input so that it can receive
 		result = HTSPBreadIO(HTSPB, 0xFF); //Do they read in the same order as Arduino sends?
-		return result;
 	}
+	return result;
 }
 
 task main()
 {
-	wait10Msec(1000);
+	wait1Msec(1000);
 	sendArduinoCommand(3);
 }

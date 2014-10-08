@@ -1,4 +1,7 @@
 #include <Wire.h>
+#include <I2Cdev.h>
+#include <MPU6050_6Axis_MotionApps20.h>
+#include <MPU6050.h>
 
 #define DATA_PIN_0 8 //Ports 8 - 13 as well as A0/1 are data pins
 #define DATA_WIDTH 8
@@ -9,6 +12,7 @@
 volatile int command, data, request, heading, GyZ; //volatile b/c used in interrupt and main loop
 const int MPU = 0x68;
 int led = 13;
+MPU6050 mpu;
 
 void setup()
 {
@@ -72,12 +76,12 @@ void hiSP()
 
 void loop()
 {
+  
   if (command == 3)
   {
     digitalWrite(led, LOW);
     delay(1000);
     digitalWrite(led, HIGH);
-    delay(1000);
   }
   request = 0;
 }
