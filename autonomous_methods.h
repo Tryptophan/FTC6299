@@ -1,8 +1,9 @@
+
 #include "libs.h";
 
 void initializeRobot() {
 	nVolume = 4;
-	latch(false);
+	latch(true);
 }
 
 // Finds the ir beacon, dumps the block, and parks on the ramp
@@ -12,7 +13,7 @@ void bare(int suspend, int begin) {
 	}
 	if (begin == 0){  //Ramp
 		playSound(soundBeepBeep);
-		moveTo(-40, -3500, 0.8);
+		moveTo(-20, -6200, 50.0);
 		latch(true);
 		turn(30, 45);
 		moveTo(30, 250, 0.8);
