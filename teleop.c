@@ -72,8 +72,8 @@ task servos()
 		}
 		if(joy1Btn(6) == 1)
 		{
-			servo[servoL] = 100;
-			servo[servoR] = 140;
+			servo[servoL] = 160;
+			servo[servoR] = 90;
 		}
 	}
 }
