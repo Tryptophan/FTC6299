@@ -202,8 +202,7 @@ void setup() {
     mpu.setXGyroOffset(220);
     mpu.setYGyroOffset(76);
     mpu.setZGyroOffset(-85);
-    mpu.setZAccelOffset(1788); // 1688 factory default for my test chip
-
+    mpu.setZAccelOffset(1688); // 1688 factory default for my test chip ** 1788 originally
     // make sure it worked (returns 0 if so)
     if (devStatus == 0) {
         // turn on the DMP, now that it's ready
@@ -221,7 +220,8 @@ void setup() {
 
         // get expected DMP packet size for later comparison
         packetSize = mpu.dmpGetFIFOPacketSize();
-    } else {
+    } 
+    else {
         // ERROR!
         // 1 = initial memory load failed
         // 2 = DMP configuration updates failed
