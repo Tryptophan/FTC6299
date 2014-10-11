@@ -7,7 +7,7 @@
 #pragma config(Motor,  mtr_S1_C1_2,     motorFR,       tmotorTetrix, openLoop)
 #pragma config(Motor,  mtr_S1_C2_1,     motorBL,       tmotorTetrix, openLoop, reversed)
 #pragma config(Motor,  mtr_S1_C2_2,     motorBR,       tmotorTetrix, openLoop)
-#pragma config(Motor,  mtr_S1_C3_1,     motorH,        tmotorTetrix, openLoop)
+#pragma config(Motor,  mtr_S1_C3_1,     lift,          tmotorTetrix, openLoop)
 #pragma config(Motor,  mtr_S1_C3_2,     flip,          tmotorTetrix, openLoop, reversed)
 #pragma config(Servo,  srvo_S3_C1_1,    servoL,               tServoStandard)
 #pragma config(Servo,  srvo_S3_C1_2,    servoR,               tServoStandard)
@@ -78,10 +78,23 @@ task servos()
 	}
 }
 
+task slide()
+{
+	while(true){
+		while(joystick.joy2_y2 >= 10){
+			motor[lift] = joystick.joy2_y2 / 1.28;
+		}
+		while(joystick.joy2_y2 <= -10){
+			motor[lift] = joystick.joy2_y2 / 2.28;
+		}
+		motor[lift] = 0;
+	}
+}
 task main () {
 	waitForStart();
 	startTask(driveControl);
 	startTask(servos);
 	startTask(flipperFlapper);
+	startTask(slide);
 	while(true){}
 }
