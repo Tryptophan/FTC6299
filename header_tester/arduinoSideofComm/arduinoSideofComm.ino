@@ -10,7 +10,8 @@
 #define CMD_WIDTH 4 //Width of command pins
 #define WR_INT 1 //The "WR" port on SP for sending pulse is port 3 on Arduino
 
-volatile int command, data, request, heading, GyZ; //volatile b/c used in interrupt and main loop
+volatile int command, data, request, heading; //volatile b/c used in interrupt and main loop
+unsigned char GyZ;
 const int MPU = 0x68;
 int led = 13;
 //MPU6050 mpu;//why won't it accept this?
@@ -49,11 +50,11 @@ void hiSP()
         data = heading;
         break;
       case 3:
-        data = 15;
+        data = GyZ;
         break;
     }
      
-   for (int i = 0; i < DATA_WIDTH; i++)
+  for (int i = 0; i < DATA_WIDTH; i++)
     {
       pinMode(DATA_PIN_0 + i, OUTPUT);
       if (data & (1 << i))
@@ -78,11 +79,16 @@ void hiSP()
 
 void loop()
 {
+  Wire.beginTransmission(MPU);
+  Wire.write(0x47);
+  Wire.endTransmission(false);
+  Wire.requestFrom(MPU, 2, true);
+  GyZ=Wire.read()<<8|Wire.read();  // 0x47 (GYRO_ZOUT_H) & 0x48 (GYRO_ZOUT_L)
   if (request == 1)
   {
-    digitalWrite(led, LOW);
-    delay(1000);
-    digitalWrite(led, HIGH);
+    Serial.print("value: ");
+    Serial.println(GyZ);
+    delay(1000); // Be warned- the arduino is a lot faster, there's a delay between when it's read and when SP sees it
+    request = 0;
   }
-  request = 0;
 }

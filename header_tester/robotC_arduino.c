@@ -10,17 +10,17 @@ command 3: receive the heading from the arduino (output)
 
 */
 
-char result;
+int result;
 
 //sends a command to the Arduino over S0-3, and gets data frorm B0-7
-unsigned char sendArduinoCommand(unsigned char command)
+int sendArduinoCommand(unsigned char command)
 {
 	HTSPBsetupIO(HTSPB, 0xFF); //sets B0-7 to output
 	HTSPBwriteStrobe(HTSPB, command); // send the command via S0-3
 	if (command >= 2)
 	{
 		HTSPBsetupIO(HTSPB, 0x00); // sets BO-7 to input so that it can receive
-		result = HTSPBreadIO(HTSPB, 0xFF); //Do they read in the same order as Arduino sends?
+		result = HTSPBreadIO(HTSPB, 0xFF);
 	}
 	return result;
 }
@@ -29,7 +29,7 @@ task main()
 {
 	while(true){
 		sendArduinoCommand(3);
-		nxtDisplayBigTextLine(1, "%.2f", result);
+		nxtDisplayBigTextLine(1, "%d", result);
 		wait1Msec(1000);
 	}
 }
