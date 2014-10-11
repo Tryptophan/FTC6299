@@ -1,5 +1,5 @@
 #include <Wire.h>
-#include <I2Cdev.h
+#include <I2Cdev.h>
 #include <MPU6050_6Axis_MotionApps20.h>
 #include <MPU6050.h>
 
@@ -13,7 +13,7 @@
 volatile int command, data, request, heading, GyZ; //volatile b/c used in interrupt and main loop
 const int MPU = 0x68;
 int led = 13;
-MPU6050 mpu;//why won't it accept this?
+//MPU6050 mpu;//why won't it accept this?
 
 void setup()
 {
@@ -49,12 +49,11 @@ void hiSP()
         data = heading;
         break;
       case 3:
-        data = 3;
+        data = 15;
         break;
     }
-
-//Does this work; no it doesn't
-    for (int i = 0; i < DATA_WIDTH; i++)
+     
+   for (int i = 0; i < DATA_WIDTH; i++)
     {
       pinMode(DATA_PIN_0 + i, OUTPUT);
       if (data & (1 << i))
@@ -66,7 +65,9 @@ void hiSP()
         digitalWrite(DATA_PIN_0 + i, LOW);
       }
     }
-
+  }
+  else
+  {
     //reset the pins to input after sending the data- allows to receive new comamnds
     for (int i = 0; i < DATA_WIDTH; i++)
     {
@@ -77,8 +78,7 @@ void hiSP()
 
 void loop()
 {
-  
-  if (request == 1 && command == 3)
+  if (request == 1)
   {
     digitalWrite(led, LOW);
     delay(1000);

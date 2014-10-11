@@ -95,7 +95,7 @@ ubyte HTSPBreadIO(tSensors link, ubyte mask) {
 
   HTSPB_I2CRequest[0] = 2;                         // Message size
   HTSPB_I2CRequest[1] = HTSPB_I2C_ADDR;             // I2C Address
-  HTSPB_I2CRequest[2] = HTSPB_OFFSET + HTSPB_DIGIN;  // Start digital output read address
+  HTSPB_I2CRequest[2] = HTSPB_OFFSET +  HTSPB_DIGIN;  // Start digital output read address
 
   if (!writeI2C(link, HTSPB_I2CRequest, HTSPB_I2CReply, 1))
     return 0;
