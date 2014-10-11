@@ -11,10 +11,6 @@ bool isInRange(float heading, float targetHeading, float threshold = 1.0) {
 	return abs(heading - targetHeading) <= threshold;
 }
 
-int getDriveDir(int power) {
-	return (power > 0) ? 1 : (power < 0) ? -1 : 0;
-}
-
 int getEncoderAverage(int leftMotor, int rightMotor) {
 	if (abs(leftMotor) < 3) {
 		return rightMotor;
@@ -39,7 +35,7 @@ void stopMotors() {
 	motor[motorBR] = 0;
 }
 
-void moveTo(int power, int deg, float threshold = 2.0, long time = 5000) {
+void moveTo(int power, int deg, float threshold = 2.0, long time = 5000, float cor = 4.0) {
 	heading = 0;
 	nMotorEncoder[motorFL] = 0;
 	nMotorEncoder[motorFR] = 0;
@@ -64,10 +60,10 @@ void moveTo(int power, int deg, float threshold = 2.0, long time = 5000) {
 			// If not, lower the speed of the required side of the robot to adjust back to 0
 			else {
 				if (heading > 0) {
-					setMotors((power / 4) * getDriveDir(power), power);
+					setMotors((power / cor), power);
 				}
 				if (heading < 0) {
-					setMotors(power, (power / 4) * getDriveDir(power));
+					setMotors(power, (power / cor));
 				}
 			}
 			wait1Msec(20);
@@ -87,10 +83,10 @@ void moveTo(int power, int deg, float threshold = 2.0, long time = 5000) {
 			// If not, lower the speed of the required side of the robot to adjust back to 0
 			else {
 				if (heading > 0) {
-					setMotors(power, (power / 4) * getDriveDir(power));
+					setMotors(power, (power / cor));
 				}
 				if (heading < 0) {
-					setMotors((power / 4) * getDriveDir(power), power);
+					setMotors((power / cor), power);
 				}
 			}
 
@@ -206,8 +202,8 @@ void latch(bool position) {
 		servo[servoR] = 0;
 	}
 	if (position) {
-		servo[servoL] = 160;
-		servo[servoR] = 83;
+		servo[servoL] = 150;
+		servo[servoR] = 93;
 	}
 }
 

@@ -13,14 +13,15 @@ void bare(int suspend, int begin) {
 	}
 	if (begin == 0){  //Ramp
 		playSound(soundBeepBeep);
-		moveTo(-20, -7000, 5.0);
+		moveTo(-10, -7300, 2.1);
 		latch(true);
-		arcTurn(20, 25);
-		moveTo(30, 1000, 0.8);
-		turn(30, 90);
-		turn(30, 90);
-		moveTo(-30, -3500, 0.8);
+		arcTurn(17, 23);
+		moveTo(15, 1300, 0.8);
+		turn(15, 90);
+		turn(15, 90);
+		moveTo(-25, -6000, 2.0);
 		latch(false);
+		//latch(false); */
 	}
 
 }
