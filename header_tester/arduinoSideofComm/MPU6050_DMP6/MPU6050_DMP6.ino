@@ -366,6 +366,7 @@ void loop() {
             teapotPacket[11]++; // packetCount, loops at 0xFF on purpose
         #endif
 
+        delay(1000); //added in by moi
         // blink LED to indicate activity
         blinkState = !blinkState;
         digitalWrite(LED_PIN, blinkState);
