@@ -1,5 +1,6 @@
 #include "drivers\JoystickDriver.c";
 #include "autonomous_methods.h";
+#include "libs.h"
 
 int i, j, begin, suspend = 0;
 string sides[2] = {"Ramp", "Zone"};
@@ -75,6 +76,7 @@ void toggleSubMenu(int dir) {
 task chooser() {
 	initializeRobot();
 	while (true) {
+		starupCheck();
 		if (nNxtButtonPressed == 3) {
 			toggleMenu();
 			wait1Msec(250);

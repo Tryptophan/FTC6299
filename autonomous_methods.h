@@ -21,7 +21,6 @@ void bare(int suspend, int begin) {
 		turn(15, 90);
 		moveTo(-25, -6000, 2.0);
 		latch(false);
-		//latch(false); */
 	}
 
 }
