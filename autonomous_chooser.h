@@ -11,6 +11,13 @@ string file = programs[0];
 
 int toggle = 0;
 
+void startupCheck(){
+	if (HTGYROreadRot(SENSOR_GYRO) == 0){
+		playSound(soundException);
+		displayTextLine(6, "Check Gyro");
+	}
+}
+
 void toggleMenu() {
 	toggle++;
 	if (toggle > 2) {
@@ -76,7 +83,7 @@ void toggleSubMenu(int dir) {
 task chooser() {
 	initializeRobot();
 	while (true) {
-		starupCheck();
+		startupCheck();
 		if (nNxtButtonPressed == 3) {
 			toggleMenu();
 			wait1Msec(250);

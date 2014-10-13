@@ -8,7 +8,7 @@ void initializeRobot() {
 
 // Finds the ir beacon, dumps the block, and parks on the ramp
 void bare(int suspend, int begin) {
-	wait10Msec(suspend * 100);
+	delay(suspend * 100);
 	if (begin == 1){  //Parking Zone
 	}
 	if (begin == 0){  //Ramp
@@ -26,11 +26,11 @@ void bare(int suspend, int begin) {
 }
 
 void autoFrontDump(int suspend) {
-	wait10Msec(suspend * 100);
+	delay(suspend * 100);
 
 }
 
 void test(int suspend){
-	wait10Msec(suspend * 100);
+	delay(suspend * 100);
 
 }

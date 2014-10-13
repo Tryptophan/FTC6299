@@ -211,13 +211,6 @@ int getIR(){
 	return HTIRS2readACDir(SENSOR_IR);
 }
 
-int startupCheck(){
-	if (HTGYROreadRot(SENSOR_GYRO) == 0){
-		playSound(soundException);
-		displayTextLine(6, "Check Gyro")
-	}
-}
-
 void moveIrUp(int speed, int IR,){
 	while(getIR() < IR){
 		setMotors(speed,speed);
