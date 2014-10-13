@@ -212,13 +212,14 @@ int getIR(){
 }
 
 void moveIrUp(int speed, int IR,){
-	while(getIR() < IR){
+	while (getIR() < IR){
 		setMotors(speed,speed);
 	}
 	stopMotors();
 }
+
 void moveIrDown(int speed, int IR){
-	while(getIR() < IR){
+	while (getIR() < IR){
 		setMotors(speed,speed);
 	}
 	stopMotors();

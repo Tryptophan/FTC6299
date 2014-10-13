@@ -28,12 +28,11 @@
 
 task main(){
 
+	//Starts Autonomous Chooser
 	startTask(chooser);
 	waitForStart();
 
 	stopTask(chooser);
-
-
 
 	// Set and run desired autonomous program
 	switch(i) {
