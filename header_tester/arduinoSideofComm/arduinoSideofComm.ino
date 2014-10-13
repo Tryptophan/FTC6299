@@ -70,6 +70,7 @@ void setup()
   Wire.endTransmission(true);
   Serial.begin(9600);
   attachInterrupt(WR_INT, hiSP, RISING);
+
 }
 
 void hiSP()
@@ -119,49 +120,49 @@ void hiSP()
 
 void loop()
 {
-  if(!dmpDataReady) return;
-  command = 0;
-  data = 0;
-  request = 0;
-  
-   mpuInterrupt = false;
-   mpuIntStatus = mpu.getIntStatus();
-   // get current FIFO count
-  fifoCount = mpu.getFIFOCount();
-  
-// check for overflow (this should never happen unless our code is too inefficient)
- if ((mpuIntStatus & 0x10) || fifoCount == 1024) 
- {
-      mpu.resetFIFO(); // reset so we can continue cleanly
- }
- else if (mpuIntStatus & 0x02) 
- {
-        // wait for correct available data length, should be a VERY short wait
-        while (fifoCount < packetSize) fifoCount = mpu.getFIFOCount();
-
-        // read a packet from FIFO
-        mpu.getFIFOBytes(fifoBuffer, packetSize);
-        
-        // track FIFO count here in case there is > 1 packet available
-        // (this lets us immediately read more without waiting for an interrupt)
-        fifoCount -= packetSize;
-        
-                    // display Euler angles in degrees
-            mpu.dmpGetQuaternion(&q, fifoBuffer);
-            mpu.dmpGetEuler(euler, &q);
-            Serial.print("euler\t");
-            Serial.print(euler[0] * 180/M_PI);
-            Serial.print("\t");
-            Serial.print(euler[1] * 180/M_PI);
-            Serial.print("\t");
-            Serial.println(euler[2] * 180/MPI);
- }
- 
   Wire.beginTransmission(MPU);
   Wire.write(0x47);
   Wire.endTransmission(false);
   Wire.requestFrom(MPU, 2, true);
   GyZ=Wire.read()<<8|Wire.read();  // 0x47 (GYRO_ZOUT_H) & 0x48 (GYRO_ZOUT_L)
+
+  if(!dmpDataReady) return;
+  command = 0;
+  data = 0;
+  request = 0;
+  
+  mpuInterrupt = false;
+  mpuIntStatus = mpu.getIntStatus();
+  fifoCount = mpu.getFIFOCount(); // get current FIFO count
+  
+// check for overflow (this should never happen unless our code is too inefficient)
+ if ((mpuIntStatus & 0x10) || fifoCount == 1024) 
+ {
+    mpu.resetFIFO(); // reset so we can continue cleanly
+ }
+ else if (mpuIntStatus & 0x02) 
+ {
+    // wait for correct available data length, should be a VERY short wait
+    while (fifoCount < packetSize) fifoCount = mpu.getFIFOCount();
+
+    // read a packet from FIFO
+    mpu.getFIFOBytes(fifoBuffer, packetSize);
+    
+    // track FIFO count here in case there is > 1 packet available
+    // (this lets us immediately read more without waiting for an interrupt)
+    fifoCount -= packetSize;
+    
+        // display Euler angles in degrees
+        mpu.dmpGetQuaternion(&q, fifoBuffer);
+        mpu.dmpGetEuler(euler, &q);
+        Serial.print("euler\t");
+        Serial.print(euler[0] * 180/M_PI);
+        Serial.print("\t");
+        Serial.print(euler[1] * 180/M_PI);
+        Serial.print("\t");
+        Serial.println(euler[2] * 180/MPI);
+ }
+
   if (request == 1)
   {
     Serial.print("value: ");
