@@ -15,7 +15,7 @@ int getEncoderAverage(int leftMotor, int rightMotor) {
 	if (abs(leftMotor) < 3) {
 		return rightMotor;
 	}
-	else {
+	if (abs(rightMotor) < 3) {
 		return leftMotor;
 	}
 	return (leftMotor + rightMotor) / 2;
@@ -212,14 +212,14 @@ int getIR(){
 }
 
 void moveIrUp(int speed, int IR,){
-	while (getIR() < IR){
+	while (getIR() < IR) {
 		setMotors(speed,speed);
 	}
 	stopMotors();
 }
 
 void moveIrDown(int speed, int IR){
-	while (getIR() < IR){
+	while (getIR() < IR) {
 		setMotors(speed,speed);
 	}
 	stopMotors();
