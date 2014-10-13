@@ -10,7 +10,8 @@
 #define CMD_WIDTH 4 //Width of command pins
 #define WR_INT 1 //The "WR" port on SP for sending pulse is port 3 on Arduino
 
-volatile int command, data, request, heading; //volatile b/c used in interrupt and main loop
+volatile int command, data, request; //volatile b/c used in interrupt and main loop
+volatile float heading;
 unsigned char GyZ;
 const int MPU = 0x68;
 int led = 13;
@@ -157,10 +158,13 @@ void loop()
     mpu.dmpGetQuaternion(&q, fifoBuffer);
             mpu.dmpGetGravity(&gravity, &q);
             mpu.dmpGetYawPitchRoll(ypr, &q, &gravity);
-            Serial.print("heading: ");
-            Serial.println(ypr[0] * 180/M_PI);
+            
+            heading = ypr[0] * 180/M_PI;
+            Serial.print("int heading: ");
+            Serial.println(heading);
+            
  }
-
+ 
   if (request == 1)
   {
     Serial.print("value: ");

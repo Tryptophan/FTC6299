@@ -28,8 +28,8 @@ int sendArduinoCommand(unsigned char command)
 task main()
 {
 	while(true){
-		sendArduinoCommand(3);
+		sendArduinoCommand(2);
 		nxtDisplayBigTextLine(1, "%d", result);
-		wait1Msec(1000);
+		wait1Msec(3000);
 	}
 }
