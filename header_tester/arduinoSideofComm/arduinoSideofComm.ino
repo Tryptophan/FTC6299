@@ -24,6 +24,7 @@ uint16_t packetSize;    // expected DMP packet size (default is 42 bytes)
 uint16_t fifoCount;     // count of all bytes currently in FIFO
 uint8_t fifoBuffer[64]; // FIFO storage buffer
 
+VectorFloat gravity;    // [x, y, z]            gravity vector
 Quaternion q;           // [w, x, y, z]         quaternion container
 float euler[3];         // [psi, theta, phi]    Euler angle container
 float ypr[3];           // [yaw, pitch, roll]   yaw/pitch/roll container and gravity vector
@@ -39,13 +40,20 @@ void setup()
   pinMode(led, OUTPUT);
   Wire.begin();
   
+  Wire.beginTransmission(MPU);
+  Wire.write(0x6B); //PWR_MGMT register
+  Wire.write(0); //Wakes up the gyro
+  Wire.endTransmission(true);
+  Serial.begin(9600);
+  attachInterrupt(WR_INT, hiSP, RISING);
+  
   //Setting up gyro
   TWBR = 24; // 400kHz I2C clock (200kHz if CPU is 8MHz)
   //Fastwire::setup(400, true);
   mpu.initialize();
   Serial.println(mpu.testConnection() ? F("MPU6050 connection successful") : F("MPU6050 connection failed"));
   devStatus = mpu.dmpInitialize();
-  mpu.setZGyroOffset(-85);
+  mpu.setZGyroOffset(0);
   
   // make sure it worked (returns 0 if so)
   if (devStatus == 0) {
@@ -63,13 +71,7 @@ void setup()
       // get expected DMP packet size for later comparison
       packetSize = mpu.dmpGetFIFOPacketSize();
   } 
-  
-  Wire.beginTransmission(MPU);
-  Wire.write(0x6B); //PWR_MGMT register
-  Wire.write(0); //Wakes up the gyro
-  Wire.endTransmission(true);
-  Serial.begin(9600);
-  attachInterrupt(WR_INT, hiSP, RISING);
+
 
 }
 
@@ -152,15 +154,11 @@ void loop()
     // (this lets us immediately read more without waiting for an interrupt)
     fifoCount -= packetSize;
     
-        // display Euler angles in degrees
-        mpu.dmpGetQuaternion(&q, fifoBuffer);
-        mpu.dmpGetEuler(euler, &q);
-        Serial.print("euler\t");
-        Serial.print(euler[0] * 180/M_PI);
-        Serial.print("\t");
-        Serial.print(euler[1] * 180/M_PI);
-        Serial.print("\t");
-        Serial.println(euler[2] * 180/MPI);
+    mpu.dmpGetQuaternion(&q, fifoBuffer);
+            mpu.dmpGetGravity(&gravity, &q);
+            mpu.dmpGetYawPitchRoll(ypr, &q, &gravity);
+            Serial.print("heading: ");
+            Serial.println(ypr[0] * 180/M_PI);
  }
 
   if (request == 1)
