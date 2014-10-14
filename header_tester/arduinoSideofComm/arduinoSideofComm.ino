@@ -72,8 +72,6 @@ void setup()
       // get expected DMP packet size for later comparison
       packetSize = mpu.dmpGetFIFOPacketSize();
   } 
-
-
 }
 
 void hiSP()
@@ -162,14 +160,5 @@ void loop()
             heading = ypr[0] * 180/M_PI;
             Serial.print("int heading: ");
             Serial.println(heading);
-            
  }
- 
-  if (request == 1)
-  {
-    Serial.print("value: ");
-    Serial.println(GyZ);
-    delay(1000); // Be warned- the arduino is a lot faster, there's a delay between when it's read and when SP sees it
-    request = 0;
-  }
 }

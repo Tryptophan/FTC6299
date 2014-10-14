@@ -10,7 +10,7 @@ command 3: receive the heading from the arduino (output)
 
 */
 
-int result;
+float result;
 
 //sends a command to the Arduino over S0-3, and gets data frorm B0-7
 int sendArduinoCommand(unsigned char command)
@@ -30,6 +30,5 @@ task main()
 	while(true){
 		sendArduinoCommand(2);
 		nxtDisplayBigTextLine(1, "%d", result);
-		wait1Msec(3000);
 	}
 }
