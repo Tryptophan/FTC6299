@@ -5,12 +5,12 @@
 /*
 Command numbers correlate with different functions compiled to the Arduino
 command 1: tell the arduino to calculate heading (input)
-command 2: tell the arduino to get raw value of z axis (input)
-command 3: receive the heading from the arduino (output)
+command 2: receive the first half of heading from the arduino (output)
+command 3: receive second half of the heading
 
 */
 
-float result;
+signed int result;//Global in order to read on NXT screen
 
 //sends a command to the Arduino over S0-3, and gets data frorm B0-7
 int sendArduinoCommand(unsigned char command)
@@ -22,13 +22,26 @@ int sendArduinoCommand(unsigned char command)
 		HTSPBsetupIO(HTSPB, 0x00); // sets BO-7 to input so that it can receive
 		result = HTSPBreadIO(HTSPB, 0xFF);
 	}
+	if (command == 3)
+	{
+		HTSPBsetupIO(HTSPB, 0x00);
+		result = HTSPBreadIO(HTSPB, 0xFF);
+	}
 	return result;
 }
 
+int getGyroHeading()
+{
+	signed int add1 = sendArduinoCommand(2);
+	signed int add2 = sendArduinoCommand(3);
+	nxtDisplayBigTextLine(4, "%d", add2);
+	int heading = add1 + (add2 << 8);
+	return heading;
+}
 task main()
 {
 	while(true){
-		sendArduinoCommand(2);
-		nxtDisplayBigTextLine(1, "%d", result);
+		getGyroHeading();
+		nxtDisplayBigTextLine(1, "%d", getGyroHeading());
 	}
 }

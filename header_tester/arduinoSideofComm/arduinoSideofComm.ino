@@ -11,7 +11,7 @@
 #define WR_INT 1 //The "WR" port on SP for sending pulse is port 3 on Arduino
 
 volatile int command, data, request; //volatile b/c used in interrupt and main loop
-volatile float heading;
+volatile signed int heading;
 unsigned char GyZ;
 const int MPU = 0x68;
 int led = 13;
@@ -91,9 +91,8 @@ void hiSP()
       case 2:
         data = heading;
         break;
-      case 3:
-        data = GyZ;
-        break;
+      case 3: 
+        data = heading >> 8;
     }
      
   for (int i = 0; i < DATA_WIDTH; i++)
@@ -154,11 +153,16 @@ void loop()
     fifoCount -= packetSize;
     
     mpu.dmpGetQuaternion(&q, fifoBuffer);
+            mpu.dmpGetEuler(euler, &q);
+            heading = euler[0] * 180/M_PI;
+            Serial.println(heading);
+    
+    /*mpu.dmpGetQuaternion(&q, fifoBuffer);
             mpu.dmpGetGravity(&gravity, &q);
             mpu.dmpGetYawPitchRoll(ypr, &q, &gravity);
             
             heading = ypr[0] * 180/M_PI;
             Serial.print("int heading: ");
-            Serial.println(heading);
+            Serial.println(heading);*/
  }
 }
