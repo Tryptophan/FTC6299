@@ -2,6 +2,30 @@
 
 float heading = 0;
 
+//Support method that sends the command to Arduino for heading
+int sendArduinoCommand(unsigned char command)
+{
+	HTSPBsetupIO(HTSPB, 0xFF); //sets B0-7 to output
+	HTSPBwriteStrobe(HTSPB, command); // send the command via S0-3
+	if (command >= 2)
+	{
+		HTSPBsetupIO(HTSPB, 0x00); // sets BO-7 to input so that it can receive
+		result = HTSPBreadIO(HTSPB, 0xFF);
+	}
+	return result;
+}
+
+//Get the current heading from the MPU6050 gyro
+int getMPUHeading()
+{
+	signed int add1 = sendArduinoCommand(2);
+	nxtDisplayBigTextLine(4, "%d", add1);
+	int MPUheading = add1 * 2; 
+	if(MPUheading > 180)
+		MPUheading = heading - 360; 
+	return MPUheading;
+}
+
 float valInRange(float val, float threshold = 1.0) {
 	return (abs(val) <= threshold) ? 0 : val;
 }
@@ -46,7 +70,7 @@ void moveTo(int power, int deg, float threshold = 2.0, long time = 5000) {
 	if (power > 0) {
 		while (time1[T1] < time && getEncoderAverage(nMotorEncoder[motorFL], nMotorEncoder[motorBL]) < deg) {
 			// Reads gyros rate of turn, mulitplies it by the time passed (20ms), and adds it to the current heading
-			heading += valInRange(HTGYROreadRot(SENSOR_GYRO), threshold) * (float)(20 / 1000.0);
+			heading = getMPUHeading();
 
 			// Checks if the gyro is outside of the specified threshold (1.0)
 			if (isInRange(heading, 0, threshold)) {
@@ -70,7 +94,7 @@ void moveTo(int power, int deg, float threshold = 2.0, long time = 5000) {
 	else {
 		while (time1[T1] < time && getEncoderAverage(nMotorEncoder[motorFL], nMotorEncoder[motorFR]) > deg) {
 			// Reads gyros rate of turn, mulitplies it by the time passed (20ms), and adds it to the current heading
-			heading += valInRange(HTGYROreadRot(SENSOR_GYRO), threshold) * (float)(20 / 1000.0);
+			heading = getMPUHeading;
 
 			// Checks if the gyro is outside of the specified threshold (1.0)
 			if (isInRange(heading, 0, threshold)) {
@@ -115,7 +139,7 @@ void turn(int power, int deg, int time = 5000) {
 
 	if (deg > 0) {
 		while (time1[T1] < time && heading < deg) {
-			heading += HTGYROreadRot(SENSOR_GYRO) * (float)(20 / 1000.0);
+			heading = getMPUHeading;
 			setMotors(power, -power);
 			wait1Msec(20);
 		}
@@ -123,7 +147,7 @@ void turn(int power, int deg, int time = 5000) {
 
 	else {
 		while (time1[T1] < time && heading < deg) {
-			heading += HTGYROreadRot(SENSOR_GYRO) * (float)(20 / 1000.0);
+			heading = getMPUHeading;
 			setMotors(-power, power);
 			wait1Msec(20);
 		}
@@ -140,7 +164,7 @@ void arcTurn(int power, int deg, int time = 2000) {
 	if (power > 0) {
 		if (deg > 0) {
 			while (time1[T1] < time && heading < deg) {
-				heading += HTGYROreadRot(SENSOR_GYRO) * (float)(20 / 1000.0);
+				heading = getMPUHeading;
 				setMotors(power, 0);
 				wait1Msec(20);
 			}
@@ -148,7 +172,7 @@ void arcTurn(int power, int deg, int time = 2000) {
 
 		else {
 			while (time1[T1] < time && heading > deg) {
-				heading += HTGYROreadRot(SENSOR_GYRO) * (float)(20 / 1000.0);
+				heading = getMPUHeading;
 				setMotors(0, power);
 				wait1Msec(20);
 			}
@@ -159,7 +183,7 @@ void arcTurn(int power, int deg, int time = 2000) {
 	else {
 		if (deg > 0) {
 			while (time1[T1] < time && heading > deg) {
-				heading += HTGYROreadRot(SENSOR_GYRO) * (float)(20 / 1000.0);
+				heading = getMPUHeading;
 				setMotors(power, 0);
 				wait1Msec(20);
 			}
@@ -167,7 +191,7 @@ void arcTurn(int power, int deg, int time = 2000) {
 
 		else {
 			while (time1[T1] < time && heading < deg) {
-				heading += HTGYROreadRot(SENSOR_GYRO) * (float)(20 / 1000.0);
+				heading = getMPUHeading;
 				setMotors(0, power);
 				wait1Msec(20);
 			}

@@ -25,21 +25,20 @@ int sendArduinoCommand(unsigned char command)
 	return result;
 }
 
-int getGyroHeading()
+int getMPUHeading()
 {
 	signed int add1 = sendArduinoCommand(2);
 	nxtDisplayBigTextLine(4, "%d", add1);
-	/*signed int add2 = sendArduinoCommand(3);
-	nxtDisplayBigTextLine(6, "%d", add2);
-	int heading = add1 + (add2 << 8);*/
 	int heading = add1 * 2;
+	if(heading > 180)
+		heading = heading - 360;
 	return heading;
 }
 
 task main()
 {
 	while(true){
-		getGyroHeading();
-		nxtDisplayBigTextLine(1, "%d", getGyroHeading());
+		getMPUHeading();
+		nxtDisplayBigTextLine(1, "%d", getMPUHeading());
 	}
 }
