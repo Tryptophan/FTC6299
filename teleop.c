@@ -1,4 +1,4 @@
-#pragma config(Hubs,  S1, HTMotor,  HTMotor,  HTMotor,  none)
+#pragma config(Hubs,  S1, HTMotor,  HTMotor,  HTMotor,  HTMotor)
 #pragma config(Hubs,  S3, HTServo,  none,     none,     none)
 #pragma config(Sensor, S1,     ,               sensorI2CMuxController)
 #pragma config(Sensor, S2,     SENSOR_GYRO,    sensorNone)
@@ -9,6 +9,8 @@
 #pragma config(Motor,  mtr_S1_C2_2,     motorBR,       tmotorTetrix, openLoop)
 #pragma config(Motor,  mtr_S1_C3_1,     liftL,         tmotorTetrix, openLoop)
 #pragma config(Motor,  mtr_S1_C3_2,     liftR,         tmotorTetrix, openLoop, reversed)
+#pragma config(Motor,  mtr_S1_C4_1,     flip,          tmotorTetrix, openLoop, encoder)
+#pragma config(Motor,  mtr_S1_C4_2,     motorK,        tmotorTetrix, openLoop)
 #pragma config(Servo,  srvo_S3_C1_1,    servoL,               tServoStandard)
 #pragma config(Servo,  srvo_S3_C1_2,    servoR,               tServoStandard)
 #pragma config(Servo,  srvo_S3_C1_3,    servo3,               tServoNone)
@@ -21,12 +23,12 @@
 task flipperFlapper(){
 	while(true){
 		while(joy1Btn(07) == 1){
-			//motor[flip] = 100;
+			motor[flip] = 100;
 		}
 		while(joy1Btn(08) == 1){
-			//motor[flip] = -100;
+			motor[flip] = -100;
 		}
-	//motor[flip] = 0;
+	motor[flip] = 0;
 	wait10Msec(5);
 	}
 }
