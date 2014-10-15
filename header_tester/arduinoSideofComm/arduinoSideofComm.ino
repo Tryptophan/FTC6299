@@ -10,8 +10,8 @@
 #define CMD_WIDTH 4 //Width of command pins
 #define WR_INT 1 //The "WR" port on SP for sending pulse is port 3 on Arduino
 
-volatile int command, data, request; //volatile b/c used in interrupt and main loop
-volatile signed int heading;
+volatile int command, heading, request; //volatile b/c used in interrupt and main loop;
+volatile signed int data;
 unsigned char GyZ;
 const int MPU = 0x68;
 int led = 13;
@@ -139,6 +139,7 @@ void loop()
  if ((mpuIntStatus & 0x10) || fifoCount == 1024) 
  {
     mpu.resetFIFO(); // reset so we can continue cleanly
+    Serial.print("FIFO Overflow!");
  }
  else if (mpuIntStatus & 0x02) 
  {
@@ -155,8 +156,13 @@ void loop()
     mpu.dmpGetQuaternion(&q, fifoBuffer);
             mpu.dmpGetEuler(euler, &q);
             heading = euler[0] * 180/M_PI;
+            if (heading < 0)
+            {
+              heading = heading + 360;
+            }
             Serial.println(heading);
-    
+            Serial.print("\t");
+            
     /*mpu.dmpGetQuaternion(&q, fifoBuffer);
             mpu.dmpGetGravity(&gravity, &q);
             mpu.dmpGetYawPitchRoll(ypr, &q, &gravity);

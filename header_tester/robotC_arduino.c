@@ -22,22 +22,20 @@ int sendArduinoCommand(unsigned char command)
 		HTSPBsetupIO(HTSPB, 0x00); // sets BO-7 to input so that it can receive
 		result = HTSPBreadIO(HTSPB, 0xFF);
 	}
-	if (command == 3)
-	{
-		HTSPBsetupIO(HTSPB, 0x00);
-		result = HTSPBreadIO(HTSPB, 0xFF);
-	}
 	return result;
 }
 
 int getGyroHeading()
 {
 	signed int add1 = sendArduinoCommand(2);
-	signed int add2 = sendArduinoCommand(3);
-	nxtDisplayBigTextLine(4, "%d", add2);
-	int heading = add1 + (add2 << 8);
+	nxtDisplayBigTextLine(4, "%d", add1);
+	/*signed int add2 = sendArduinoCommand(3);
+	nxtDisplayBigTextLine(6, "%d", add2);
+	int heading = add1 + (add2 << 8);*/
+	int heading = add1 * 2;
 	return heading;
 }
+
 task main()
 {
 	while(true){
