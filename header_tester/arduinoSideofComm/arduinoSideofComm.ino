@@ -89,7 +89,7 @@ void hiSP()
     switch(command)
     {
       case 2:
-        data = heading;
+        data = heading / 2;
         break;
       case 3: 
         data = heading >> 8;
