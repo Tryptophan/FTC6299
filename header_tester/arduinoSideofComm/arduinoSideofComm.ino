@@ -58,6 +58,7 @@ void setup()
   Serial.println(mpu.testConnection() ? F("MPU6050 connection successful") : F("MPU6050 connection failed"));
   devStatus = mpu.dmpInitialize();
   mpu.setZGyroOffset(0);
+  mpu.setZAccelOffset(1688);
   
   // make sure it worked (returns 0 if so)
   if (devStatus == 0) {
@@ -138,41 +139,31 @@ void loop()
   mpuIntStatus = mpu.getIntStatus();
   fifoCount = mpu.getFIFOCount(); // get current FIFO count
   
-// check for overflow (this should never happen unless our code is too inefficient)
- if ((mpuIntStatus & 0x10) || fifoCount == 1024) 
- {
+// check for overflow (this should never happen)
+  if ((mpuIntStatus & 0x10) || fifoCount == 1024) 
+  {
     mpu.resetFIFO(); // reset so we can continue cleanly
     Serial.print("FIFO Overflow!");
- }
- else if (mpuIntStatus & 0x02) 
- {
-    // wait for correct available data length, should be a VERY short wait
-    while (fifoCount < packetSize) fifoCount = mpu.getFIFOCount();
-
-    // read a packet from FIFO
-    mpu.getFIFOBytes(fifoBuffer, packetSize);
+  }
+ 
+  else if (mpuIntStatus & 0x02) 
+  {
+    while (fifoCount < packetSize) fifoCount = mpu.getFIFOCount(); // wait for correct available data length, should be SHORT
+    mpu.getFIFOBytes(fifoBuffer, packetSize); // read a packet from FIFO
     
     // track FIFO count here in case there is > 1 packet available
     // (this lets us immediately read more without waiting for an interrupt)
     fifoCount -= packetSize;
     
+/********** READ THE GYRO HEADING **********/
     mpu.dmpGetQuaternion(&q, fifoBuffer);
-            mpu.dmpGetEuler(euler, &q);
-            heading = euler[0] * 180/M_PI;
-            if (heading < 0)
-            {
-              heading = heading + 360;
-            }
-            Serial.println(heading);
-            Serial.print("\t");
-            
-   // display real acceleration, adjusted to remove gravity
-          mpu.dmpGetQuaternion(&q, fifoBuffer);
-          mpu.dmpGetAccel(&aa, fifoBuffer);
-          mpu.dmpGetGravity(&gravity, &q);
-          mpu.dmpGetLinearAccel(&aaReal, &aa, &gravity);
-          accel = aaReal.x;
-          Serial.print("x axis: ");
-          Serial.println(accel);
- }
+    mpu.dmpGetEuler(euler, &q);
+    heading = euler[0] * 180/M_PI;
+    if (heading < 0)
+    {
+      heading = heading + 360;
+    }
+    Serial.println(heading);
+    Serial.print("\t");
+  }
 }

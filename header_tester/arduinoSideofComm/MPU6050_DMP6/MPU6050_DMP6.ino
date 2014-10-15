@@ -202,7 +202,7 @@ void setup() {
     mpu.setXGyroOffset(220);
     mpu.setYGyroOffset(76);
     mpu.setZGyroOffset(-85);
-    mpu.setZAccelOffset(1688); // 1688 factory default for my test chip ** 1788 originally
+    mpu.setZAccelOffset(); // 1688 factory default for my test chip ** 1788 originally
     // make sure it worked (returns 0 if so)
     if (devStatus == 0) {
         // turn on the DMP, now that it's ready
