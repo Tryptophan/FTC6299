@@ -1,8 +1,6 @@
 #include "drivers\JoystickDriver.c";
 #include "autonomous_methods.h";
-#include "libs.h"
-
-//autonomous_chooser.h
+//#include "libs.h"
 
 int i, j, begin, suspend = 0;
 string sides[2] = {"Ramp", "Zone"};
@@ -14,7 +12,7 @@ string file = programs[0];
 int toggle = 0;
 
 void startupCheck(){
-	if (HTGYROreadRot(SENSOR_GYRO) == 0){
+	if (getMPUHeading() == 0){ //WIll this match up with arduino?
 		playSound(soundException);
 		displayTextLine(6, "Check Gyro");
 	}

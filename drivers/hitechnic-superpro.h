@@ -20,7 +20,7 @@
  *
  * License: You may use this code as you wish, provided you give credit where its due.
  *
- * THIS CODE WILL ONLY WORK WITH ROBOTC VERSION 3.59 AND HIGHER. 
+ * THIS CODE WILL ONLY WORK WITH ROBOTC VERSION 3.59 AND HIGHER.
 
  * \author Gustav Jansson (gus_at_hitechnic.com)
  * \date 10 October 2011
@@ -118,6 +118,19 @@ bool HTSPBwriteIO(tSensors link, ubyte mask) {
   HTSPB_I2CRequest[2] = HTSPB_OFFSET + HTSPB_DIGOUT; // Start digital output read address
   HTSPB_I2CRequest[3] = mask;                      // The specified digital ports
 
+
+  return writeI2C(link, HTSPB_I2CRequest);
+}
+
+bool HTSPBwriteStrobe(tSensors link, ubyte mask) {
+  memset(HTSPB_I2CRequest, 0, sizeof(tByteArray));
+
+  HTSPB_I2CRequest[0] = 3;                         // Message size
+  HTSPB_I2CRequest[1] = HTSPB_I2C_ADDR;             // I2C Address
+  HTSPB_I2CRequest[2] = HTSPB_OFFSET + HTSPB_STROBE; // Start digital output read address
+  HTSPB_I2CRequest[3] = (mask & 0xF) | 0x20;   	    // The specified digital ports
+  writeI2C(link, HTSPB_I2CRequest);
+  HTSPB_I2CRequest[3] = (mask & 0xF);
 
   return writeI2C(link, HTSPB_I2CRequest);
 }
