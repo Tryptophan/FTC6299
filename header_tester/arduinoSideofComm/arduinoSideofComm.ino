@@ -58,7 +58,7 @@ void setup()
   Serial.println(mpu.testConnection() ? F("MPU6050 connection successful") : F("MPU6050 connection failed"));
   devStatus = mpu.dmpInitialize();
   mpu.setZGyroOffset(0);
-  mpu.setZAccelOffset(1688);
+   mpu.setZAccelOffset(1688);
   
   // make sure it worked (returns 0 if so)
   if (devStatus == 0) {
@@ -159,11 +159,26 @@ void loop()
     mpu.dmpGetQuaternion(&q, fifoBuffer);
     mpu.dmpGetEuler(euler, &q);
     heading = euler[0] * 180/M_PI;
+    
     if (heading < 0)
     {
       heading = heading + 360;
     }
+    
     Serial.println(heading);
     Serial.print("\t");
+    
+/********** READ ACCELEROMETER X AXIS **********/
+    mpu.dmpGetQuaternion(&q, fifoBuffer);
+    mpu.dmpGetAccel(&aa, fifoBuffer);
+    mpu.dmpGetGravity(&gravity, &q);
+    mpu.dmpGetLinearAccel(&aaReal, &aa, &gravity);
+    accel = aaReal.x;
+    
+    if (abs(accel) < 100)
+      accel = 0;
+      
+    Serial.print("x axis: ");
+    Serial.println(accel);
   }
 }
