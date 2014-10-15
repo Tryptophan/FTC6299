@@ -6,15 +6,16 @@
 Command numbers correlate with different functions compiled to the Arduino
 command 1: tell the arduino to calculate heading (input)
 command 2: receive the first half of heading from the arduino (output)
-command 3: receive second half of the heading
+command 3: receive raw acceleration on the x axis
 
 */
 
 signed int result;//Global in order to read on NXT screen
 
-//sends a command to the Arduino over S0-3, and gets data frorm B0-7
+//Support method that sends the command to Arduino for heading
 int sendArduinoCommand(unsigned char command)
 {
+	//add result as local for libs
 	HTSPBsetupIO(HTSPB, 0xFF); //sets B0-7 to output
 	HTSPBwriteStrobe(HTSPB, command); // send the command via S0-3
 	if (command >= 2)
@@ -25,14 +26,14 @@ int sendArduinoCommand(unsigned char command)
 	return result;
 }
 
+//Get the current heading from the MPU6050 gyro
 int getMPUHeading()
 {
-	signed int add1 = sendArduinoCommand(2);
-	nxtDisplayBigTextLine(4, "%d", add1);
-	int heading = add1 * 2;
-	if(heading > 180)
-		heading = heading - 360;
-	return heading;
+	int add1 = sendArduinoCommand(2);
+	int MPUheading = add1 * 2;
+	if(MPUheading > 180)
+		MPUheading = heading - 360;
+	return MPUheading;
 }
 
 task main()

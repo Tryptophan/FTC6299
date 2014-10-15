@@ -5,6 +5,7 @@ float heading = 0;
 //Support method that sends the command to Arduino for heading
 int sendArduinoCommand(unsigned char command)
 {
+	signed int result;
 	HTSPBsetupIO(HTSPB, 0xFF); //sets B0-7 to output
 	HTSPBwriteStrobe(HTSPB, command); // send the command via S0-3
 	if (command >= 2)
@@ -18,8 +19,7 @@ int sendArduinoCommand(unsigned char command)
 //Get the current heading from the MPU6050 gyro
 int getMPUHeading()
 {
-	signed int add1 = sendArduinoCommand(2);
-	nxtDisplayBigTextLine(4, "%d", add1);
+	int add1 = sendArduinoCommand(2);
 	int MPUheading = add1 * 2; 
 	if(MPUheading > 180)
 		MPUheading = heading - 360; 
