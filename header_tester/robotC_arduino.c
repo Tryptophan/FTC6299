@@ -36,6 +36,12 @@ int getMPUHeading()
 	return MPUheading;
 }
 
+int getMPUAccelX()
+{
+	int raw = sendArduinoComman(3);
+	return raw;
+}
+
 task main()
 {
 	while(true){
