@@ -10,7 +10,7 @@
 #define CMD_WIDTH 4 //Width of command pins
 #define WR_INT 1 //The "WR" port on SP for sending pulse is port 3 on Arduino
 
-volatile int command, heading, request; //volatile b/c used in interrupt and main loop;
+volatile int command, heading, request, accel; //volatile b/c used in interrupt and main loop;
 volatile signed int data;
 unsigned char GyZ;
 const int MPU = 0x68;
@@ -25,8 +25,11 @@ uint16_t packetSize;    // expected DMP packet size (default is 42 bytes)
 uint16_t fifoCount;     // count of all bytes currently in FIFO
 uint8_t fifoBuffer[64]; // FIFO storage buffer
 
-VectorFloat gravity;    // [x, y, z]            gravity vector
 Quaternion q;           // [w, x, y, z]         quaternion container
+VectorInt16 aa;         // [x, y, z]            accel sensor measurements
+VectorInt16 aaReal;     // [x, y, z]            gravity-free accel sensor measurements
+VectorInt16 aaWorld;    // [x, y, z]            world-frame accel sensor measurements
+VectorFloat gravity;    // [x, y, z]            gravity vector
 float euler[3];         // [psi, theta, phi]    Euler angle container
 float ypr[3];           // [yaw, pitch, roll]   yaw/pitch/roll container and gravity vector
 
@@ -92,7 +95,7 @@ void hiSP()
         data = heading / 2;
         break;
       case 3: 
-        data = heading >> 8;
+        data = accel;
     }
      
   for (int i = 0; i < DATA_WIDTH; i++)
@@ -163,12 +166,13 @@ void loop()
             Serial.println(heading);
             Serial.print("\t");
             
-    /*mpu.dmpGetQuaternion(&q, fifoBuffer);
-            mpu.dmpGetGravity(&gravity, &q);
-            mpu.dmpGetYawPitchRoll(ypr, &q, &gravity);
-            
-            heading = ypr[0] * 180/M_PI;
-            Serial.print("int heading: ");
-            Serial.println(heading);*/
+   // display real acceleration, adjusted to remove gravity
+          mpu.dmpGetQuaternion(&q, fifoBuffer);
+          mpu.dmpGetAccel(&aa, fifoBuffer);
+          mpu.dmpGetGravity(&gravity, &q);
+          mpu.dmpGetLinearAccel(&aaReal, &aa, &gravity);
+          accel = aaReal.x;
+          Serial.print("x axis: ");
+          Serial.println(accel);
  }
 }
