@@ -7,8 +7,8 @@
 #pragma config(Motor,  mtr_S1_C1_2,     motorFR,       tmotorTetrix, openLoop)
 #pragma config(Motor,  mtr_S1_C2_1,     motorBL,       tmotorTetrix, openLoop, reversed)
 #pragma config(Motor,  mtr_S1_C2_2,     motorBR,       tmotorTetrix, openLoop)
-#pragma config(Motor,  mtr_S1_C3_1,     lift,          tmotorTetrix, openLoop)
-#pragma config(Motor,  mtr_S1_C3_2,     flip,          tmotorTetrix, openLoop, reversed)
+#pragma config(Motor,  mtr_S1_C3_1,     liftL,         tmotorTetrix, openLoop)
+#pragma config(Motor,  mtr_S1_C3_2,     liftR,         tmotorTetrix, openLoop, reversed)
 #pragma config(Servo,  srvo_S3_C1_1,    servoL,               tServoStandard)
 #pragma config(Servo,  srvo_S3_C1_2,    servoR,               tServoStandard)
 #pragma config(Servo,  srvo_S3_C1_3,    servo3,               tServoNone)
@@ -21,12 +21,12 @@
 task flipperFlapper(){
 	while(true){
 		while(joy1Btn(07) == 1){
-			motor[flip] = 100;
+			//motor[flip] = 100;
 		}
 		while(joy1Btn(08) == 1){
-			motor[flip] = -100;
+			//motor[flip] = -100;
 		}
-	motor[flip] = 0;
+	//motor[flip] = 0;
 	wait10Msec(5);
 	}
 }
@@ -81,13 +81,12 @@ task servos()
 task slide()
 {
 	while(true){
-		while(joystick.joy2_y2 >= 10){
-			motor[lift] = joystick.joy2_y2 / 1.28;
+		while(abs(joystick.joy2_y2) >= 10){
+			motor[liftL] = joystick.joy2_y2 / 1.28;
+			motor[liftR] = joystick.joy2_y2 / 1.28;
 		}
-		while(joystick.joy2_y2 <= -10){
-			motor[lift] = joystick.joy2_y2 / 2.28;
-		}
-		motor[lift] = 0;
+		motor[liftL] = 0;
+		motor[liftR] = 0;
 	}
 }
 task main () {
