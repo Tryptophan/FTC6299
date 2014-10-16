@@ -131,6 +131,17 @@ void loop()
   Wire.requestFrom(MPU, 2, true);
   GyZ=Wire.read()<<8|Wire.read();  // 0x47 (GYRO_ZOUT_H) & 0x48 (GYRO_ZOUT_L)
 
+  //If command = 1; good to use for debug
+  if (request == 1 && command == 1)
+  {
+    while(true)
+    {
+      digitalWrite(led, HIGH);
+      delay(1000);
+      digitalWrite(led, LOW);
+      delay(1000);
+    }
+  }
   if(!dmpDataReady) return;
   command = 0;
   data = 0;
