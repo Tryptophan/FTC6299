@@ -10,12 +10,10 @@ command 3: receive raw acceleration on the x axis
 
 */
 
-signed int result;//Global in order to read on NXT screen
-
 //Support method that sends the command to Arduino for heading
 int sendArduinoCommand(unsigned char command)
 {
-	//add result as local for libs
+	signed int result;
 	HTSPBsetupIO(HTSPB, 0xFF); //sets B0-7 to output
 	HTSPBwriteStrobe(HTSPB, command); // send the command via S0-3
 	if (command >= 2)
@@ -39,6 +37,8 @@ int getMPUHeading()
 int getMPUAccelX()
 {
 	int raw = sendArduinoCommand(3);
+	if (raw > 100)
+		raw = 255 - raw; //supposedly will
 	return raw;
 }
 
@@ -47,5 +47,8 @@ task main()
 	while(true){
 		getMPUHeading();
 		nxtDisplayBigTextLine(1, "%d", getMPUHeading());
+		getMPUAccelX();
+		nxtDisplayBigTextLine(4, "%d", getMPUAccelX());
+
 	}
 }

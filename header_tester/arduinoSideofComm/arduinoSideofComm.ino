@@ -12,7 +12,7 @@
 
 volatile int command, heading, request; //volatile b/c used in interrupt and main loop;
 volatile signed int data;
-volatile float accel;
+volatile signed short accel;
 unsigned char GyZ;
 const int MPU = 0x68;
 int led = 13;
@@ -185,14 +185,15 @@ void loop()
     mpu.dmpGetAccel(&aa, fifoBuffer);
     mpu.dmpGetGravity(&gravity, &q);
     mpu.dmpGetLinearAccel(&aaReal, &aa, &gravity);
+    Serial.print(mpu.getAccelerationX());
     accel = aaReal.x;
     
     if (abs(accel) < 100)
     {
         accel = 0;
     }
-    accel /= 78.4;
-    Serial.print("x axis: ");
-    Serial.println(accel);
+    accel /= 39.2; //78.4
+    //Serial.print("x axis: ");
+    //Serial.println(accel);
   }
 }
