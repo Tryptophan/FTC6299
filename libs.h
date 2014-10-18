@@ -1,6 +1,12 @@
 #include "drivers\hitechnic-gyro.h";
 #include "drivers\hitechnic-irseeker-v2.h"
 
+/* 
+	Made by Team 6299 QuadX
+		- Jacob Greenway
+		- Joshua Johnson
+		- Linnea May
+*/
 float heading = 0;
 
 float valInRange(float val, float threshold = 1.0) {
@@ -15,7 +21,7 @@ int getEncoderAverage(int leftMotor, int rightMotor) {
 	if (abs(leftMotor) < 3) {
 		return rightMotor;
 	}
-	else {
+	if (abs(rightMotor) < 3) {
 		return leftMotor;
 	}
 	return (leftMotor + rightMotor) / 2;
@@ -212,13 +218,14 @@ int getIR(){
 }
 
 void moveIrUp(int speed, int IR,){
-	while(getIR() < IR){
+	while (getIR() < IR) {
 		setMotors(speed,speed);
 	}
 	stopMotors();
 }
+
 void moveIrDown(int speed, int IR){
-	while(getIR() < IR){
+	while (getIR() > IR) {
 		setMotors(speed,speed);
 	}
 	stopMotors();

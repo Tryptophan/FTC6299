@@ -26,14 +26,20 @@
 #include "autonomous_methods.h";
 #include "drivers\JoystickDriver.c";
 
+/* 
+	Made by Team 6299 QuadX
+		- Jacob Greenway
+		- Joshua Johnson
+		- Linnea May
+*/
+
 task main(){
 
+	//Starts Autonomous Chooser
 	startTask(chooser);
 	waitForStart();
 
 	stopTask(chooser);
-
-
 
 	// Set and run desired autonomous program
 	switch(i) {

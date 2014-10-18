@@ -1,5 +1,13 @@
 #include "drivers\JoystickDriver.c";
 #include "autonomous_methods.h";
+#include "libs.h"
+
+/* 
+	Made by Team 6299 QuadX
+		- Jacob Greenway
+		- Joshua Johnson
+		- Linnea May
+*/
 
 int i, j, begin, suspend = 0;
 string sides[2] = {"Ramp", "Zone"};
@@ -9,6 +17,13 @@ string programs[3] = {"Autonomous", "autoBDump", "test"};
 string file = programs[0];
 
 int toggle = 0;
+
+void startupCheck(){
+	if (HTGYROreadRot(SENSOR_GYRO) == 0){
+		playSound(soundException);
+		displayTextLine(6, "Check Gyro");
+	}
+}
 
 void toggleMenu() {
 	toggle++;
@@ -75,6 +90,7 @@ void toggleSubMenu(int dir) {
 task chooser() {
 	initializeRobot();
 	while (true) {
+		startupCheck();
 		if (nNxtButtonPressed == 3) {
 			toggleMenu();
 			wait1Msec(250);
