@@ -18,12 +18,12 @@ bool isInRange(float heading, float targetHeading, float threshold = 1.0) {
 }
 
 int getEncoderAverage(int leftMotor, int rightMotor) {
-	/*if (abs(leftMotor) < 3) {
+	if (abs(leftMotor) < 3) {
 		return rightMotor;
 	}
 	if (abs(rightMotor) < 3) {
 		return leftMotor;
-	}*/
+	}
 	return (leftMotor + rightMotor) / 2;
 }
 
