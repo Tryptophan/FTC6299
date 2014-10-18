@@ -1,4 +1,3 @@
-
 #include "libs.h";
 
 void initializeRobot() {

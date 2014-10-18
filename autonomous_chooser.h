@@ -2,6 +2,13 @@
 #include "autonomous_methods.h";
 #include "libs.h"
 
+/* 
+	Made by Team 6299 QuadX
+		- Jacob Greenway
+		- Joshua Johnson
+		- Linnea May
+*/
+
 int i, j, begin, suspend = 0;
 string sides[2] = {"Ramp", "Zone"};
 string side = sides[0];

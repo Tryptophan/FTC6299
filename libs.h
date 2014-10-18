@@ -1,6 +1,12 @@
 #include "drivers\hitechnic-gyro.h";
 #include "drivers\hitechnic-irseeker-v2.h"
 
+/* 
+	Made by Team 6299 QuadX
+		- Jacob Greenway
+		- Joshua Johnson
+		- Linnea May
+*/
 float heading = 0;
 
 float valInRange(float val, float threshold = 1.0) {
