@@ -59,4 +59,8 @@
 * Reads and returns the current heading from the MPU6050
 
 <code><h3>getMPUAccelX()</h3></code>
+<<<<<<< HEAD
 * Reads and returns the current x acceleration from the MPU6050
+=======
+* Reads and returns the current x acceleration from the MPU6050
+>>>>>>> master
