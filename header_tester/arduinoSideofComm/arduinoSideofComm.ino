@@ -10,7 +10,8 @@
 #define CMD_WIDTH 4 //Width of command pins
 #define WR_INT 1 //The "WR" port on SP for sending pulse is port 3 on Arduino
 
-volatile int command, heading, request, accel; //volatile b/c used in interrupt and main loop;
+volatile int command, request, heading; //volatile b/c used in interrupt and main loop;
+volatile signed int accel; //getting closer, but not there yet
 volatile byte data;
 unsigned char GyZ;
 const int MPU = 0x68;
@@ -93,12 +94,12 @@ void hiSP()
     switch(command)
     {
       case 2:
-        data = heading / 2;
+        data = heading / 2.0;
         break;
       case 3: 
-        data = accel / 2; //now there are issues with no negative values... something unsingned?
-      /*case 4: 
-        data = accel >> 8;*/
+        data = accel; 
+      case 4: 
+        data = accel >> 8;
     }
      
   for (int i = 0; i < DATA_WIDTH; i++)
@@ -193,7 +194,7 @@ void loop()
         accel = 0;
     }
     
-    accel /= 78.4; 
+    accel /= 78.4; //78.4
     Serial.print("x axis: ");
     Serial.println(accel);
   }

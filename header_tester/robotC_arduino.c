@@ -35,12 +35,11 @@ int getMPUHeading()
 	return MPUheading;
 }
 
-short getMPUAccelX()
+int getMPUAccelX()
 {
 	short raw = sendArduinoCommand(3);
-	return raw * 2;
-	/*short raw2 = sendArduinoCommand(4);
-	return raw | (raw2 << 8);*/
+	short raw2 = sendArduinoCommand(4);
+	return raw | (raw2 << 8);
 }
 
 task main()
