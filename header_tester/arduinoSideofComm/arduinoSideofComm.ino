@@ -10,13 +10,12 @@
 #define CMD_WIDTH 4 //Width of command pins
 #define WR_INT 1 //The "WR" port on SP for sending pulse is port 3 on Arduino
 
-volatile int command, heading, request; //volatile b/c used in interrupt and main loop;
-volatile signed int data;
-volatile signed short accel;
+volatile int command, heading, request, accel; //volatile b/c used in interrupt and main loop;
+volatile byte data;
 unsigned char GyZ;
 const int MPU = 0x68;
 int led = 13;
-MPU6050 mpu;//why won't it accept this?
+MPU6050 mpu;
 
 // MPU control/status vars
 bool dmpReady = false;  // set true if DMP init was successful
@@ -97,7 +96,9 @@ void hiSP()
         data = heading / 2;
         break;
       case 3: 
-        data = accel;
+        data = accel / 2; //now there are issues with no negative values... something unsingned?
+      /*case 4: 
+        data = accel >> 8;*/
     }
      
   for (int i = 0; i < DATA_WIDTH; i++)
@@ -185,15 +186,15 @@ void loop()
     mpu.dmpGetAccel(&aa, fifoBuffer);
     mpu.dmpGetGravity(&gravity, &q);
     mpu.dmpGetLinearAccel(&aaReal, &aa, &gravity);
-    Serial.print(mpu.getAccelerationX());
     accel = aaReal.x;
     
     if (abs(accel) < 100)
     {
         accel = 0;
     }
-    accel /= 39.2; //78.4
-    //Serial.print("x axis: ");
-    //Serial.println(accel);
+    
+    accel /= 78.4; 
+    Serial.print("x axis: ");
+    Serial.println(accel);
   }
 }

@@ -7,6 +7,7 @@ Command numbers correlate with different functions compiled to the Arduino
 command 1: Tell the arduino to blink LED (debug)
 command 2: receive the first half of heading from the arduino (output)
 command 3: receive raw acceleration on the x axis
+command 4: receive the second half of raw acceleration from the arduino
 
 */
 
@@ -34,12 +35,12 @@ int getMPUHeading()
 	return MPUheading;
 }
 
-int getMPUAccelX()
+short getMPUAccelX()
 {
-	int raw = sendArduinoCommand(3);
-	if (raw > 100)
-		raw = 255 - raw; //supposedly will
-	return raw;
+	short raw = sendArduinoCommand(3);
+	return raw * 2;
+	/*short raw2 = sendArduinoCommand(4);
+	return raw | (raw2 << 8);*/
 }
 
 task main()
