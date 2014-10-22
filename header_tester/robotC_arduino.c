@@ -12,7 +12,7 @@ command 4: receive the second half of raw acceleration from the arduino
 */
 
 //Support method that sends the command to Arduino for heading
-int sendArduinoCommand(unsigned char command)
+signed int sendArduinoCommand(unsigned char command)
 {
 	signed int result;
 	HTSPBsetupIO(HTSPB, 0xFF); //sets B0-7 to output
@@ -37,9 +37,10 @@ int getMPUHeading()
 
 int getMPUAccelX()
 {
-	short raw = sendArduinoCommand(3);
-	short raw2 = sendArduinoCommand(4);
-	return raw | (raw2 << 8);
+	signed short raw = sendArduinoCommand(3);
+	nxtDisplayBigTextLine(6, "%d", raw);
+	signed short raw2 = sendArduinoCommand(4);
+	return raw | (raw2 >> 8); // originally <<
 }
 
 task main()
