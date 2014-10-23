@@ -57,23 +57,19 @@ int getEncoderAverage(int leftMotor, int rightMotor) {
 }
 
 void setMotors(int left, int right) {
-  motor[motorFL] = left;
-  motor[motorBL] = left;
-  motor[motorFR] = right;
-  motor[motorBR] = right;
+  motor[motorL] = left;
+  motor[motorR] = right;
 }
 
 void stopMotors() {
-  motor[motorFL] = 0;
-  motor[motorBL] = 0;
-  motor[motorFR] = 0;
-  motor[motorBR] = 0;
+  motor[motorL] = 0;
+  motor[motorR] = 0;
 }
 
 void moveTo(int power, int deg, float threshold = 2.0, long time = 5000, float cor = 4.0) {
   heading = 0;
-  nMotorEncoder[motorFL] = 0;
-  nMotorEncoder[motorFR] = 0;
+  nMotorEncoder[motorL] = 0;
+  nMotorEncoder[motorR] = 0;
 
   wait1Msec(500);
   //HTGYROstartCal(SENSOR_GYRO);
@@ -82,7 +78,7 @@ void moveTo(int power, int deg, float threshold = 2.0, long time = 5000, float c
   clearTimer(T1);
 
   if (power > 0) {
-    while (time1[T1] < time && getEncoderAverage(nMotorEncoder[motorFL], nMotorEncoder[motorBL]) < deg) {
+    while (time1[T1] < time && getEncoderAverage(nMotorEncoder[motorL], nMotorEncoder[motorR]) < deg) {
       displayCenteredBigTextLine(3, "%2i", nMotorEncoder[motorBL]);
       // Reads gyros rate of turn, mulitplies it by the time passed (20ms), and adds it to the current heading
       heading = getMPUHeading();
@@ -106,7 +102,7 @@ void moveTo(int power, int deg, float threshold = 2.0, long time = 5000, float c
   }
 
   else {
-    while (time1[T1] < time && getEncoderAverage(nMotorEncoder[motorFL], nMotorEncoder[motorFR]) > deg) {
+    while (time1[T1] < time && getEncoderAverage(nMotorEncoder[motorL], nMotorEncoder[motorR]) > deg) {
       // Reads gyros rate of turn, mulitplies it by the time passed (20ms), and adds it to the current heading
       heading = getMPUHeading();
 
@@ -231,7 +227,7 @@ void arcTurn(int power, int deg, int time = 2000) {
   stopMotors();
 }
 
-void latch(bool position) {
+/*void latch(bool position) {
   if (!position) {
     servo[servoL] = 225;
     servo[servoR] = 0;
@@ -240,7 +236,7 @@ void latch(bool position) {
     servo[servoL] = 150;
     servo[servoR] = 93;
   }
-}
+}*/
 
 int getIR(){
   return HTIRS2readACDir(SENSOR_IR);
