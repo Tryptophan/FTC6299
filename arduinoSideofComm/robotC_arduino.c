@@ -35,11 +35,11 @@ signed int sendArduinoCommand(unsigned char command)
 }
 
 //Get the current heading from the MPU6050 gyro
-int getMPUHeading() //short - char
+short getMPUHeading() //int
 {
 	//all originally ints
-	signed short add1 = sendArduinoCommand(2);
-	signed short add2 = sendArduinoCommand(3);
+	signed char add1 = sendArduinoCommand(2);
+	signed char add2 = sendArduinoCommand(3);
 	short MPUheading = add1 | (add2 << 8); //* 2;
 	/*if(MPUheading > 180)
 		MPUheading = MPUheading - 360;*/
