@@ -94,12 +94,14 @@ void hiSP()
     switch(command)
     {
       case 2:
-        data = heading / 2.0;
+        data = heading; /// 2.0;
         break;
       case 3: 
         data = accel; 
       /*case 4: 
         data = accel >> 8; //originally >>*/
+      case 5: 
+        data = heading >> 8;
     }
      
   for (int i = 0; i < DATA_WIDTH; i++)
@@ -174,10 +176,10 @@ void loop()
     mpu.dmpGetEuler(euler, &q);
     heading = euler[0] * 180/M_PI;
     
-    if (heading < 0)
+    /*if (heading < 0)
     {
       heading = heading + 360;
-    }
+    }*/
     
     Serial.println(heading);
     Serial.print("\t");
