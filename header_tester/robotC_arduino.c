@@ -35,12 +35,12 @@ int getMPUHeading()
 	return MPUheading;
 }
 
-int getMPUAccelX()
+short getMPUAccelX()
 {
-	signed short raw = sendArduinoCommand(3);
+	signed char raw = sendArduinoCommand(3);
 	nxtDisplayBigTextLine(6, "%d", raw);
-	signed short raw2 = sendArduinoCommand(4);
-	return raw | (raw2 >> 8); // originally <<
+	signed char raw2 = sendArduinoCommand(4);
+	return raw | (raw2 << 8); // originally <<*/
 }
 
 task main()
