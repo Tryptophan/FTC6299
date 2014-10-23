@@ -94,14 +94,17 @@ void hiSP()
     switch(command)
     {
       case 2:
-        data = heading; /// 2.0;
+        data = heading;
         break;
       case 3: 
-        data = accel; 
-      /*case 4: 
-        data = accel >> 8; //originally >>*/
-      case 5: 
-        data = heading >> 8;
+        data = heading >> 8; 
+        break;
+      case 4: 
+        data = accel;
+        break;
+     case 5: 
+        data = accel >> 8; // does it need commenting out?
+        break;
     }
      
   for (int i = 0; i < DATA_WIDTH; i++)

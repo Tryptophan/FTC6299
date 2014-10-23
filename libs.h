@@ -4,28 +4,56 @@
 
 float heading = 0;
 
-//Support method that sends the command to Arduino for heading
-int sendArduinoCommand(unsigned char command)
+/*
+												sendArduinoCommand():
+Supporting method for getMPUHeading() and getMPUAccel()
+Command numbers correlate with different functions compiled to the Arduino
+
+Command 1: Tell the arduino to blink LED (debug)
+
+Command 2: Receive the first half of heading from the arduino
+Command 3: Receive the second half of heading from the arduino
+NOTE: To receive the full heading, call getMPUHeading(), which
+bitwise or pairs the values to return actual heading.
+
+
+Command 4: receive raw acceleration on the x axis
+(Command 5: receive the second half of raw acceleration from the arduino)
+NOTE: To receive full acceleration, call getMPUAccel(), which bitwise
+or pairs the two values to return the actual heading.
+*/
+
+signed int sendArduinoCommand(unsigned char command)
 {
-  signed int result;
-  HTSPBsetupIO(HTSPB, 0xFF); //sets B0-7 to output
-  HTSPBwriteStrobe(HTSPB, command); // send the command via S0-3
-  if (command >= 2)
-  {
-    HTSPBsetupIO(HTSPB, 0x00); // sets BO-7 to input so that it can receive
-    result = HTSPBreadIO(HTSPB, 0xFF);
-  }
-  return result;
+	signed int result;
+	HTSPBsetupIO(HTSPB, 0xFF); //sets B0-7 to output
+	HTSPBwriteStrobe(HTSPB, command); // send the command via S0-3
+	if (command >= 2)
+	{
+		HTSPBsetupIO(HTSPB, 0x00); // sets BO-7 to input so that it can receive
+		result = HTSPBreadIO(HTSPB, 0xFF);
+	}
+	return result;
 }
 
 //Get the current heading from the MPU6050 gyro
-int getMPUHeading()
+int getMPUHeading() //short - char
 {
-  int add1 = sendArduinoCommand(2);
-  int MPUheading = add1 * 2;
-  if(MPUheading > 180)
-    MPUheading = MPUheading - 360;
-  return MPUheading;
+	//all originally ints
+	signed short add1 = sendArduinoCommand(2);
+	signed short add2 = sendArduinoCommand(3);
+	short MPUheading = add1 | (add2 << 8); //* 2;
+	/*if(MPUheading > 180)
+		MPUheading = MPUheading - 360;*/
+	return MPUheading;
+}
+
+short getMPUAccelX()
+{
+	signed char raw = sendArduinoCommand(4);
+	nxtDisplayBigTextLine(6, "%d", raw);
+	signed char raw2 = sendArduinoCommand(5);
+	return raw | (raw2 << 8); // originally <<*/
 }
 
 float valInRange(float val, float threshold = 1.0) {

@@ -3,16 +3,24 @@
 
 #include "hitechnic-superpro.h"
 /*
+												sendArduinoCommand():
+Supporting method for getMPUHeading() and getMPUAccel()
 Command numbers correlate with different functions compiled to the Arduino
-command 1: Tell the arduino to blink LED (debug)
-command 2: receive the first half of heading from the arduino (output)
-command 3: receive raw acceleration on the x axis
-command 4: receive the second half of raw acceleration from the arduino
-command 5:
 
+Command 1: Tell the arduino to blink LED (debug)
+
+Command 2: Receive the first half of heading from the arduino
+Command 3: Receive the second half of heading from the arduino
+NOTE: To receive the full heading, call getMPUHeading(), which
+bitwise or pairs the values to return actual heading.
+
+
+Command 4: receive raw acceleration on the x axis
+(Command 5: receive the second half of raw acceleration from the arduino)
+NOTE: To receive full acceleration, call getMPUAccel(), which bitwise
+or pairs the two values to return the actual heading.
 */
 
-//Support method that sends the command to Arduino for heading
 signed int sendArduinoCommand(unsigned char command)
 {
 	signed int result;
@@ -27,11 +35,11 @@ signed int sendArduinoCommand(unsigned char command)
 }
 
 //Get the current heading from the MPU6050 gyro
-short getMPUHeading() //int
+int getMPUHeading() //short - char
 {
 	//all originally ints
-	signed char add1 = sendArduinoCommand(2);
-	signed char add2 = sendArduinoCommand(5);
+	signed short add1 = sendArduinoCommand(2);
+	signed short add2 = sendArduinoCommand(3);
 	short MPUheading = add1 | (add2 << 8); //* 2;
 	/*if(MPUheading > 180)
 		MPUheading = MPUheading - 360;*/
@@ -40,9 +48,9 @@ short getMPUHeading() //int
 
 short getMPUAccelX()
 {
-	signed char raw = sendArduinoCommand(3);
+	signed char raw = sendArduinoCommand(4);
 	nxtDisplayBigTextLine(6, "%d", raw);
-	signed char raw2 = sendArduinoCommand(4);
+	signed char raw2 = sendArduinoCommand(5);
 	return raw | (raw2 << 8); // originally <<*/
 }
 
