@@ -79,7 +79,7 @@ void moveTo(int power, int deg, float threshold = 2.0, long time = 5000, float c
 
   if (power > 0) {
     while (time1[T1] < time && getEncoderAverage(nMotorEncoder[motorL], nMotorEncoder[motorR]) < deg) {
-      displayCenteredBigTextLine(3, "%2i", nMotorEncoder[motorBL]);
+      displayCenteredBigTextLine(3, "%2i", nMotorEncoder[motorL]);
       // Reads gyros rate of turn, mulitplies it by the time passed (20ms), and adds it to the current heading
       heading = getMPUHeading();
 
