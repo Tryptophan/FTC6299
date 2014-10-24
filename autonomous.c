@@ -15,23 +15,8 @@
 #include "drivers\JoystickDriver.c";
 
 task main(){
-
-	//Starts Autonomous Chooser
-	startTask(chooser);
-	waitForStart();
-
-	stopTask(chooser);
-
-	// Set and run desired autonomous program
-	switch(i) {
-		case 0 :
-			bare(suspend, begin);
-			break;
-		case 1 :
-			autoFrontDump(suspend);
-		case 2 :
-			test(suspend);
-			break;
-}
-	while(true){}
+	turn(30,90);
+	while(true){
+		nxtDisplayTextLine(2, "%d", MPUheading);
+	}
 }

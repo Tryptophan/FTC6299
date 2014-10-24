@@ -121,7 +121,6 @@ bool HTSPBwriteIO(tSensors link, ubyte mask) {
 
   return writeI2C(link, HTSPB_I2CRequest);
 }
-
 bool HTSPBwriteStrobe(tSensors link, ubyte mask) {
   memset(HTSPB_I2CRequest, 0, sizeof(tByteArray));
 
@@ -134,6 +133,7 @@ bool HTSPBwriteStrobe(tSensors link, ubyte mask) {
 
   return writeI2C(link, HTSPB_I2CRequest);
 }
+
 
 /**
  * Configure the ports for input or output according to the mask.

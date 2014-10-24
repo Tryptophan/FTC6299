@@ -2,6 +2,7 @@
 #include "drivers\hitechnic-irseeker-v2.h"
 #include "drivers\hitechnic-superpro.h"
 
+float MPUheading = 0;
 float heading = 0;
 
 //Support method that sends the command to Arduino for heading
