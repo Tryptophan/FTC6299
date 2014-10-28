@@ -59,7 +59,7 @@ void setup()
   Serial.println(mpu.testConnection() ? F("MPU6050 connection successful") : F("MPU6050 connection failed"));
   devStatus = mpu.dmpInitialize();
   mpu.setZGyroOffset(0);
-   mpu.setZAccelOffset(1688);
+  mpu.setZAccelOffset(1688);
   
   // make sure it worked (returns 0 if so)
   if (devStatus == 0) {
@@ -141,6 +141,7 @@ void loop()
   //If command = 1; good to use for debug
   if (request == 1 && command == 1)
   {
+    mpu.setZGyroOffset(0);
     while(true)
     {
       digitalWrite(led, HIGH);
@@ -149,6 +150,14 @@ void loop()
       delay(1000);
     }
   }
+  
+  //If command is one, reset gyro for callibration
+  if (request == 1 && command ==6)
+  {
+     //mpu.resetSensors();
+     mpu.setZGyroOffset(0)
+  }
+  
   if(!dmpDataReady) return;
   command = 0;
   data = 0;
