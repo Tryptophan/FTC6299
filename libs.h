@@ -1,7 +1,7 @@
 #include "drivers\hitechnic-gyro.h";
 #include "drivers\hitechnic-irseeker-v2.h"
 
-/* 
+/*
 	Made by Team 6299 QuadX
 		- Jacob Greenway
 		- Joshua Johnson
@@ -217,7 +217,7 @@ int getPos() {
 	wait1Msec(175);
 	if(HTIRS2readACDir(SENSOR_IR) == 3)
 		return 1;
-	if(HTIRS2readACDir(SENSOR_IR) == 7)
+	if(HTIRS2readACDir(SENSOR_IR) == 5)
 		return 2;
 	if(HTIRS2readACDir(SENSOR_IR) == 0)
 		return 3;

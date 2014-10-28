@@ -8,9 +8,13 @@ void initializeRobot() {
 // Finds the ir beacon, dumps the block, and parks on the ramp
 void bare(int suspend, int begin) {
 	delay(suspend * 100);
-	if (begin == 1){  //Parking Zone
+	if (begin == 1) {  //Parking Zone
+		playSound(soundBeepBeep);
+		moveTo(-20, -100, 0.9);
+		arcTurn(-15, 30);
+		move(-20, -5000, 0.9);
 	}
-	if (begin == 0){  //Ramp
+	if (begin == 0) {  //Ramp
 		playSound(soundBeepBeep);
 		moveTo(-10, -3900, 2.1);
 		latch(true);
