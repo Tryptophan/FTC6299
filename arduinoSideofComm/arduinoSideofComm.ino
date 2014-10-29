@@ -141,7 +141,6 @@ void loop()
   //If command = 1; good to use for debug
   if (request == 1 && command == 1)
   {
-    mpu.setZGyroOffset(0);
     while(true)
     {
       digitalWrite(led, HIGH);

@@ -2,7 +2,6 @@
 #include "drivers\hitechnic-irseeker-v2.h";
 #include "drivers\hitechnic-superpro.h";
 
-float MPUheading;// = 0;
 float heading = 0;
 
 /*
@@ -45,6 +44,13 @@ short getMPUHeading()
 	signed char add2 = sendArduinoCommand(3);
 	short MPUheading = add1 | (add2 << 8); //* 2;
 	return MPUheading;
+}
+
+//Hopefully will adequately calibrate the MPU
+int getCalibration()
+{
+	int calValue = heading * -1;
+	return calValue;
 }
 
 short getMPUAccelX()
@@ -97,6 +103,7 @@ void moveTo(int power, int deg, float threshold = 2.0, long time = 5000, float c
   if (power > 0) {
     while (time1[T1] < time && getEncoderAverage(nMotorEncoder[motorL], nMotorEncoder[motorR]) < deg) {
       displayCenteredBigTextLine(3, "%2i", nMotorEncoder[motorL]);
+      heading += getCalibration();
       //heading = getMPUHeading();
 
       // Checks if the gyro is outside of the specified threshold (1.0)
