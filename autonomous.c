@@ -16,11 +16,16 @@
 
 
 task main(){
-		//moveTo(20, 300, 60000);
-		wait10Msec(500);
+		turn(20, 90);
+		wait10Msec(100);
+		turn(20, -90);
+		/*wait10Msec(500);
 		sendArduinoCommand(6);
 		while(true){
 		MPUheading = getMPUHeading();
 		nxtDisplayBigTextLine(1, "%d", MPUheading);
+	}*/
+	while(true){
+		nxtDisplayBigTextLine(1, "%d", heading);
 	}
 }

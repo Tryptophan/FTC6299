@@ -155,7 +155,7 @@ void moveTo(int power, int deg, float threshold = 2.0, long time = 5000, float c
 void turn(int power, int deg, int time = 5000) {
 
   // 90 Degree Modifier
-  if (abs(deg) == 90) {
+  /*if (abs(deg) == 90) {
     int modifier = deg * 8/9;
     deg = modifier;
   }
@@ -164,9 +164,10 @@ void turn(int power, int deg, int time = 5000) {
   else if (abs(deg) == 45) {
     int modifier = deg * 7/9;
     deg = modifier;
-  }
+  }*/
 
-  heading = 0;
+  //heading = 0;
+  int calibrate = heading * -1;
 
   wait1Msec(500);
   //HTGYROstartCal(SENSOR_GYRO);
@@ -176,7 +177,7 @@ void turn(int power, int deg, int time = 5000) {
 
   if (deg > 0) {
     while (time1[T1] < time && abs(heading) < abs(deg)) {
-      heading = getMPUHeading();
+      heading = getMPUHeading() + calibrate;
       setMotors(power, -power);
       wait1Msec(20);
     }
@@ -184,7 +185,7 @@ void turn(int power, int deg, int time = 5000) {
 
   if (deg < 0) {
     while (time1[T1] < time && abs(heading) < abs(deg)) {
-    heading = getMPUHeading();
+    heading = getMPUHeading() + calibrate;
       setMotors(-power, power);
       wait1Msec(20);
     }
