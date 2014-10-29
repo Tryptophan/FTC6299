@@ -36,14 +36,11 @@ signed int sendArduinoCommand(unsigned char command)
 }
 
 //Get the current heading from the MPU6050 gyro
-short getMPUHeading() //int
+short getMPUHeading()
 {
-	//all originally ints
 	signed char add1 = sendArduinoCommand(2);
 	signed char add2 = sendArduinoCommand(3);
-	short MPUheading = add1 | (add2 << 8); //* 2;
-	/*if(MPUheading > 180)
-		MPUheading = MPUheading - 360;*/
+	short MPUheading = add1 | (add2 << 8);
 	return MPUheading;
 }
 
@@ -52,7 +49,7 @@ short getMPUAccelX()
 	signed char raw = sendArduinoCommand(4);
 	nxtDisplayBigTextLine(6, "%d", raw);
 	signed char raw2 = sendArduinoCommand(5);
-	return raw | (raw2 << 8); // originally <<*/
+	return raw | (raw2 << 8);
 }
 
 task main()

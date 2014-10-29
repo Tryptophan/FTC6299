@@ -2,7 +2,7 @@
 #include "drivers\hitechnic-irseeker-v2.h";
 #include "drivers\hitechnic-superpro.h";
 
-float MPUHeading = 0;
+float MPUheading;// = 0;
 float heading = 0;
 
 /*
@@ -32,21 +32,18 @@ signed int sendArduinoCommand(unsigned char command)
 	HTSPBwriteStrobe(HTSPB, command); // send the command via S0-3
 	if (command >= 2)
 	{
-		HTSPBsetupIO(HTSPB, 0x00); // sets BO-7 to input so that it can receive
+		HTSPBsetupIO(HTSPB, 0x00); // sets BO-7 to input so that it can receive data
 		result = HTSPBreadIO(HTSPB, 0xFF);
 	}
 	return result;
 }
 
 //Get the current heading from the MPU6050 gyro
-short getMPUHeading() //int
+short getMPUHeading()
 {
-	//all originally ints
 	signed char add1 = sendArduinoCommand(2);
 	signed char add2 = sendArduinoCommand(3);
 	short MPUheading = add1 | (add2 << 8); //* 2;
-	/*if(MPUheading > 180)
-		MPUheading = MPUheading - 360;*/
 	return MPUheading;
 }
 
@@ -55,7 +52,7 @@ short getMPUAccelX()
 	signed char raw = sendArduinoCommand(4);
 	nxtDisplayBigTextLine(6, "%d", raw);
 	signed char raw2 = sendArduinoCommand(5);
-	return raw | (raw2 << 8); // originally <<*/
+	return raw | (raw2 << 8);
 }
 
 float valInRange(float val, float threshold = 1.0) {

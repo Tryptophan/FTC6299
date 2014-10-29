@@ -150,14 +150,6 @@ void loop()
       delay(1000);
     }
   }
-  
-  //If command is one, reset gyro for callibration
-  if (request == 1 && command ==6)
-  {
-     //mpu.resetSensors();
-     mpu.setZGyroOffset(0)
-  }
-  
   if(!dmpDataReady) return;
   command = 0;
   data = 0;
