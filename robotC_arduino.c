@@ -8,7 +8,6 @@ Supporting method for getMPUHeading() and getMPUAccel()
 Command numbers correlate with different functions compiled to the Arduino
 
 Command 1: Tell the arduino to blink LED (debug)
-Command 6: Tell arduino to recalibrate
 
 Command 2: Receive the first half of heading from the arduino
 Command 3: Receive the second half of heading from the arduino
@@ -20,6 +19,9 @@ Command 4: receive raw acceleration on the x axis
 (Command 5: receive the second half of raw acceleration from the arduino)
 NOTE: To receive full acceleration, call getMPUAccel(), which bitwise
 or pairs the two values to return the actual heading.
+
+Command 6: Receive raw values from the arduino
+Command 7: Receive second half of raw x values from arduino
 */
 
 signed int sendArduinoCommand(unsigned char command)
@@ -47,9 +49,15 @@ short getMPUHeading()
 short getMPUAccelX()
 {
 	signed char raw = sendArduinoCommand(4);
-	nxtDisplayBigTextLine(6, "%d", raw);
 	signed char raw2 = sendArduinoCommand(5);
 	return raw | (raw2 << 8);
+}
+
+short getMPUrot()
+{
+	signed char half1 = sendArduinoCommand(6);
+	signed char half2 = sendArduinoCommand(7);
+	return half1 | (half2 << 8);
 }
 
 task main()
@@ -57,8 +65,10 @@ task main()
 	while(true){
 		getMPUHeading();
 		nxtDisplayBigTextLine(1, "%d", getMPUHeading());
-		getMPUAccelX();
-		nxtDisplayBigTextLine(4, "%d", getMPUAccelX());
+		/*tMPUAccelX();
+		nxtDisplayBigTextLine(4, "%d", getMPUAccelX());*/
+		getMPUrot();
+		nxtDisplayBigTextLine(4,"%d", getMPUrot());
 
 	}
 }

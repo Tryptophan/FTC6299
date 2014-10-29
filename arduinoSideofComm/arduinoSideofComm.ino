@@ -10,10 +10,9 @@
 #define CMD_WIDTH 4 //Width of command pins
 #define WR_INT 1 //The "WR" port on SP for sending pulse is port 3 on Arduino
 
-volatile int command, request, heading; //volatile b/c used in interrupt and main loop; //getting closer, but not there yet
-volatile signed short accel;
+volatile int command, request, heading, GyZ, accel; //volatile b/c used in interrupt and main loop; //getting closer, but not there yet
+//volatile signed short accel;
 volatile byte data;
-unsigned char GyZ;
 const int MPU = 0x68;
 int led = 13;
 MPU6050 mpu;
@@ -105,6 +104,12 @@ void hiSP()
      case 5: 
         data = accel >> 8;
         break;
+     case 6: 
+       data = GyZ;
+       break;
+     case 7: 
+       data = GyZ >> 8;
+       break;
     }
      
   for (int i = 0; i < DATA_WIDTH; i++)
@@ -136,7 +141,9 @@ void loop()
   Wire.write(0x47);
   Wire.endTransmission(false);
   Wire.requestFrom(MPU, 2, true);
-  GyZ=Wire.read()<<8|Wire.read();  // 0x47 (GYRO_ZOUT_H) & 0x48 (GYRO_ZOUT_L)
+  
+  GyZ = Wire.read()<<8|Wire.read();  // 0x47 (GYRO_ZOUT_H) & 0x48 (GYRO_ZOUT_L)
+  Serial.println(GyZ);
 
   //If command = 1; good to use for debug
   if (request == 1 && command == 1)
@@ -190,8 +197,8 @@ void loop()
       heading = heading + 360;
     }*/
     
-    Serial.println(heading);
-    Serial.print("\t");
+    /*Serial.println(heading);
+    Serial.print("\t");*/
     
 /********** READ ACCELEROMETER X AXIS **********/
     mpu.dmpGetQuaternion(&q, fifoBuffer);
@@ -206,7 +213,7 @@ void loop()
     }
     
     accel /= 78.4; //78.4
-    Serial.print("x axis: ");
-    Serial.println(accel);
+    /*Serial.print("x axis: ");
+    Serial.println(accel);*/
   }
 }
