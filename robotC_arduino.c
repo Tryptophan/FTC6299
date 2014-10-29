@@ -8,6 +8,7 @@ Supporting method for getMPUHeading() and getMPUAccel()
 Command numbers correlate with different functions compiled to the Arduino
 
 Command 1: Tell the arduino to blink LED (debug)
+Command 6: Tell arduino to recalibrate
 
 Command 2: Receive the first half of heading from the arduino
 Command 3: Receive the second half of heading from the arduino

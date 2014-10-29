@@ -149,10 +149,16 @@ void loop()
       delay(1000);
     }
   }
+  
+  if (request == 1 && command ==  6)
+  {
+    mpu.resetFIFO();
+  }
+  request = 0;
+  
   if(!dmpDataReady) return;
   command = 0;
   data = 0;
-  request = 0;
   
   mpuInterrupt = false;
   mpuIntStatus = mpu.getIntStatus();

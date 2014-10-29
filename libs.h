@@ -3,6 +3,7 @@
 #include "drivers\hitechnic-superpro.h";
 
 float heading = 0;
+float MPUheading;
 
 /*
 												sendArduinoCommand():
@@ -49,7 +50,7 @@ short getMPUHeading()
 //Hopefully will adequately calibrate the MPU
 int getCalibration()
 {
-	int calValue = heading * -1;
+	int calValue = MPUheading * -1;
 	return calValue;
 }
 
@@ -103,8 +104,8 @@ void moveTo(int power, int deg, float threshold = 2.0, long time = 5000, float c
   if (power > 0) {
     while (time1[T1] < time && getEncoderAverage(nMotorEncoder[motorL], nMotorEncoder[motorR]) < deg) {
       displayCenteredBigTextLine(3, "%2i", nMotorEncoder[motorL]);
-      heading += getCalibration();
-      //heading = getMPUHeading();
+      //heading += getCalibration();
+      heading = getMPUHeading();
 
       // Checks if the gyro is outside of the specified threshold (1.0)
       if (isInRange(heading, 0, threshold)) {
