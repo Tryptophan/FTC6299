@@ -223,3 +223,26 @@ int getPos() {
 		return 3;
 	return 0;
 }
+
+void lift(int power, int time) {
+	int t = 0;
+	while (t < time) {
+		motor[liftL] = power;
+		motor[liftR] = power;
+		t += 20;
+		wait1Msec(20);
+	}
+	motor[liftL] = 0;
+	motor[liftR] = 0;
+}
+
+void basket(char position) {
+	if (position == 'x') {
+		servo[liftServoL] = 125;
+		servo[liftServoR] = 165;
+	}
+	if (position == 'y') {
+		servo[liftServoL] = 240;
+		servo[liftServoR] = 15;
+	}
+}
