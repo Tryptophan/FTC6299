@@ -88,7 +88,7 @@ void hiSP()
   }
   request = 1; //to alert the main method that new command has been sent
 
-  //if command is 2 or greater, send back a certain value
+  //if command is 2 or greater, send back a specified value
   if (command >= 2)
   {
     switch(command)
@@ -103,7 +103,7 @@ void hiSP()
         data = accel;
         break;
      case 5: 
-        data = accel >> 8; // does it need commenting out?
+        data = accel >> 8;
         break;
     }
      
