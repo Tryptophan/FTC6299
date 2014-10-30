@@ -64,32 +64,26 @@ task driveControl() {
 	}
 }
 
-task servos()
-{
-	while(true)
-	{
-		if(joy1Btn(05) == 1)
-		{
+task servos() {
+	while (true) {
+		if (joy1Btn(05) == 1) {
 			servo[servoL] = 250;
 			servo[servoR] = 0;
 		}
-		if(joy1Btn(06) == 1)
-		{
+		if (joy1Btn(06) == 1) {
 			servo[servoL] = 160;
 			servo[servoR] = 90;
 		}
 
 		// BTN01 = X
-		if(joy2Btn(01) == 1)
-		{
-			servo[liftServoL] = 125;
-			servo[liftServoR] = 165;
+		if (joy2Btn(01) == 1) {
+			servo[liftServoL] = 110;
+			servo[liftServoR] = 140;
 		}
 
 		// BTN04 = Y
-		if(joy2Btn(04) == 1)
-		{
-			servo[liftServoL] = 240;
+		if (joy2Btn(04) == 1) {
+			servo[liftServoL] = 235;
 			servo[liftServoR] = 15;
 		}
 	}
