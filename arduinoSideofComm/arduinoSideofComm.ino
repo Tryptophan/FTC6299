@@ -143,6 +143,7 @@ void loop()
   Wire.requestFrom(MPU, 2, true);
   
   GyZ = Wire.read()<<8|Wire.read();  // 0x47 (GYRO_ZOUT_H) & 0x48 (GYRO_ZOUT_L)
+  Serial.print("raw: ");
   Serial.println(GyZ);
 
   //If command = 1; good to use for debug
@@ -197,8 +198,8 @@ void loop()
       heading = heading + 360;
     }*/
     
-    /*Serial.println(heading);
-    Serial.print("\t");*/
+    Serial.println(heading);
+    Serial.print("\t");
     
 /********** READ ACCELEROMETER X AXIS **********/
     mpu.dmpGetQuaternion(&q, fifoBuffer);

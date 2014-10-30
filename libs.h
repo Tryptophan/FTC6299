@@ -3,6 +3,7 @@
 #include "drivers\hitechnic-superpro.h";
 
 float heading = 0;
+int ROT;
 
 /*
 												sendArduinoCommand():
@@ -103,9 +104,9 @@ void moveTo(int power, int deg, float threshold = 2.0, long time = 5000, float c
 
   if (power > 0) {
     while (time1[T1] < time && getEncoderAverage(nMotorEncoder[motorL], nMotorEncoder[motorR]) < deg) {
-      displayCenteredBigTextLine(3, "%2i", heading);
-      displayCenteredBigTextLine(4, "%d", getMPUrot());
-      heading += (getMPUrot() + offset) * (20 / 1000);
+      //displayCenteredBigTextLine(3, "%2i", heading);
+      displayCenteredBigTextLine(4, "%d", ROT);
+      heading += (ROT + offset) * (20 / 1000);
 
       // Checks if the gyro is outside of the specified threshold (1.0)
       if (isInRange(heading, 0, threshold)) {
