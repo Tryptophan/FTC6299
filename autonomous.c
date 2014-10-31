@@ -24,6 +24,6 @@
 
 task main(){
 	//startTask(ReadRot);
-	moveTo(20, 10000, 5.0);
+	moveTo(20, 10000);
 	while(true){}
 }
