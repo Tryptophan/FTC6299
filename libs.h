@@ -2,8 +2,8 @@
 #include "drivers\hitechnic-irseeker-v2.h";
 #include "drivers\hitechnic-superpro.h";
 
-float heading = 0;
-int ROT;
+float heading; // = 0;
+float ROT;
 
 /*
 												sendArduinoCommand():
@@ -92,21 +92,22 @@ void stopMotors() {
 }
 
 void moveTo(int power, int deg, float threshold = 2.0, long time = 5000, float cor = 4.0) {
-  heading = 0;
+  //heading = 0;
   nMotorEncoder[motorL] = 0;
   nMotorEncoder[motorR] = 0;
 
   wait1Msec(500);
-  int offset = getMPUrot() * -1;
+  int offset = ROT * -1;
   wait1Msec(500);
 
   clearTimer(T1);
 
   if (power > 0) {
     while (time1[T1] < time && getEncoderAverage(nMotorEncoder[motorL], nMotorEncoder[motorR]) < deg) {
-      //displayCenteredBigTextLine(3, "%2i", heading);
-      displayCenteredBigTextLine(4, "%d", ROT);
-      heading += (ROT + offset) * (20 / 1000);
+      displayCenteredBigTextLine(2, "%2i", ROT);
+    	getMPUHeading()
+      heading = getMPUHeading(); //(ROT + offset) * (20 / 1000);
+      displayCenteredBigTextLine(4, "%d", heading);
 
       // Checks if the gyro is outside of the specified threshold (1.0)
       if (isInRange(heading, 0, threshold)) {

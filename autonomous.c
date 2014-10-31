@@ -14,16 +14,16 @@
 //#include "autonomous_methods.h";
 #include "drivers\JoystickDriver.c";
 
-task ReadRot()
+/*task ReadRot()
 {
 	while(true)
 	{
 		ROT = getMPUrot();
 	}
-}
+}*/
 
 task main(){
-	startTask(ReadRot);
-	moveTo(20, 10000, 0.8, 100000);
+	//startTask(ReadRot);
+	moveTo(20, 10000, 5.0);
 	while(true){}
 }
