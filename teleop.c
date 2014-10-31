@@ -56,9 +56,9 @@ task driveControl() {
 			motor[motorFR] = 0;
 			motor[motorBR] = 0;
 			while (joy1Btn(02) == 1) {
-				heading = 0;
 				float threshold = 0.8;
 				int power = 80;
+				displayCenteredBigTextLine(3, "%2i", heading);
 				heading += valInRange(HTGYROreadRot(SENSOR_GYRO), threshold) * (float)(20 / 1000.0);
 
 				// Checks if the gyro is outside of the specified threshold (1.0)
@@ -101,14 +101,14 @@ task servos() {
 
 		// BTN01 = X
 		if (joy2Btn(01) == 1) {
-			servo[liftServoL] = 110;
-			servo[liftServoR] = 140;
+			servo[liftServoL] = 100;
+			servo[liftServoR] = 155;
 		}
 
 		// BTN04 = Y
 		if (joy2Btn(04) == 1) {
-			servo[liftServoL] = 235;
-			servo[liftServoR] = 15;
+			servo[liftServoL] = 230;
+			servo[liftServoR] = 25;
 		}
 	}
 }
@@ -128,6 +128,7 @@ task main () {
 	waitForStart();
 	wait1Msec(50);
 	HTGYROstartCal(SENSOR_GYRO);
+	heading = 0;
 	wait1Msec(50);
 	startTask(driveControl);
 	startTask(servos);
