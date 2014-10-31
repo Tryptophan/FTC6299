@@ -238,11 +238,11 @@ void lift(int power, int time) {
 
 void basket(char position) {
 	if (position == 'x') {
-		servo[liftServoL] = 125;
-		servo[liftServoR] = 165;
+		servo[liftServoL] = 100;
+		servo[liftServoR] = 155;
 	}
 	if (position == 'y') {
-		servo[liftServoL] = 240;
-		servo[liftServoR] = 15;
+		servo[liftServoL] = 230;
+		servo[liftServoR] = 25;
 	}
 }

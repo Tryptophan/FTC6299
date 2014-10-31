@@ -23,9 +23,10 @@ void bare(int suspend, int begin) {
 		turn(30, 90);
 		turn(30, 90);
 		moveTo(-25, -3000, 2.0);
+		lift(40, 3250);
+		basket('x');
 		latch(false);
 	}
-
 }
 
 void autoFrontDump(int suspend) {
