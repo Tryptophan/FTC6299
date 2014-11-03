@@ -91,13 +91,13 @@ void stopMotors() {
 }
 
 void moveTo(int power, int deg, float threshold = 2.0, long time = 5000, float cor = 4.0) {
-  //heading = 0;
+  heading = 0;
 
   nMotorEncoder[motorL] = 0;
   nMotorEncoder[motorR] = 0;
 
   wait1Msec(500);
-  int ROT = getMPUrot();
+  float ROT = (float)(getMPUrot());
   wait1Msec(500);
 
   clearTimer(T1);
@@ -108,9 +108,8 @@ void moveTo(int power, int deg, float threshold = 2.0, long time = 5000, float c
       //heading = getMPUHeading();
 
       //ROT = getMPUrot();
-     	heading += getMPUrot() * (20/1000);
+     	heading += ROT * (20/1000);
 
-      displayCenteredBigTextLine(2, "%2i", getMPUrot();
       displayCenteredBigTextLine(4, "%d", heading);
 
       // Checks if the gyro is outside of the specified threshold (1.0)

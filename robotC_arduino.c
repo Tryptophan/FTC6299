@@ -63,12 +63,9 @@ short getMPUrot()
 task main()
 {
 	while(true){
-		//getMPUHeading();
+		getMPUHeading();
 		nxtDisplayBigTextLine(1, "%d", getMPUHeading());
-		/*tMPUAccelX();
-		nxtDisplayBigTextLine(4, "%d", getMPUAccelX());*/
-		getMPUrot();
-		nxtDisplayBigTextLine(4,"%d", getMPUrot());
+		sendArduinoCommand(1);
 
 	}
 }

@@ -149,19 +149,20 @@ void loop()
   //If command = 1; good to use for debug
   if (request == 1 && command == 1)
   {
-    while(true)
+    Wire.endTransmission(true);
+    Wire.beginTransmission(MPU);
+    Wire.write(0x47);
+    Wire.endTransmission(false);
+    Wire.requestFrom(MPU, 2, true);
+    /*while(true)
     {
       digitalWrite(led, HIGH);
       delay(1000);
       digitalWrite(led, LOW);
       delay(1000);
-    }
+    }*/
   }
   
-  if (request == 1 && command ==  6)
-  {
-    mpu.resetFIFO();
-  }
   request = 0;
   
   if(!dmpDataReady) return;
