@@ -108,8 +108,13 @@ task servos() {
 
 		// BTN04 = Y
 		if (joy2Btn(04) == 1) {
-			servo[liftServoL] = 230;
-			servo[liftServoR] = 25;
+			servo[liftServoL] = 240;
+			servo[liftServoR] = 15;
+		}
+		// BTN02 = A
+		if (joy2Btn(02) == 1) {
+			servo[liftServoL] = 220;
+			servo[liftServoR] = 35;
 		}
 	}
 }
@@ -117,9 +122,9 @@ task servos() {
 task slide()
 {
 	while(true){
-		while(abs(joystick.joy2_y2) >= 10){
-			motor[liftL] = joystick.joy2_y2 / 1.28;
-			motor[liftR] = joystick.joy2_y2 / 1.28;
+		while(abs(joystick.joy2_y1) >= 10){
+			motor[liftL] = joystick.joy2_y1 / 1.28;
+			motor[liftR] = joystick.joy2_y1 / 1.28;
 		}
 		motor[liftL] = 0;
 		motor[liftR] = 0;
