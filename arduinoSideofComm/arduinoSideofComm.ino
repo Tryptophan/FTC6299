@@ -135,6 +135,18 @@ void hiSP()
   }
 }
 
+/*void calcHeading()
+{
+  while(request == 0)
+   {
+      mpu.dmpGetQuaternion(&q, fifoBuffer);
+      mpu.dmpGetEuler(euler, &q);
+      heading = euler[0] * 180/M_PI;
+      if (request = 1)
+        break;
+   }
+   request = 0;
+}*/
 void loop()
 {
   Wire.beginTransmission(MPU);
@@ -150,10 +162,7 @@ void loop()
   if (request == 1 && command == 1)
   {
     Wire.endTransmission(true);
-    Wire.beginTransmission(MPU);
-    Wire.write(0x47);
-    Wire.endTransmission(false);
-    Wire.requestFrom(MPU, 2, true);
+    
     /*while(true)
     {
       digitalWrite(led, HIGH);
@@ -163,7 +172,7 @@ void loop()
     }*/
   }
   
-  request = 0;
+  //request = 0;
   
   if(!dmpDataReady) return;
   command = 0;
@@ -188,20 +197,16 @@ void loop()
     // track FIFO count here in case there is > 1 packet available
     // (this lets us immediately read more without waiting for an interrupt)
     fifoCount -= packetSize;
+
     
 /********** READ THE GYRO HEADING **********/
-    mpu.dmpGetQuaternion(&q, fifoBuffer);
-    mpu.dmpGetEuler(euler, &q);
-    heading = euler[0] * 180/M_PI;
-    
-    /*if (heading < 0)
-    {
-      heading = heading + 360;
-    }*/
-    
-    Serial.println(heading);
-    Serial.print("\t");
-    
+      mpu.dmpGetQuaternion(&q, fifoBuffer);
+      mpu.dmpGetEuler(euler, &q);
+      heading = euler[0] * 180/M_PI;
+      
+      Serial.println(heading);
+      Serial.print("\t");
+
 /********** READ ACCELEROMETER X AXIS **********/
     mpu.dmpGetQuaternion(&q, fifoBuffer);
     mpu.dmpGetAccel(&aa, fifoBuffer);

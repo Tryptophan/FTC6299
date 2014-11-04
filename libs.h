@@ -98,6 +98,7 @@ void moveTo(int power, int deg, float threshold = 2.0, long time = 5000, float c
 
   wait1Msec(500);
   float ROT = (float)(getMPUrot());
+//  sendArduinoCommand(1);
   wait1Msec(500);
 
   clearTimer(T1);
@@ -161,17 +162,17 @@ void turn(int power, int deg, int time = 5000) {
 
   // 90 Degree Modifier
   /*if (abs(deg) == 90) {
-    int modifier = deg * 8/9;
+    int modifier = deg *2;
     deg = modifier;
-  }
+  }*/
 
-  // 45 Degree Modifier
+  /*// 45 Degree Modifier
   else if (abs(deg) == 45) {
     int modifier = deg * 7/9;
     deg = modifier;
   }*/
 
-  heading = 0;
+  //heading = 0;
 
   wait1Msec(500);
   int offset = getMPUrot() * -1;
@@ -179,19 +180,21 @@ void turn(int power, int deg, int time = 5000) {
 
   clearTimer(T1);
 
-  if (deg > 0) {
+  if (deg > 0) { //there will prob be issues due to the absolute or
     while (time1[T1] < time && abs(heading) < abs(deg)) {
-      heading += (getMPUrot() + offset) * (20 / 1000);
+    	displayCenteredBigTextLine(4, "%d", heading);
+      heading = getMPUHeading();
       setMotors(power, -power);
-      wait1Msec(20);
+      wait1Msec(1);
     }
   }
 
   if (deg < 0) {
     while (time1[T1] < time && abs(heading) < abs(deg)) {
-    heading += (getMPUrot() + offset) * (20 / 1000);
+    	displayCenteredBigTextLine(4, "%d", heading);
+     	heading = getMPUHeading();
       setMotors(-power, power);
-      wait1Msec(20);
+      wait1Msec(1);
     }
   }
 

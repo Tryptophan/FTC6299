@@ -62,10 +62,11 @@ short getMPUrot()
 
 task main()
 {
+	wait10Msec(50);
+	sendArduinoCommand(1);
+	wait10Msec(50)
 	while(true){
 		getMPUHeading();
 		nxtDisplayBigTextLine(1, "%d", getMPUHeading());
-		sendArduinoCommand(1);
-
 	}
 }
