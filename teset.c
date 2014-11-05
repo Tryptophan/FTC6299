@@ -30,8 +30,8 @@ task main()
 	while (true) {
 		while (base) {
 			displayTextLine(0, "Base");
-			displayTextLine(1, "EncoderL: ", "%6i", nMotorEncoder[motorFL]);
-			displayTextLine(2, "EncoderR: ", "%6i", nMotorEncoder[motorFR]);
+			displayTextLine(1, "EncoderL: %6i", nMotorEncoder[motorFL]);
+			displayTextLine(2, "EncoderR: %6i", nMotorEncoder[motorFR]);
 			while (nNxtButtonPressed == 1) {
 				motor[motorFL] = 100;
 				motor[motorFR] = 100;
@@ -44,7 +44,7 @@ task main()
 				motor[motorBL] = -100;
 				motor[motorBR] = -100;
 			}
-			displayTextLine(3, "GyroROT: ", "%2i", HTGYROreadRot(SENSOR_GYRO));
+			displayTextLine(3, "GyroROT: %2i", HTGYROreadRot(SENSOR_GYRO));
 			motor[motorFL] = 0;
 			motor[motorBL] = 0;
 			motor[motorBR] = 0;
