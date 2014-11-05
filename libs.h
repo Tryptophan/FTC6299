@@ -182,7 +182,7 @@ void turn(int power, int deg, int time = 5000) {
   clearTimer(T1);
 
   if (deg > 0) {
-    while (time1[T1] < time && getMPUHeading() < deg) {
+    while (time1[T1] < time && heading < deg) {
     	heading = getMPUHeading();
     	displayCenteredBigTextLine(0, "%d", heading);
     	displayCenteredBigTextLine(2, "%d", deg);
@@ -195,8 +195,8 @@ void turn(int power, int deg, int time = 5000) {
 
 
   if (deg < 0) {
-    while (time1[T1] < time && getMPUHeading() > deg) {
-    	displayCenteredBigTextLine(4, "%d", getMPUHeading());
+    while (time1[T1] < time && heading > deg) {
+    	displayCenteredBigTextLine(4, "%d", heading);
     	displayCenteredBigTextLine(6, "%d", deg);
      	heading = getMPUHeading();
       setMotors(-power, power);

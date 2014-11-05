@@ -23,10 +23,9 @@
 }*/
 
 task main(){
-	//startTask(ReadRot);
-	turn(15, 90);
-	turn(15, -90);
-	//turn(10, 45);
+	//startTask(ReadRot);	turn(15, 90);
+	turn(10, -90);
+	turn(10, 45);
 	while(true){
 	}
 }
