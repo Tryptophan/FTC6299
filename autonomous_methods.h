@@ -16,7 +16,7 @@ void bare(int suspend, int begin) {
 	}
 	if (begin == 0) {  //Ramp
 		playSound(soundBeepBeep);
-		moveTo(-10, -3900, 2.1);
+		moveTo(-50, -3900, 2.1);
 		latch(true);
 		arcTurn(17, 30);
 		moveTo(15, 700, 0.8, 2000);
