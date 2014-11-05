@@ -12,7 +12,16 @@ void bare(int suspend, int begin) {
 	if (begin == 1) {  //Parking Zone
 		playSound(soundBeepBeep);
 		moveTo(-15, -1200, 1.5);
-		arcTurn(-20, -28);
+		arcTurn(-20, -26);
+		moveTo(-15, -7200, 1.5);
+		latch(true);
+		moveTo(15, 1100, 1.5);
+		turn(20, 90);
+		turn(20, 90);
+		moveTo(-15, -6000, 1.5);
+		lift(60, 2550);
+		basket('x');
+		latch(false);
 	}
 	if (begin == 0) {  //Ramp
 		playSound(soundBeepBeep);
@@ -20,10 +29,10 @@ void bare(int suspend, int begin) {
 		latch(true);
 		arcTurn(20, 30);
 		moveTo(15, 900, 0.8, 2000);
-		turn(30, 90);
+		turn(20, 90);
 		turn(20, 90);
 		moveTo(-25, -7000, 2.0);
-		lift(60, 2250);
+		lift(60, 2550);
 		basket('x');
 		latch(false);
 	}
