@@ -182,22 +182,28 @@ void turn(int power, int deg, int time = 5000) {
   clearTimer(T1);
 
   if (deg > 0) {
-    while (time1[T1] < time && abs(getMPUHeading()) < abs(deg)) {
-    	displayCenteredBigTextLine(4, "%d", getMPUHeading());
-      getMPUHeading();
+    while (time1[T1] < time && getMPUHeading() < deg) {
+    	heading = getMPUHeading();
+    	displayCenteredBigTextLine(0, "%d", heading);
+    	displayCenteredBigTextLine(2, "%d", deg);
       setMotors(power, -power);
-      wait1Msec(1);
+      //wait1Msec(5);
     }
+    stopMotors();
+		wait1Msec(10)
   }
 
 
   if (deg < 0) {
-    while (time1[T1] < time && abs(getMPUHeading()) > abs(deg)) {
+    while (time1[T1] < time && getMPUHeading() > deg) {
     	displayCenteredBigTextLine(4, "%d", getMPUHeading());
+    	displayCenteredBigTextLine(6, "%d", deg);
      	heading = getMPUHeading();
       setMotors(-power, power);
-      wait1Msec(1);
+      //wait1Msec(5);
     }
+    stopMotors();
+    wait1Msec(10);
   }
 
   stopMotors();
