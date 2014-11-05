@@ -11,20 +11,20 @@ void bare(int suspend, int begin) {
 	delay(suspend * 100);
 	if (begin == 1) {  //Parking Zone
 		playSound(soundBeepBeep);
-		lift(40, 3250);
-		basket('x');
+		moveTo(-15, -1200, 1.5);
+		arcTurn(-20, -28);
 	}
 	if (begin == 0) {  //Ramp
 		playSound(soundBeepBeep);
-	/*	moveTo(-10, -7500, 1.5);
+		moveTo(-10, -7600, 1.5);
 		latch(true);
 		arcTurn(20, 30);
-		moveTo(15, 700, 0.8, 2000);
-		turn(30, 90); */
+		moveTo(15, 900, 0.8, 2000);
+		turn(30, 90);
 		turn(20, 90);
-	//	moveTo(-25, -3000, 2.0);
-	//	lift(40, 3250);
-	//	basket('x');
+		moveTo(-25, -7000, 2.0);
+		lift(60, 2250);
+		basket('x');
 		latch(false);
 	}
 }
