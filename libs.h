@@ -54,7 +54,8 @@ void moveTo(int power, int deg, float threshold = 2.0, long time = 5000, float c
 
 	if (power > 0) {
 		while (time1[T1] < time && getEncoderAverage(nMotorEncoder[motorFL], nMotorEncoder[motorBL]) < deg) {
-			displayCenteredBigTextLine(3, "%2i", nMotorEncoder[motorBL]);
+			displayCenteredBigTextLine(3, "%10i", nMotorEncoder[motorFL]);
+			displayCenteredBigTextLine(5, "%10i", nMotorEncoder[motorFR]);
 			// Reads gyros rate of turn, mulitplies it by the time passed (20ms), and adds it to the current heading
 			heading += valInRange(HTGYROreadRot(SENSOR_GYRO), threshold) * (float)(20 / 1000.0);
 
@@ -78,6 +79,8 @@ void moveTo(int power, int deg, float threshold = 2.0, long time = 5000, float c
 
 	else {
 		while (time1[T1] < time && getEncoderAverage(nMotorEncoder[motorFL], nMotorEncoder[motorFR]) > deg) {
+			displayCenteredBigTextLine(3, "%10i", nMotorEncoder[motorFL]);
+			displayCenteredBigTextLine(5, "%10i", nMotorEncoder[motorFR]);
 			// Reads gyros rate of turn, mulitplies it by the time passed (20ms), and adds it to the current heading
 			heading += valInRange(HTGYROreadRot(SENSOR_GYRO), threshold) * (float)(20 / 1000.0);
 
@@ -107,7 +110,7 @@ void turn(int power, int deg, int time = 5000) {
 
 	// 90 Degree Modifier
 	if (abs(deg) == 90) {
-		int modifier = deg * 8/9;
+		int modifier = deg * 16/18;
 		deg = modifier;
 	}
 
@@ -144,7 +147,7 @@ void turn(int power, int deg, int time = 5000) {
 	stopMotors();
 }
 
-void arcTurn(int power, int deg, int time = 2000) {
+void arcTurn(int power, int deg, int time = 3000) {
 
 	// 90 Degree Modifier
 	if (abs(deg) == 90) {
@@ -160,8 +163,9 @@ void arcTurn(int power, int deg, int time = 2000) {
 
 	heading = 0;
 	clearTimer(T1);
+	wait1Msec(500);
 	HTGYROstartCal(SENSOR_GYRO);
-
+	wait1Msec(500);
 	// Forward arcTurn
 	if (power > 0) {
 		if (deg > 0) {
