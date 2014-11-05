@@ -173,6 +173,7 @@ void turn(int power, int deg, int time = 5000) {
   }*/
 
   //heading = 0;
+  heading = getMPUHeading();
 
   wait1Msec(500);
   int offset = getMPUrot() * -1;
@@ -180,18 +181,19 @@ void turn(int power, int deg, int time = 5000) {
 
   clearTimer(T1);
 
-  if (deg > 0) { //there will prob be issues due to the absolute or
-    while (time1[T1] < time && abs(heading) < abs(deg)) {
-    	displayCenteredBigTextLine(4, "%d", heading);
-      heading = getMPUHeading();
+  if (deg > 0) {
+    while (time1[T1] < time && abs(getMPUHeading()) < abs(deg)) {
+    	displayCenteredBigTextLine(4, "%d", getMPUHeading());
+      getMPUHeading();
       setMotors(power, -power);
       wait1Msec(1);
     }
   }
 
+
   if (deg < 0) {
-    while (time1[T1] < time && abs(heading) < abs(deg)) {
-    	displayCenteredBigTextLine(4, "%d", heading);
+    while (time1[T1] < time && abs(getMPUHeading()) > abs(deg)) {
+    	displayCenteredBigTextLine(4, "%d", getMPUHeading());
      	heading = getMPUHeading();
       setMotors(-power, power);
       wait1Msec(1);
