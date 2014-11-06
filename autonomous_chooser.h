@@ -2,7 +2,7 @@
 #include "autonomous_methods.h";
 #include "libs.h"
 
-/* 
+/*
 	Made by Team 6299 QuadX
 		- Jacob Greenway
 		- Joshua Johnson
@@ -19,9 +19,15 @@ string file = programs[0];
 int toggle = 0;
 
 void startupCheck(){
-	if (HTGYROreadRot(SENSOR_GYRO) == 0){
+	if (HTGYROreadRot(SENSOR_GYRO) == 403){
 		playSound(soundException);
-		displayTextLine(6, "Check Gyro");
+		displayTextLine(6, " Check Gyro");
+	}
+	if (externalBattery < 13600){
+		playSound(soundBlip);
+		displayTextLine(7, " Battery Low");
+	}
+	if (nAvgBatteryLevel){
 	}
 }
 

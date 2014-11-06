@@ -110,7 +110,7 @@ void turn(int power, int deg, int time = 5000) {
 
 	// 90 Degree Modifier
 	if (abs(deg) == 90) {
-		int modifier = deg * 16/18;
+		int modifier = deg * 8/9;
 		deg = modifier;
 	}
 

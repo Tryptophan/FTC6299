@@ -19,7 +19,7 @@ void bare(int suspend, int begin) {
 		turn(20, 90);
 		turn(20, 90);
 		moveTo(-15, -6000, 1.5);
-		lift(60, 1900);
+		lift(60, 2000);
 		basket('x');
 		latch(false);
 	}
@@ -32,7 +32,7 @@ void bare(int suspend, int begin) {
 		turn(20, 90);
 		turn(20, 90);
 		moveTo(-25, -7000, 2.0);
-		lift(60, 2550);
+		lift(60, 2250);
 		basket('x');
 		latch(false);
 	}
