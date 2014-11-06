@@ -110,6 +110,9 @@ void hiSP()
      case 7: 
        data = GyZ >> 8;
        break;
+     case 8: // test with even bigger numbers
+       data = GyZ >> 16;
+       break;
     }
      
   for (int i = 0; i < DATA_WIDTH; i++)
@@ -135,18 +138,6 @@ void hiSP()
   }
 }
 
-/*void calcHeading()
-{
-  while(request == 0)
-   {
-      mpu.dmpGetQuaternion(&q, fifoBuffer);
-      mpu.dmpGetEuler(euler, &q);
-      heading = euler[0] * 180/M_PI;
-      if (request = 1)
-        break;
-   }
-   request = 0;
-}*/
 void loop()
 {
   Wire.beginTransmission(MPU);
@@ -159,12 +150,11 @@ void loop()
   Serial.print("raw: ");
   Serial.println(GyZ);
 
-
-  
   //If command = 1; good to use for debug
   if (request == 1 && command == 1)
   {
-    Wire.endTransmission(true);
+    mpu.setZGyroOffset(GyZ * -1);
+    delay(100);
     
     /*while(true)
     {

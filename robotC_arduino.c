@@ -55,20 +55,21 @@ short getMPUAccelX()
 
 short getMPUrot()
 {
-	signed char half1 = sendArduinoCommand(6);
-	signed char half2 = sendArduinoCommand(7);
-	return half1 | (half2 << 8);
+	signed char third1 = sendArduinoCommand(6);
+	signed char third2 = sendArduinoCommand(7);
+	signed char third3 = sendArduinoCommand(8);
+	return third1 | (third2 << 8) | (third3 << 16);
 }
 
 task main()
 {
-	int heading = 0;
-	int ROT = 0;
+	float heading = 0;
+	float ROT;
 	while(true){
 		ROT = getMPUrot();
-		heading += (ROT * 20) / 1000;
+		heading += ROT * 20/1000.0;
 		wait1Msec(20);
 		displayCenteredBigTextLine(4, "%d", heading);
-		displayCenteredBigTextLine(6, "%d", ROT);
+		displayCenteredBigTextLine(6, "%.2f", ROT);
 	}
 }
