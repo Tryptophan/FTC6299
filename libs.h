@@ -108,7 +108,7 @@ void moveTo(int power, int deg, float threshold = 2.0, long time = 5000, float c
 
 void turn(int power, int deg, int time = 5000) {
 
-	// 90 Degree Modifier
+	/*// 90 Degree Modifier
 	if (abs(deg) == 90) {
 		int modifier = deg * 8/9;
 		deg = modifier;
@@ -118,7 +118,7 @@ void turn(int power, int deg, int time = 5000) {
 	else if (abs(deg) == 45) {
 		int modifier = deg * 7/9;
 		deg = modifier;
-	}
+	}*/
 
 	heading = 0;
 

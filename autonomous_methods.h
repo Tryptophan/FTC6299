@@ -29,10 +29,10 @@ void bare(int suspend, int begin) {
 		latch(true);
 		arcTurn(20, 30);
 		moveTo(15, 900, 0.8, 2000);
-		turn(20, 90);
+		turn(20, 80);
 		turn(20, 90);
 		moveTo(-25, -7000, 2.0);
-		lift(60, 2250);
+		lift(60, 2000);
 		basket('x');
 		latch(false);
 	}
