@@ -30,6 +30,9 @@ task main()
 	while (true) {
 		while (base == 0) {
 			displayTextLine(0, "Lift");
+			displayTextLine(1, "");
+			displayTextLine(2, "");
+			displayTextLine(3, "");
 			while (nNxtButtonPressed == 1) {
 				motor[liftL] = 100;
 				motor[liftR] = 100;
@@ -73,6 +76,9 @@ task main()
 		}
 		while (base == 2) {
 			displayTextLine(0, "Flinger Flanger");
+			displayTextLine(1, "");
+			displayTextLine(2, "");
+			displayTextLine(3, "");
 			while (nNxtButtonPressed == 1) {
 				motor[flip] = 100;
 			}
@@ -80,6 +86,24 @@ task main()
 				motor[flip] = -100;
 			}
 			motor[flip] = 0;
+			if (nNxtButtonPressed == 3) {
+				base++;
+				delay(500);
+			}
+		}
+		while (base == 3) {
+			displayTextLine(0, "Servo");
+			displayTextLine(1, "");
+			displayTextLine(2, "");
+			displayTextLine(3, "");
+			if (nNxtButtonPressed == 1) {
+				servo[liftServoL] = 100;
+				servo[liftServoR] = 155;
+			}
+			if (nNxtButtonPressed == 2) {
+				servo[liftServoL] = 230;
+				servo[liftServoR] = 25;
+			}
 			if (nNxtButtonPressed == 3) {
 				base = 0;
 				delay(500);
