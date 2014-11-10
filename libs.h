@@ -182,7 +182,7 @@ void turn(int power, int deg, int time = 5000) {
 
   if (deg > 0) {
     while (time1[T1] < time && heading < deg) {
-    	heading = (getMPUHeading() - init) % 360;
+    	heading = (getMPUHeading() - init) % 360; //accomodate for going over 360
     	displayCenteredBigTextLine(0, "%d", heading);
     	displayCenteredBigTextLine(2, "%d", deg);
       setMotors(power, -power);
