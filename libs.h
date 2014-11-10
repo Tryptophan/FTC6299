@@ -173,17 +173,16 @@ void turn(int power, int deg, int time = 5000) {
   }*/
 
   //heading = 0;
-  heading = getMPUHeading();
 
   wait1Msec(500);
-  int offset = getMPUrot() * -1;
+  int init = getMPUHeading();
   wait1Msec(500);
 
   clearTimer(T1);
 
   if (deg > 0) {
     while (time1[T1] < time && heading < deg) {
-    	heading = getMPUHeading();
+    	heading = (getMPUHeading() - init) % 360;
     	displayCenteredBigTextLine(0, "%d", heading);
     	displayCenteredBigTextLine(2, "%d", deg);
       setMotors(power, -power);

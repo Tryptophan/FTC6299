@@ -198,6 +198,11 @@ void loop()
       mpu.dmpGetEuler(euler, &q);
       heading = euler[0] * 180/M_PI;
       
+      if(heading < 0)
+      {
+        heading += 360;
+      }
+      
       Serial.println(heading);
       Serial.print("\t");
      
