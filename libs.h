@@ -172,19 +172,22 @@ void turn(int power, int deg, int time = 5000) {
     deg = modifier;
   }*/
 
-  //heading = 0;
 
   wait1Msec(500);
   int init = getMPUHeading();
-  wait1Msec(500);
+  displayCenteredBigTextLine(0, "%d", heading);
+  wait10Msec(500);
+  heading = getMPUHeading() - init; //heading now at 0
+  displayCenteredBigTextLine(4, "%d", heading);
+  wait10Msec(500);
 
   clearTimer(T1);
 
-  if (deg > 0) {
+  if (deg < 180) {
     while (time1[T1] < time && heading < deg) {
     	heading = (getMPUHeading() - init) % 360; //accomodate for going over 360
     	displayCenteredBigTextLine(0, "%d", heading);
-    	displayCenteredBigTextLine(2, "%d", deg);
+    	displayCenteredBigTextLine(2, "%d", getMPUHeading());
       setMotors(power, -power);
       //wait1Msec(5);
     }
@@ -193,11 +196,11 @@ void turn(int power, int deg, int time = 5000) {
   }
 
 
-  if (deg < 0) {
-    while (time1[T1] < time && heading > deg) {
+  if (deg > 180) {
+    while (time1[T1] < time && heading < deg) {
     	displayCenteredBigTextLine(4, "%d", heading);
     	displayCenteredBigTextLine(6, "%d", deg);
-     	heading = getMPUHeading();
+     	heading = (getMPUHeading() - init) % 360; //accomodate for going over 360
       setMotors(-power, power);
       //wait1Msec(5);
     }
