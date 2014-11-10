@@ -24,11 +24,28 @@
 
 task main()
 {
-	bool base = true;
+	int base = 0;
 	nMotorEncoder[motorFL] = 0;
 	nMotorEncoder[motorFR] = 0;
 	while (true) {
-		while (base) {
+		while (base == 0) {
+			displayTextLine(0, "Lift");
+			while (nNxtButtonPressed == 1) {
+				motor[liftL] = 100;
+				motor[liftR] = 100;
+			}
+			while (nNxtButtonPressed == 2) {
+				motor[liftL] = -70;
+				motor[liftR] = -70;
+			}
+			motor[liftL] = 0;
+			motor[liftR] = 0;
+			if (nNxtButtonPressed == 3) {
+				base++;
+				delay(500);
+			}
+		}
+		while (base == 1) {
 			displayTextLine(0, "Base");
 			displayTextLine(1, "EncoderL: %6i", nMotorEncoder[motorFL]);
 			displayTextLine(2, "EncoderR: %6i", nMotorEncoder[motorFR]);
@@ -50,24 +67,21 @@ task main()
 			motor[motorBR] = 0;
 			motor[motorFR] = 0;
 			if (nNxtButtonPressed == 3) {
-				base = false;
+				base++;
 				delay(500);
 			}
 		}
-		while (!base) {
-			displayTextLine(0, "Lift");
+		while (base == 2) {
+			displayTextLine(0, "Flinger Flanger");
 			while (nNxtButtonPressed == 1) {
-				motor[liftL] = 100;
-				motor[liftR] = 100;
+				motor[flip] = 100;
 			}
 			while (nNxtButtonPressed == 2) {
-				motor[liftL] = -70;
-				motor[liftR] = -70;
+				motor[flip] = -100;
 			}
-			motor[liftL] = 0;
-			motor[liftR] = 0;
+			motor[flip] = 0;
 			if (nNxtButtonPressed == 3) {
-				base = true;
+				base = 0;
 				delay(500);
 			}
 		}
