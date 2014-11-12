@@ -53,7 +53,6 @@ task main()
 			displayTextLine(0, "Base");
 			displayTextLine(1, "EncoderL: %6i", nMotorEncoder[motorFL]);
 			displayTextLine(2, "EncoderR: %6i", nMotorEncoder[motorFR]);
-			displayTextLine(4, "Flip: %6i", nMotorEncoder[flip]);
 			while (nNxtButtonPressed == 1) {
 				motor[motorFL] = 100;
 				motor[motorFR] = 100;
@@ -78,14 +77,14 @@ task main()
 		}
 		while (base == 2) {
 			displayTextLine(0, "Flinger Flanger");
-			displayTextLine(1, "");
+			displayTextLine(1, "Flip: %6i", nMotorEncoder[flip]);
 			displayTextLine(2, "");
 			displayTextLine(3, "");
 			while (nNxtButtonPressed == 1) {
-				motor[flip] = 100;
+				motor[flip] = 10;
 			}
 			while (nNxtButtonPressed == 2) {
-				motor[flip] = -100;
+				motor[flip] = -10;
 			}
 			motor[flip] = 0;
 			if (nNxtButtonPressed == 3) {
