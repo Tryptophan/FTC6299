@@ -66,10 +66,6 @@ task main()
 	float heading = 0;
 	float ROT;
 	while(true){
-		ROT = getMPUrot();
-		heading += ROT * 20/1000.0;
-		wait1Msec(20);
-		displayCenteredBigTextLine(4, "%d", heading);
-		displayCenteredBigTextLine(6, "%.2f", ROT);
+		displayCenteredBigTextLine(6, "%.2f", getMPUHeading());
 	}
 }
