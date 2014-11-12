@@ -23,9 +23,9 @@
 #include "JoystickDriver.c";
 #include "libs.h";
 task flipperFlapper() {
-	int count = 0;
+	/*int count = 0;
 	int lower;
-	int bigger;
+	int bigger;*/
 	while (true) {
 		while (joy1Btn(07) == 1) {
 			motor[flip] = 35;
@@ -48,8 +48,8 @@ task flipperFlapper() {
 					motor[flip] = 17;
 				}*/
 		wait10Msec(5);
-		/*motor[flip] = 0;
-		displayTextLine(0, "%3i", count);
+		motor[flip] = 0;
+		/*displayTextLine(0, "%3i", count);
 		displayTextLine(1, "%4i", nMotorEncoder[flip]); */
 	}
 }
