@@ -175,17 +175,17 @@ void turn(int power, int deg, int time = 5000) {
 	int heading = 0;
   wait10Msec(50);
   int init = getMPUHeading() * -1;
+  displayCenteredBigTextLine(0, "init:%d", init);
   wait10Msec(50);
 
   clearTimer(T1);
 
   if (deg < 180) {
     while (time1[T1] < time && heading < deg) {
-    	heading = (getMPUHeading() - init) % 360; //accomodate for going over 360
+    	heading = getMPUHeading();//(getMPUHeading() + init) % 360; //accomodate for going over 360
     	displayCenteredBigTextLine(0, "%d", heading);
-    	//displayCenteredBigTextLine(2, "%d", (getMPUHeading() - init) % 360);
       setMotors(power, -power);
-      //wait1Msec(5);
+      wait1Msec(5);
     }
     stopMotors();
 		wait1Msec(10)
