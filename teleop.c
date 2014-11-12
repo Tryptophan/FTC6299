@@ -33,18 +33,18 @@ task flipperFlapper() {
 		while (joy1Btn(08) == 1) {
 			motor[flip] = -35;
 		}
-		if(nMotorEncoder[flip] % 720 == 0)
+		if(nMotorEncoder[flip] % 460 == 0)
 			count++;
 		if(joystick.joy1_TopHat == 4) {
-			lower = abs(nMotorEncoder[flip]) - (180 * count);
-			bigger = abs(nMotorEncoder[flip]) - (180 * (count + 1));
+			lower = abs(nMotorEncoder[flip]) - (460 * count);
+			bigger = abs(nMotorEncoder[flip]) - (460 * (count + 1));
 			if(abs(lower) < abs(bigger)){
-				while(abs(nMotorEncoder[flip]) < (180 * count)){
+				while(abs(nMotorEncoder[flip]) < (460 * count)){
 					motor[flip] = -17;
 				}
 		}
 			else{
-				while(abs(nMotorEncoder[flip]) > (180 * count)){
+				while(abs(nMotorEncoder[flip]) > (460 * count)){
 					motor[flip] = 17;
 				}
 			}
