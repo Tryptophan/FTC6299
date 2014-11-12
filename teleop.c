@@ -10,7 +10,7 @@
 #pragma config(Motor,  mtr_S4_C2_2,     motorBR,       tmotorTetrix, openLoop)
 #pragma config(Motor,  mtr_S4_C3_1,     liftL,         tmotorTetrix, openLoop)
 #pragma config(Motor,  mtr_S4_C3_2,     liftR,         tmotorTetrix, openLoop, reversed)
-#pragma config(Motor,  mtr_S4_C4_1,     flip,          tmotorTetrix, openLoop)
+#pragma config(Motor,  mtr_S4_C4_1,     flip,          tmotorTetrix, openLoop, encoder)
 #pragma config(Motor,  mtr_S4_C4_2,     motorI,        tmotorTetrix, openLoop)
 #pragma config(Servo,  srvo_S3_C1_1,    servoL,               tServoStandard)
 #pragma config(Servo,  srvo_S3_C1_2,    servoR,               tServoStandard)
@@ -23,33 +23,44 @@
 #include "JoystickDriver.c";
 #include "libs.h";
 task flipperFlapper() {
+	int count = 0;
+	int lower;
+	int bigger;
 	while (true) {
 		while (joy1Btn(07) == 1) {
-			motor[flip] = 25;
+			motor[flip] = 35;
 		}
 		while (joy1Btn(08) == 1) {
-			motor[flip] = -25;
+			motor[flip] = -35;
 		}
-
-		motor[flip] = 0;
+		if(nMotorEncoder[flip] % 720 == 0)
+			count++;
+		if(joystick.joy1_TopHat == 4) {
+			lower = abs(nMotorEncoder[flip]) - (180 * count);
+			bigger = abs(nMotorEncoder[flip]) - (180 * (count + 1));
+			if(abs(lower) < abs(bigger)){
+				while(abs(nMotorEncoder[flip]) < (180 * count)){
+					motor[flip] = -17;
+				}
+		}
+			else{
+				while(abs(nMotorEncoder[flip]) > (180 * count)){
+					motor[flip] = 17;
+				}
+			}
+		}
 		wait10Msec(5);
+		motor[flip] = 0;
 	}
 }
 task driveControl() {
-	bool slowmo = false;
 	while (true) {
 		getJoystickSettings(joystick);
-		if ((abs(joystick.joy1_y1) > 10 || abs(joystick.joy1_y2) > 10) && !slowmo) {
+		if ((abs(joystick.joy1_y1) > 10 || abs(joystick.joy1_y2) > 10)) {
 				motor[motorFL] = joystick.joy1_y1 / 1.28;
 				motor[motorBL] = joystick.joy1_y1 / 1.28;
 				motor[motorFR] = joystick.joy1_y2 / 1.28;
 				motor[motorBR] = joystick.joy1_y2 / 1.28;
-		}
-		else if ((abs(joystick.joy1_y1) > 10 || abs(joystick.joy1_y2) > 10) && slowmo) {
-				motor[motorFL] = joystick.joy1_y1 / 4.28;
-				motor[motorBL] = joystick.joy1_y1 / 4.28;
-				motor[motorFR] = joystick.joy1_y2 / 4.28;
-				motor[motorBR] = joystick.joy1_y2 / 4.28;
 		}
 		else {
 			motor[motorFL] = 0;
@@ -78,13 +89,6 @@ task driveControl() {
 				}
 				wait1Msec(20);
 			}
-		}
-
-		if (joystick.joy1_TopHat == 0) {
-			slowmo = false;
-		}
-		if (joystick.joy1_TopHat == 4) {
-			slowmo = true;
 		}
 	}
 }
