@@ -18,7 +18,7 @@ void bare(int s, int position) {
 		moveTo(15, 1100, 1.5);
 		turn(20, 80);
 		turn(20, 90);
-		moveTo(-15, -6000, 1.5);
+		moveTo(-15, -7000, 1.5);
 		lift(60, 2000);
 		basket('x');
 		delay(3000);
