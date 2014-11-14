@@ -41,7 +41,7 @@ void bare(int s, int position) {
 
 void autoFrontDump(int s) {
 	delay(s * 100);
-
+	basket('x');
 }
 
 void test(int suspend){

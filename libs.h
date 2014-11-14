@@ -241,6 +241,20 @@ void lift(int power, int time) {
 }
 
 void basket(char position) {
+	TFileHandle file_handle;
+	TFileIOResult io;
+	word size = 10000;
+	short XL, XR, YL, YR, AL, AR, BL, BR;
+	OpenRead(file_handle, io, "servo.txt", size);
+	ReadShort(file_handle, io, XL);
+	ReadShort(file_handle, io, XR);
+	ReadShort(file_handle, io, YL);
+	ReadShort(file_handle, io, YR);
+	ReadShort(file_handle, io, AL);
+	ReadShort(file_handle, io, AR);
+	ReadShort(file_handle, io, BL);
+	ReadShort(file_handle, io, BR);
+	displayTextLine(0,"%d3", XL);
 	if (position == 'x') {
 		servo[liftServoL] = 100;
 		servo[liftServoR] = 155;
