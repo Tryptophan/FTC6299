@@ -28,12 +28,12 @@ void bare(int s, int position) {
 		playSound(soundBeepBeep);
 		moveTo(-10, -7600, 1.5);
 		latch(true);
-		arcTurn(20, 30);
+		arcTurn(20, 10, 8000);
 		moveTo(15, 900, 0.8, 2000);
 		turn(20, 80);
 		turn(20, 90);
-		moveTo(-25, -7000, 2.0, 7000);
-		lift(60, 2000);
+		moveTo(-25, -7700, 2.0, 20000);
+		lift(60, 2100);
 		basket('x');
 		latch(false);
 	}
