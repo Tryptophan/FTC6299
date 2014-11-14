@@ -2,7 +2,7 @@
 #include "autonomous_methods.h";
 #include "libs.h"
 
-/* 
+/*
 	Made by Team 6299 QuadX
 		- Jacob Greenway
 		- Joshua Johnson
@@ -10,6 +10,7 @@
 */
 
 int i, j, begin, suspend = 0;
+int tube = 2;
 string sides[2] = {"Ramp", "Zone"};
 string side = sides[0];
 
@@ -19,15 +20,19 @@ string file = programs[0];
 int toggle = 0;
 
 void startupCheck(){
-	if (HTGYROreadRot(SENSOR_GYRO) == 0){
+	if (HTGYROreadRot(SENSOR_GYRO) == 403){
 		playSound(soundException);
-		displayTextLine(6, "Check Gyro");
+		displayTextLine(6, " Check Gyro");
+	}
+	if (externalBattery < 13600){
+		playSound(soundBlip);
+		displayTextLine(7, " Battery Low");
 	}
 }
 
 void toggleMenu() {
 	toggle++;
-	if (toggle > 2) {
+	if (toggle > 3) {
 		toggle = 0;
 		wait1Msec(250);
 		return;
@@ -69,6 +74,20 @@ void toggleSubMenu(int dir) {
 
 		case 2 :
 			// Select Right
+			if (dir == 1 && tube < 3) {
+				tube++;
+				wait1Msec(250);
+			}
+
+			// Select Left
+			else if (dir == 2 && tube > 1) {
+				tube--;
+				wait1Msec(250);
+			}
+			break;
+
+		case 3 :
+			// Select Right
 			if (dir == 1 && j < 2) {
 				j++;
 				side = sides[j];
@@ -103,15 +122,17 @@ task chooser() {
 		if (toggle == 0) {
 			displayTextLine(0, "*Pgm: %s", file);
 			displayTextLine(1, " Delay: %2i", suspend);
-			displayTextLine(2, " Side: %s", side);
+			displayTextLine(2, " Tube: %2i", tube);
+			displayTextLine(3, " Side: %s", side);
 
 			displayTextLine(4, " NXT Batt: %3f", (float)nAvgBatteryLevel / 1000);
 			displayTextLine(5, " EXT Batt: %3f", (float)externalBattery / 1000);
 		}
 		else if (toggle == 1) {
 			displayTextLine(0, " Pgm: %s", file);
-			displayTextLine(1, "*Delay: %2i", suspend);
-			displayTextLine(2, " Side: %s", side);
+			displayTextLine(1, "*Delay: %2i", suspend)
+			displayTextLine(2, " Tube: %2i", tube);
+			displayTextLine(3, " Side: %s", side);
 
 			displayTextLine(4, " NXT Batt: %3f", (float)nAvgBatteryLevel / 1000);
 			displayTextLine(5, " EXT Batt: %3f", (float)externalBattery / 1000);
@@ -120,7 +141,18 @@ task chooser() {
 		else if (toggle == 2) {
 			displayTextLine(0, " Pgm: %s", file);
 			displayTextLine(1, " Delay: %2i", suspend);
-			displayTextLine(2, "*Side: %s", side);
+			displayTextLine(2, "*Tube: %2i", tube);
+			displayTextLine(3, " Side: %s", side);
+
+			displayTextLine(4, " NXT Batt: %3f", (float)nAvgBatteryLevel / 1000);
+			displayTextLine(5, " EXT Batt: %3f", (float)externalBattery / 1000);
+		}
+
+		else if (toggle == 3) {
+			displayTextLine(0, " Pgm: %s", file);
+			displayTextLine(1, " Delay: %2i", suspend);
+			displayTextLine(2, " Tube: %2i", tube);
+			displayTextLine(3, "*Side: %s", side);
 
 			displayTextLine(4, " NXT Batt: %3f", (float)nAvgBatteryLevel / 1000);
 			displayTextLine(5, " EXT Batt: %3f", (float)externalBattery / 1000);
