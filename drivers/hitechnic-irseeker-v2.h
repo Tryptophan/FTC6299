@@ -30,7 +30,11 @@
  *
  * License: You may use this code as you wish, provided you give credit where its due.
  *
+<<<<<<< HEAD
  * THIS CODE WILL ONLY WORK WITH ROBOTC VERSION 3.59 AND HIGHER.
+=======
+ * THIS CODE WILL ONLY WORK WITH ROBOTC VERSION 3.59 AND HIGHER. 
+>>>>>>> master
 
  * \author Xander Soldaat (mightor_at_gmail.com)
  * \date 06 April 2010
