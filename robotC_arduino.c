@@ -63,9 +63,20 @@ short getMPUrot()
 
 task main()
 {
-	float heading = 0;
-	float ROT;
+	int heading = 0;
+  wait10Msec(50);
+  int init = getMPUHeading();
+  displayCenteredBigTextLine(0, "init:%d", init);
+  heading -= init;
+  wait10Msec(50);
 	while(true){
-		displayCenteredBigTextLine(6, "%.2f", getMPUHeading());
+	    heading = (getMPUHeading() - init)// % 360; //accomodate for going over 360
+	   	/*if(abs(heading) > 360)//test this out
+	   	{
+	    	heading = 360 - (abs(getMPUHeading()) - abs(init));
+	  	}*/
+    	displayCenteredBigTextLine(2, "%d", heading);
+    	displayCenteredBigTextLine(4, "%d", getMPUHeading());
+      wait1Msec(5);
 	}
 }
