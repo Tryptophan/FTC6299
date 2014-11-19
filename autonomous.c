@@ -24,7 +24,7 @@
 
 task main(){
 	//startTask(ReadRot);	turn(15, 90);
-	turn(10, 90);
+	turn(10, 90, 100000);
 	//turn(10, 270);
 	while(true){
 	}
