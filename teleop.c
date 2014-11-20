@@ -8,8 +8,8 @@
 #pragma config(Motor,  mtr_S4_C1_2,     motorFR,       tmotorTetrix, openLoop, encoder)
 #pragma config(Motor,  mtr_S4_C2_1,     motorBL,       tmotorTetrix, openLoop, reversed)
 #pragma config(Motor,  mtr_S4_C2_2,     motorBR,       tmotorTetrix, openLoop)
-#pragma config(Motor,  mtr_S4_C3_1,     liftL,         tmotorTetrix, openLoop)
-#pragma config(Motor,  mtr_S4_C3_2,     liftR,         tmotorTetrix, openLoop, reversed)
+#pragma config(Motor,  mtr_S4_C3_1,     liftL,         tmotorTetrix, openLoop, reversed)
+#pragma config(Motor,  mtr_S4_C3_2,     liftR,         tmotorTetrix, openLoop)
 #pragma config(Motor,  mtr_S4_C4_1,     flip,          tmotorTetrix, openLoop, encoder)
 #pragma config(Motor,  mtr_S4_C4_2,     motorI,        tmotorTetrix, openLoop)
 #pragma config(Servo,  srvo_S3_C1_1,    servoL,               tServoStandard)
@@ -23,9 +23,9 @@
 #include "JoystickDriver.c";
 #include "libs.h";
 task flipperFlapper() {
-	/*int count = 0;
-	int lower;
-	int bigger;*/
+	int deg;
+	displayTextLine(0, "%7i", -12 % 10);
+	nMotorEncoder[flip] = 0;
 	while (true) {
 		while (joy1Btn(07) == 1) {
 			motor[flip] = 35;
@@ -33,24 +33,19 @@ task flipperFlapper() {
 		while (joy1Btn(08) == 1) {
 			motor[flip] = -35;
 		}
-		 /*if(nMotorEncoder[flip] % 560 > -2 && nMotorEncoder[flip] % 560 < 2  && nMotorEncoder[flip] != 0)
-			count++;
-		if(joystick.joy1_TopHat == 4) {
-			lower = abs(nMotorEncoder[flip]) - (560 * count);
-			bigger = abs(nMotorEncoder[flip]) - (560 * (count + 1));
-			if(abs(lower) < abs(bigger)){
-				while(abs(nMotorEncoder[flip]) < (560 * count)){
-					motor[flip] = -17;
-				}
-			}
-				else{
-				while(abs(nMotorEncoder[flip]) > (560 * count)){
-					motor[flip] = 17;
-				}*/
 		wait10Msec(5);
 		motor[flip] = 0;
-		/*displayTextLine(0, "%3i", count);
-		displayTextLine(1, "%4i", nMotorEncoder[flip]); */
+		if (joystick.joy1_TopHat == 4) {
+			int move = nMotorEncoder[flip] % 570;
+			move = 570 - move;
+			nMotorEncoder[flip] = 0;
+			while (abs(nMotorEncoder[flip]) < move) {
+				motor[flip] = 35;
+				displayTextLine(0, "%7i", nMotorEncoder[flip]);
+				wait1Msec(5);
+			}
+		}
+		//displayTextLine(0, "%7i", nMotorEncoder[flip]);
 	}
 }
 task driveControl() {
