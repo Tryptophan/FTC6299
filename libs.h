@@ -193,6 +193,45 @@ void arcTurn(int power, int deg, int time = 4000) {
 	stopMotors();
 }
 
+void drift(int power, int deg, int angle, int time = 8000) {
+	heading = 0;
+	nMotorEncoder[motorFL] = 0;
+	nMotorEncoder[motorFR] = 0;
+	clearTimer(T1);
+	wait1Msec(250);
+	if (power > 0) {
+		while (time1[T1] < time && getEncoderAverage(nMotorEncoder[motorFL], nMotorEncoder[motorBL]) < deg) {
+			heading += HTGYROreadRot(SENSOR_GYRO) * (float)(20 / 1000.0);
+			if (angle > 0) {
+				while (heading < angle) {
+					setMotors(power, power - 10);
+				}
+			}
+			else {
+				while (heading > angle) {
+					setMotors(power - 10, power);
+				}
+			}
+		}
+	}
+	if (power < 0) {
+		while (time1[T1] < time && getEncoderAverage(nMotorEncoder[motorFL], nMotorEncoder[motorFR]) < deg) {
+			heading += HTGYROreadRot(SENSOR_GYRO) * (float)(20 / 1000.0);
+			if (angle > 0) {
+				while (heading < angle) {
+					setMotors(power, power - 10);
+				}
+			}
+			else {
+				while (heading > angle) {
+					setMotors(power - 10, power);
+				}
+			}
+		}
+	}
+	stopMotors();
+}
+
 void latch(bool position) {
 	if (!position) {
 		servo[servoL] = 225;
