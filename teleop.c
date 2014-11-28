@@ -48,13 +48,20 @@ task flipperFlapper() {
 	}
 }
 task driveControl() {
+	bool slowmo = false;
 	while (true) {
 		getJoystickSettings(joystick);
-		if ((abs(joystick.joy1_y1) > 10 || abs(joystick.joy1_y2) > 10)) {
-				motor[motorFL] = joystick.joy1_y1 / 1.28;
-				motor[motorBL] = joystick.joy1_y1 / 1.28;
-				motor[motorFR] = joystick.joy1_y2 / 1.28;
-				motor[motorBR] = joystick.joy1_y2 / 1.28;
+		if ((abs(joystick.joy1_y1) > 10 || abs(joystick.joy1_y2) > 10) && !slowmo) {
+			motor[motorFL] = joystick.joy1_y1 / 1.28;
+			motor[motorBL] = joystick.joy1_y1 / 1.28;
+			motor[motorFR] = joystick.joy1_y2 / 1.28;
+			motor[motorBR] = joystick.joy1_y2 / 1.28;
+		}
+		else if ((abs(joystick.joy1_y1) > 10 || abs(joystick.joy1_y2) > 10) && slowmo) {
+			motor[motorFL] = joystick.joy1_y1 / 5.28;
+			motor[motorBL] = joystick.joy1_y1 / 5.28;
+			motor[motorFR] = joystick.joy1_y2 / 5.28;
+			motor[motorBR] = joystick.joy1_y2 / 5.28;
 		}
 		else {
 			motor[motorFL] = 0;
@@ -83,6 +90,14 @@ task driveControl() {
 				}
 				wait1Msec(20);
 			}
+		}
+		if(!slowmo && joystick.joy1_TopHat == 2) {
+			slowmo = true;
+			wait1Msec(300);
+		}
+		if(slowmo && joystick.joy1_TopHat == 2) {
+			slowmo = false;
+			wait1Msec(300);
 		}
 	}
 }
