@@ -45,8 +45,8 @@ void moveTo(int power, int deg, float threshold = 2.0, long time = 100000, float
 	heading = 0;
 	nMotorEncoder[motorFL] = 0;
 	nMotorEncoder[motorFR] = 0;
-	clearTimer(T1);
 	wait1Msec(250);
+	clearTimer(T1);
 	if (power > 0) {
 		while (time1[T1] < time && getEncoderAverage(nMotorEncoder[motorFL], nMotorEncoder[motorFR]) < deg) {
 			displayCenteredBigTextLine(3, "%10i", nMotorEncoder[motorFL]);
@@ -116,6 +116,7 @@ void turn(int power, int deg, int time = 6000) {
 	}*/
 
 	heading = 0;
+	wait1Msec(250);
 	clearTimer(T1);
 
 	if (deg > 0) {
@@ -152,6 +153,7 @@ void arcTurn(int power, int deg, int time = 7000) {
 	}
 
 	heading = 0;
+	wait1Msec(250);
 	clearTimer(T1);
 	// Forward arcTurn
 	if (power > 0) {
@@ -197,8 +199,8 @@ void drift(int power, int deg, int angle, int time = 8000) {
 	heading = 0;
 	nMotorEncoder[motorFL] = 0;
 	nMotorEncoder[motorFR] = 0;
-	clearTimer(T1);
 	wait1Msec(250);
+	clearTimer(T1);
 	if (power > 0) {
 		while (time1[T1] < time && getEncoderAverage(nMotorEncoder[motorFL], nMotorEncoder[motorFR]) < deg) {
 			heading += HTGYROreadRot(SENSOR_GYRO) * (float)(20 / 1000.0);
@@ -233,6 +235,7 @@ void drift(int power, int deg, int angle, int time = 8000) {
 }
 
 void latch(bool position) {
+	wait1Msec(250);
 	if (!position) {
 		servo[servoL] = 225;
 		servo[servoR] = 20;
@@ -257,6 +260,7 @@ int getPos() {
 
 void lift(int power, int time) {
 	int t = 0;
+	wait1Msec(250);
 	while (t < time) {
 		motor[liftL] = power;
 		motor[liftR] = power;
@@ -268,20 +272,7 @@ void lift(int power, int time) {
 }
 
 void basket(char position) {
-	TFileHandle file_handle;
-	TFileIOResult io;
-	/*word size = 10000;
-	short XL, XR, YL, YR, AL, AR, BL, BR;
-	OpenRead(file_handle, io, "servo.txt", size);
-	ReadShort(file_handle, io, XL);
-	ReadShort(file_handle, io, XR);
-	ReadShort(file_handle, io, YL);
-	ReadShort(file_handle, io, YR);
-	ReadShort(file_handle, io, AL);
-	ReadShort(file_handle, io, AR);
-	ReadShort(file_handle, io, BL);
-	ReadShort(file_handle, io, BR);
-	displayTextLine(0,"%d3", XL); */
+
 	if (position == 'x') {
 		servo[liftServoL] = 100;
 		servo[liftServoR] = 155;

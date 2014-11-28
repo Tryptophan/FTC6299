@@ -27,7 +27,7 @@ void bare(int s, int position) {
 	if (position == 0) {  //Ramp
 		playSound(soundBeepBeep);
 		moveTo(-10, -7500, 1.5, 4000);
-		arcTurn(-20, -20)
+		arcTurn(-20, -20);
 		moveTo(-15, -500, 2.0, 1000);
 		latch(true);
 		moveTo(15, 900);
