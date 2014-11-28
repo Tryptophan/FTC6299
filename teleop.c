@@ -28,10 +28,10 @@ task flipperFlapper() {
 	nMotorEncoder[flip] = 0;
 	while (true) {
 		while (joy1Btn(07) == 1) {
-			motor[flip] = 35;
+			motor[flip] = 40;
 		}
 		while (joy1Btn(08) == 1) {
-			motor[flip] = -35;
+			motor[flip] = -40;
 		}
 		wait10Msec(5);
 		motor[flip] = 0;
@@ -40,7 +40,7 @@ task flipperFlapper() {
 			move = 570 - move;
 			nMotorEncoder[flip] = 0;
 			while (abs(nMotorEncoder[flip]) < move) {
-				motor[flip] = 35;
+				motor[flip] = -35;
 				displayTextLine(0, "%7i", nMotorEncoder[flip]);
 				wait1Msec(5);
 			}
