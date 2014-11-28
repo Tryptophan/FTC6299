@@ -225,15 +225,15 @@ bool writeI2C(tSensors link, tByteArray &request) {
 	    hogCPU();
 	    playSound(soundException);
 	    eraseDisplay();
-	    nxtDisplayCenteredTextLine(0, "3rd Party Driver");
-	    nxtDisplayCenteredTextLine(1, "ERROR");
-	    nxtDisplayCenteredTextLine(2, "You have not");
-	    nxtDisplayCenteredTextLine(3, "setup the sensor");
-	    nxtDisplayCenteredTextLine(4, "port correctly. ");
-	    nxtDisplayCenteredTextLine(5, "Please refer to");
-	    nxtDisplayCenteredTextLine(6, "one of the");
-	    nxtDisplayCenteredTextLine(7, "examples.");
-	    wait1Msec(10000);
+	    displayTextLine(0, "3rd Party Driver");
+	    displayTextLine(1, "ERROR");
+	    displayTextLine(2, "You have not");
+	    displayTextLine(3, "setup the sensor");
+	    displayTextLine(4, "port correctly. ");
+	    displayTextLine(5, "Please refer to");
+	    displayTextLine(6, "one of the");
+	    displayTextLine(7, "examples.");
+	    delay(10000);
 	    stopAllTasks();
   }
 #endif
@@ -286,15 +286,15 @@ bool writeI2C(tSensors link, tByteArray &request, tByteArray &reply, int replyle
 	    hogCPU();
 	    playSound(soundException);
 	    eraseDisplay();
-	    nxtDisplayCenteredTextLine(0, "3rd Party Driver");
-	    nxtDisplayCenteredTextLine(1, "ERROR");
-	    nxtDisplayCenteredTextLine(2, "You have not");
-	    nxtDisplayCenteredTextLine(3, "setup the sensor");
-	    nxtDisplayCenteredTextLine(4, "port correctly. ");
-	    nxtDisplayCenteredTextLine(5, "Please refer to");
-	    nxtDisplayCenteredTextLine(6, "one of the");
-	    nxtDisplayCenteredTextLine(7, "examples.");
-	    wait1Msec(10000);
+	    displayTextLine(0, "3rd Party Driver");
+	    displayTextLine(1, "ERROR");
+	    displayTextLine(2, "You have not");
+	    displayTextLine(3, "setup the sensor");
+	    displayTextLine(4, "port correctly. ");
+	    displayTextLine(5, "Please refer to");
+	    displayTextLine(6, "one of the");
+	    displayTextLine(7, "examples.");
+	    delay(10000);
 	    stopAllTasks();
   }
 #endif

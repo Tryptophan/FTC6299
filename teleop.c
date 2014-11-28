@@ -23,7 +23,6 @@
 #include "JoystickDriver.c";
 #include "libs.h";
 task flipperFlapper() {
-	int deg;
 	displayTextLine(0, "%7i", -12 % 10);
 	nMotorEncoder[flip] = 0;
 	while (true) {
@@ -33,7 +32,7 @@ task flipperFlapper() {
 		while (joy1Btn(08) == 1) {
 			motor[flip] = -40;
 		}
-		wait10Msec(5);
+		delay(50);
 		motor[flip] = 0;
 		if (joystick.joy1_TopHat == 4) {
 			int move = nMotorEncoder[flip] % 570;
