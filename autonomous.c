@@ -42,7 +42,6 @@ task main(){
 	wait1Msec(500);
 	HTGYROstartCal(SENSOR_GYRO);
 	wait1Msec(500);
-
 	// Set and run desired autonomous program
 	switch(i) {
 		case 0 :

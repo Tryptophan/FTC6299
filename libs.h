@@ -206,12 +206,12 @@ void drift(int power, int deg, int angle, int time = 8000) {
 			heading += HTGYROreadRot(SENSOR_GYRO) * (float)(20 / 1000.0);
 			if (angle > 0) {
 				while (heading < angle) {
-					setMotors(power, power - 10);
+					setMotors(power, power - (power / 10));
 				}
 			}
 			else {
 				while (heading > angle) {
-					setMotors(power - 10, power);
+					setMotors(power - (power / 10), power);
 				}
 			}
 		}

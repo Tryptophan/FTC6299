@@ -26,14 +26,15 @@ void bare(int s, int position) {
 	}
 	if (position == 0) {  //Ramp
 		playSound(soundBeepBeep);
-		moveTo(-10, -7500, 1.5, 4000);
-		arcTurn(-20, -20);
-		moveTo(-15, -500, 2.0, 1000);
+		moveTo(-10, -6700, 1.5, 4000);
+		turn(20, -45);
+		moveTo(-15, -500);
+		turn(-20, -80);
+		moveTo(-15, -600, 2.0);
 		latch(true);
 		moveTo(15, 900);
-		turn(20, 90);
-		turn(20, 90);
-		moveTo(-25, -7700, 2.0, 1000);
+		turn(20, 165);
+		moveTo(-25, -7100, 2.0);
 		lift(60, 2100);
 		basket('x');
 		latch(false);
