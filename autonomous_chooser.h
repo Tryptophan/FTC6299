@@ -24,7 +24,7 @@ void startupCheck(){
 		playSound(soundException);
 		displayTextLine(6, " Check Gyro");
 	}
-	if (externalBattery < 13600){
+	if (externalBattery < 13000){
 		playSound(soundBlip);
 		displayTextLine(7, " Battery Low");
 	}
