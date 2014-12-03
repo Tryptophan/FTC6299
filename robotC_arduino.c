@@ -70,11 +70,12 @@ task main()
   heading -= init;
   wait10Msec(50);
 	while(true){
-	    heading = (getMPUHeading() - init)// % 360; //accomodate for going over 360
-	   	/*if(abs(heading) > 360)//test this out
-	   	{
-	    	heading = 360 - (abs(getMPUHeading()) - abs(init));
-	  	}*/
+	    heading = (getMPUHeading() - init) //% 360; //accomodate for going over 360
+	    if(heading + init > 360)
+	    {
+	    		heading = (getMPUHeading() - init) - 360;
+	    		displayCenteredBigTextLine(6, "roll over");
+	    }
     	displayCenteredBigTextLine(2, "%d", heading);
     	displayCenteredBigTextLine(4, "%d", getMPUHeading());
       wait1Msec(5);

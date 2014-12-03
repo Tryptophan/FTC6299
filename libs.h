@@ -183,10 +183,11 @@ void turn(int power, int deg, int time = 5000) {
 
   if (abs(deg) < 180) {
     while (time1[T1] < time && heading < abs(deg)) {
-	    heading = (getMPUHeading() - init)// % 360; //accomodate for going over 360
-	    if(init + deg > 360)
+	    heading = (getMPUHeading() - init) //% 360; //accomodate for going over 360
+	    if(heading + init > 360)
 	    {
 	    		heading = (getMPUHeading() - init) - 360;
+	    		displayCenteredBigTextLine(6, "roll over");
 	    }
     	displayCenteredBigTextLine(2, "%d", heading);
     	displayCenteredBigTextLine(4, "%d", getMPUHeading());
