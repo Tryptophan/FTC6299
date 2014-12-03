@@ -141,8 +141,8 @@ task slide()
 {
 	while(true){
 		while(abs(joystick.joy2_y1) >= 10){
-			motor[liftL] = joystick.joy2_y1 / 1.28;
-			motor[liftR] = joystick.joy2_y1 / 1.28;
+			motor[liftL] = joystick.joy2_y1 / -1.28;
+			motor[liftR] = joystick.joy2_y1 / -1.28;
 		}
 		motor[liftL] = 0;
 		motor[liftR] = 0;
