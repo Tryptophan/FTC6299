@@ -30,11 +30,11 @@ void bare(int s, int position) {
 	}
 	if (position == 0) {  //Ramp
 		playSound(soundBeepBeep);
-		moveTo(-10, -6700, 1.5, 4000);
+		moveTo(-10, -6300, 1.5, 4000);
 		turn(20, -45);
-		moveTo(-15, -500);
+		moveTo(-15, -900);
 		turn(-20, -80);
-		moveTo(-15, -700, 2.0);
+		moveTo(-15, -800, 2.0);
 		latch(true);
 		moveTo(15, 900);
 		turn(20, 165);
