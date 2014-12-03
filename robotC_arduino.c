@@ -63,21 +63,30 @@ short getMPUrot()
 
 task main()
 {
-	int heading = 0;
+	/*int heading = 0;
   wait10Msec(50);
   int init = getMPUHeading();
   displayCenteredBigTextLine(0, "init:%d", init);
   heading -= init;
   wait10Msec(50);
 	while(true){
-	    heading = (getMPUHeading() - init) //% 360; //accomodate for going over 360
-	    if(heading + init > 360)
-	    {
-	    		heading = (getMPUHeading() - init) - 360;
-	    		displayCenteredBigTextLine(6, "roll over");
-	    }
-    	displayCenteredBigTextLine(2, "%d", heading);
+			displayCenteredBigTextLine(2, "%d", heading);
     	displayCenteredBigTextLine(4, "%d", getMPUHeading());
+    	heading = (getMPUHeading() - init); //% 360; //accomodate for going over 360
+    	if(heading < 360)
+    	{
+				heading = (getMPUHeading() - init); //% 360; //accomodate for going over 360
+			}
+	    else if(getMPUHeading() + init > 360 ||getMPUHeading() - init < 0)
+	    {
+	    		heading = (getMPUHeading() - init) + 360;
+	    		displayCenteredBigTextLine(6, "roll over");
+	  	}
       wait1Msec(5);
+	}*/
+
+	while(true)
+	{
+		displayCenteredBigTextLine(4, "%d", getMPUHeading());
 	}
 }
