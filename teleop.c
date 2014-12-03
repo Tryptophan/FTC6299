@@ -27,10 +27,10 @@ task flipperFlapper() {
 	nMotorEncoder[flip] = 0;
 	while (true) {
 		while (joy1Btn(07) == 1) {
-			motor[flip] = 60;
+			motor[flip] = 40;
 		}
 		while (joy1Btn(08) == 1) {
-			motor[flip] = -60;
+			motor[flip] = -40;
 		}
 		delay(50);
 		motor[flip] = 0;
