@@ -15,18 +15,17 @@ void bare(int s, int position) {
 		turn(-20, -21);
 		moveTo(-15, -5000, 1.5);
 		turn(-20, -50);
-		moveTo(-15, -2000, 1.5, 2000);
+		moveTo(-15, -2200, 1.5, 2250);
 		moveTo(15, 1300);
-		turn(-20, 60);
-
-		/*
+		turn(-20, 55);
+		moveTo(-15, -2000);
 		latch(true);
-		moveTo(15, 1100, 1.5);
-		turn(20, 180);
-		moveTo(-40, -7000, 1.5);
-		//lift(60, 2000);
-		//basket('x');
-		latch(false);*/
+		moveTo(15, 1400, 1.5);
+		turn(20, 190);
+		moveTo(-15, -7000, 1.5);
+		lift(60, 2000);
+		basket('x');
+		latch(false);
 	}
 	if (position == 0) {  //Ramp
 		playSound(soundBeepBeep);
