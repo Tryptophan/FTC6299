@@ -26,10 +26,10 @@
 #include "drivers\JoystickDriver.c";
 
 /*
-	Made by Team 6299 QuadX
-		- Jacob Greenway
-		- Joshua Johnson
-		- Linnea May
+Made by Team 6299 QuadX
+- Jacob Greenway
+- Joshua Johnson
+- Linnea May
 */
 
 task main(){
@@ -37,19 +37,21 @@ task main(){
 	//Starts Autonomous Chooser
 	startTask(chooser);
 	waitForStart();
-
+	//delay(5000);
 	stopTask(chooser);
-
+	wait1Msec(500);
+	HTGYROstartCal(SENSOR_GYRO);
+	wait1Msec(500);
 	// Set and run desired autonomous program
 	switch(i) {
-		case 0 :
-			bare(suspend, begin);
-			break;
-		case 1 :
-			autoFrontDump(suspend);
-		case 2 :
-			test(suspend);
-			break;
-}
+	case 0 :
+		bare(suspend, begin);
+		break;
+	case 1 :
+		autoFrontDump(suspend);
+	case 2 :
+		test(suspend);
+		break;
+	}
 	while(true){}
 }

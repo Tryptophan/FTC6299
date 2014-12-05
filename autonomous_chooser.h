@@ -24,7 +24,7 @@ void startupCheck(){
 		playSound(soundException);
 		displayTextLine(6, " Check Gyro");
 	}
-	if (externalBattery < 13600){
+	if (externalBattery < 13000){
 		playSound(soundBlip);
 		displayTextLine(7, " Battery Low");
 	}
@@ -130,7 +130,7 @@ task chooser() {
 		}
 		else if (toggle == 1) {
 			displayTextLine(0, " Pgm: %s", file);
-			displayTextLine(1, "*Delay: %2i", suspend)
+			displayTextLine(1, "*Delay: %2i", suspend);
 			displayTextLine(2, " Tube: %2i", tube);
 			displayTextLine(3, " Side: %s", side);
 

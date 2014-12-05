@@ -8,31 +8,36 @@ void initializeRobot() {
 
 // Finds the ir beacon, dumps the block, and parks on the ramp
 void bare(int s, int position) {
-	delay(s * 100);
+	delay(s * 1000);
 	if (position == 1) {  //Parking Zone
 		playSound(soundBeepBeep);
-		moveTo(-15, -1200, 1.5);
-		arcTurn(-20, -25);
-		moveTo(-15, -7200, 1.5);
+		moveTo(-15, -1600, 1.5);
+		turn(-20, -21);
+		moveTo(-15, -5000, 1.5);
+		turn(-20, -50);
+		moveTo(-15, -2200, 1.5, 2250);
+		moveTo(15, 1300);
+		turn(-20, 55);
+		moveTo(-15, -2000);
 		latch(true);
-		moveTo(15, 1100, 1.5);
-		turn(20, 80);
-		turn(20, 90);
+		moveTo(15, 1400, 1.5);
+		turn(20, 190);
 		moveTo(-15, -7000, 1.5);
 		lift(60, 2000);
 		basket('x');
-		delay(3000);
 		latch(false);
 	}
 	if (position == 0) {  //Ramp
 		playSound(soundBeepBeep);
-		moveTo(-10, -7600, 1.5);
+		moveTo(-10, -6300, 1.5, 4000);
+		turn(20, -45);
+		moveTo(-15, -900);
+		turn(-20, -80);
+		moveTo(-15, -1100, 2.0);
 		latch(true);
-		arcTurn(20, 10, 8000);
-		moveTo(15, 900, 0.8, 2000);
-		turn(20, 80);
-		turn(20, 90);
-		moveTo(-25, -7700, 2.0, 20000);
+		moveTo(15, 900);
+		turn(20, 165);
+		moveTo(-40, -7100, 2.0);
 		lift(60, 2100);
 		basket('x');
 		latch(false);

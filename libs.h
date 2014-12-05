@@ -18,13 +18,13 @@ bool isInRange(float heading, float targetHeading, float threshold = 1.0) {
 }
 
 int getEncoderAverage(int leftMotor, int rightMotor) {
-	if (abs(leftMotor) < 3) {
+	/*if (abs(leftMotor) < 3) {
 		return rightMotor;
 	}
 	if (abs(rightMotor) < 3) {
 		return leftMotor;
-	}
-	return (leftMotor + rightMotor) / 2;
+	} */
+	return (/*leftMotor +*/ rightMotor)/* / 2*/;
 }
 
 void setMotors(int left, int right) {
@@ -41,19 +41,14 @@ void stopMotors() {
 	motor[motorBR] = 0;
 }
 
-void moveTo(int power, int deg, float threshold = 2.0, long time = 5000, float cor = 4.0) {
+void moveTo(int power, int deg, float threshold = 2.0, long time = 100000, float cor = 4.0) {
 	heading = 0;
 	nMotorEncoder[motorFL] = 0;
 	nMotorEncoder[motorFR] = 0;
-
-	wait1Msec(500);
-	HTGYROstartCal(SENSOR_GYRO);
-	wait1Msec(500);
-
+	wait1Msec(250);
 	clearTimer(T1);
-
 	if (power > 0) {
-		while (time1[T1] < time && getEncoderAverage(nMotorEncoder[motorFL], nMotorEncoder[motorBL]) < deg) {
+		while (time1[T1] < time && getEncoderAverage(nMotorEncoder[motorFL], nMotorEncoder[motorFR]) < deg) {
 			displayCenteredBigTextLine(3, "%10i", nMotorEncoder[motorFL]);
 			displayCenteredBigTextLine(5, "%10i", nMotorEncoder[motorFR]);
 			// Reads gyros rate of turn, mulitplies it by the time passed (20ms), and adds it to the current heading
@@ -106,7 +101,7 @@ void moveTo(int power, int deg, float threshold = 2.0, long time = 5000, float c
 	stopMotors();
 }
 
-void turn(int power, int deg, int time = 5000) {
+void turn(int power, int deg, int time = 6000) {
 
 	/*// 90 Degree Modifier
 	if (abs(deg) == 90) {
@@ -121,11 +116,7 @@ void turn(int power, int deg, int time = 5000) {
 	}*/
 
 	heading = 0;
-
-	wait1Msec(500);
-	HTGYROstartCal(SENSOR_GYRO);
-	wait1Msec(500);
-
+	wait1Msec(250);
 	clearTimer(T1);
 
 	if (deg > 0) {
@@ -147,7 +138,7 @@ void turn(int power, int deg, int time = 5000) {
 	stopMotors();
 }
 
-void arcTurn(int power, int deg, int time = 3000) {
+void arcTurn(int power, int deg, int time = 7000) {
 
 	// 90 Degree Modifier
 	if (abs(deg) == 90) {
@@ -162,10 +153,8 @@ void arcTurn(int power, int deg, int time = 3000) {
 	}
 
 	heading = 0;
+	wait1Msec(250);
 	clearTimer(T1);
-	wait1Msec(500);
-	HTGYROstartCal(SENSOR_GYRO);
-	wait1Msec(500);
 	// Forward arcTurn
 	if (power > 0) {
 		if (deg > 0) {
@@ -206,30 +195,72 @@ void arcTurn(int power, int deg, int time = 3000) {
 	stopMotors();
 }
 
+void drift(int power, int deg, int angle, int time = 8000) {
+	heading = 0;
+	nMotorEncoder[motorFL] = 0;
+	nMotorEncoder[motorFR] = 0;
+	wait1Msec(250);
+	clearTimer(T1);
+	if (power > 0) {
+		while (time1[T1] < time && getEncoderAverage(nMotorEncoder[motorFL], nMotorEncoder[motorFR]) < deg) {
+			heading += HTGYROreadRot(SENSOR_GYRO) * (float)(20 / 1000.0);
+			if (angle > 0) {
+				while (heading < angle) {
+					setMotors(power, power - (power / 10));
+				}
+			}
+			else {
+				while (heading > angle) {
+					setMotors(power - (power / 10), power);
+				}
+			}
+		}
+	}
+	if (power < 0) {
+		while (time1[T1] < time && getEncoderAverage(nMotorEncoder[motorFL], nMotorEncoder[motorFR]) < deg) {
+			heading += HTGYROreadRot(SENSOR_GYRO) * (float)(20 / 1000.0);
+			if (angle > 0) {
+				while (heading < angle) {
+					setMotors(power, power - 10);
+				}
+			}
+			else {
+				while (heading > angle) {
+					setMotors(power - 10, power);
+				}
+			}
+		}
+	}
+	stopMotors();
+}
+
 void latch(bool position) {
+	wait1Msec(250);
 	if (!position) {
 		servo[servoL] = 225;
-		servo[servoR] = 0;
+		servo[servoR] = 20;
 	}
 	if (position) {
 		servo[servoL] = 150;
 		servo[servoR] = 93;
 	}
+	wait1Msec(250);
 }
 
 int getPos() {
 	wait1Msec(175);
-	if(HTIRS2readACDir(SENSOR_IR) == 3)
-		return 1;
-	if(HTIRS2readACDir(SENSOR_IR) == 5)
-		return 2;
 	if(HTIRS2readACDir(SENSOR_IR) == 0)
+		return 1;
+	if(HTIRS2readACDir(SENSOR_IR) == 4)
+		return 2;
+	if(HTIRS2readACDir(SENSOR_IR) == 5)
 		return 3;
 	return 0;
 }
 
 void lift(int power, int time) {
 	int t = 0;
+	wait1Msec(250);
 	while (t < time) {
 		motor[liftL] = power;
 		motor[liftR] = power;
@@ -241,20 +272,7 @@ void lift(int power, int time) {
 }
 
 void basket(char position) {
-	TFileHandle file_handle;
-	TFileIOResult io;
-	word size = 10000;
-	short XL, XR, YL, YR, AL, AR, BL, BR;
-	OpenRead(file_handle, io, "servo.txt", size);
-	ReadShort(file_handle, io, XL);
-	ReadShort(file_handle, io, XR);
-	ReadShort(file_handle, io, YL);
-	ReadShort(file_handle, io, YR);
-	ReadShort(file_handle, io, AL);
-	ReadShort(file_handle, io, AR);
-	ReadShort(file_handle, io, BL);
-	ReadShort(file_handle, io, BR);
-	displayTextLine(0,"%d3", XL);
+
 	if (position == 'x') {
 		servo[liftServoL] = 100;
 		servo[liftServoR] = 155;
