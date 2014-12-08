@@ -17,14 +17,21 @@ bool isInRange(float heading, float targetHeading, float threshold = 1.0) {
 	return abs(heading - targetHeading) <= threshold;
 }
 
-int getEncoderAverage(int leftMotor, int rightMotor) {
-	/*if (abs(leftMotor) < 3) {
-		return rightMotor;
+int getEncoderAverage() {
+	int divide = 4;
+	if (nMotorEncoder[motorFL] == 0) {
+		divide--;
 	}
-	if (abs(rightMotor) < 3) {
-		return leftMotor;
-	} */
-	return (/*leftMotor +*/ rightMotor)/* / 2*/;
+	if (nMotorEncoder[motorBL] == 0) {
+		divide--;
+	}
+	if (nMotorEncoder[motorFR] == 0) {
+		divide--;
+	}
+	if (nMotorEncoder[motorBR] == 0) {
+		divide--;
+	}
+	return (nMotorEncoder[motorFL] + nMotorEncoder[motorBL] + nMotorEncoder[motorFR] + nMotorEncoder[motorBR]) / divide;
 }
 
 void setMotors(int left, int right) {
@@ -48,9 +55,7 @@ void moveTo(int power, int deg, float threshold = 2.0, long time = 100000, float
 	wait1Msec(250);
 	clearTimer(T1);
 	if (power > 0) {
-		while (time1[T1] < time && getEncoderAverage(nMotorEncoder[motorFL], nMotorEncoder[motorFR]) < deg) {
-			displayCenteredBigTextLine(3, "%10i", nMotorEncoder[motorFL]);
-			displayCenteredBigTextLine(5, "%10i", nMotorEncoder[motorFR]);
+		while (time1[T1] < time && getEncoderAverage() < deg) {
 			// Reads gyros rate of turn, mulitplies it by the time passed (20ms), and adds it to the current heading
 			heading += valInRange(HTGYROreadRot(SENSOR_GYRO), threshold) * (float)(20 / 1000.0);
 
@@ -73,9 +78,7 @@ void moveTo(int power, int deg, float threshold = 2.0, long time = 100000, float
 	}
 
 	else {
-		while (time1[T1] < time && getEncoderAverage(nMotorEncoder[motorFL], nMotorEncoder[motorFR]) > deg) {
-			displayCenteredBigTextLine(3, "%10i", nMotorEncoder[motorFL]);
-			displayCenteredBigTextLine(5, "%10i", nMotorEncoder[motorFR]);
+		while (time1[T1] < time && getEncoderAverage() > deg) {
 			// Reads gyros rate of turn, mulitplies it by the time passed (20ms), and adds it to the current heading
 			heading += valInRange(HTGYROreadRot(SENSOR_GYRO), threshold) * (float)(20 / 1000.0);
 
@@ -102,18 +105,6 @@ void moveTo(int power, int deg, float threshold = 2.0, long time = 100000, float
 }
 
 void turn(int power, int deg, int time = 6000) {
-
-	/*// 90 Degree Modifier
-	if (abs(deg) == 90) {
-		int modifier = deg * 8/9;
-		deg = modifier;
-	}
-
-	// 45 Degree Modifier
-	else if (abs(deg) == 45) {
-		int modifier = deg * 7/9;
-		deg = modifier;
-	}*/
 
 	heading = 0;
 	wait1Msec(250);
@@ -202,7 +193,7 @@ void drift(int power, int deg, int angle, int time = 8000) {
 	wait1Msec(250);
 	clearTimer(T1);
 	if (power > 0) {
-		while (time1[T1] < time && getEncoderAverage(nMotorEncoder[motorFL], nMotorEncoder[motorFR]) < deg) {
+		while (time1[T1] < time && getEncoderAverage() < deg) {
 			heading += HTGYROreadRot(SENSOR_GYRO) * (float)(20 / 1000.0);
 			if (angle > 0) {
 				while (heading < angle) {
@@ -217,7 +208,7 @@ void drift(int power, int deg, int angle, int time = 8000) {
 		}
 	}
 	if (power < 0) {
-		while (time1[T1] < time && getEncoderAverage(nMotorEncoder[motorFL], nMotorEncoder[motorFR]) < deg) {
+		while (time1[T1] < time && getEncoderAverage() < deg) {
 			heading += HTGYROreadRot(SENSOR_GYRO) * (float)(20 / 1000.0);
 			if (angle > 0) {
 				while (heading < angle) {
