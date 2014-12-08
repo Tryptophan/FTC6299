@@ -2,7 +2,7 @@
 #include "drivers\hitechnic-irseeker-v2.h";
 #include "drivers\hitechnic-superpro.h";
 
-float heading; // = 0;
+int heading; // = 0;
 
 /*
 												sendArduinoCommand():
@@ -97,20 +97,14 @@ void moveTo(int power, int deg, float threshold = 2.0, long time = 5000, float c
   nMotorEncoder[motorR] = 0;
 
   wait1Msec(500);
-  float ROT = (float)(getMPUrot());
-//  sendArduinoCommand(1);
+	int init = getMPUHeading();
   wait1Msec(500);
 
   clearTimer(T1);
 
   if (power > 0) {
     while (time1[T1] < time && getEncoderAverage(nMotorEncoder[motorL], nMotorEncoder[motorR]) < deg) {
-    	//getMPUHeading()
-      //heading = getMPUHeading();
-
-      //ROT = getMPUrot();
-     	heading += ROT * (20/1000);
-
+    	heading = getMPUHeading() + init;
       displayCenteredBigTextLine(4, "%d", heading);
 
       // Checks if the gyro is outside of the specified threshold (1.0)
@@ -172,38 +166,39 @@ void turn(int power, int deg, int time = 5000) {
     deg = modifier;
   }*/
 
-	int heading = 0;
-  wait10Msec(50);
-  int init = getMPUHeading();
+	heading = 0;
+  delay(500);
+  int init = getMPUHeading() * -1;
   displayCenteredBigTextLine(0, "init:%d", init);
-  heading -= init;
-  wait10Msec(50);
+  displayCenteredBigTextLine(2, "hd:%d", heading);
+  delay(500);
 
   clearTimer(T1);
 
-  if (abs(deg) < 180) {
-    while (time1[T1] < time && heading < abs(deg)) {
-	    heading = (getMPUHeading() - init) //% 360; //accomodate for going over 360
-	    if(heading + init > 360)
-	    {
-	    		heading = (getMPUHeading() - init) - 360;
-	    		displayCenteredBigTextLine(6, "roll over");
-	    }
-    	displayCenteredBigTextLine(2, "%d", heading);
-    	displayCenteredBigTextLine(4, "%d", getMPUHeading());
+  if (deg <= 180) {
+    while (time1[T1] < time && heading < deg) {
+    	heading = (getMPUHeading() - init);
+    	if(heading < 0)//accomodate for rollover
+    	{
+    		heading = (getMPUHeading() + init) + 360;
+    	}
       setMotors(power, -power);
-      wait1Msec(5);
+     	wait1Msec(10);
+     	displayCenteredBigTextLine(2, "%d", heading);
+    	displayCenteredBigTextLine(4, "%d", getMPUHeading());
     }
     stopMotors();
-		wait1Msec(10);
+		wait1Msec(50);
   }
 
 
-  if (deg > 180) {
+  if (deg >= 181) {
     while (time1[T1] < time && heading < deg) {
-    	displayCenteredBigTextLine(4, "%d", heading);
-    	displayCenteredBigTextLine(6, "%d", deg);
-     	heading = (getMPUHeading() - init) % 360; //accomodate for going over 360
+    	displayCenteredBigTextLine(2, "%d", heading);
+    	displayCenteredBigTextLine(4, "%d", getMPUHeading());
+    	heading = (getMPUHeading() + init);
+    	if(heading < 0)//accomodate for rollover
+    		heading = (getMPUHeading() + init) + 360;
       setMotors(-power, power);
       //wait1Msec(5);
     }

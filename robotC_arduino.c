@@ -43,6 +43,10 @@ short getMPUHeading()
 	unsigned char add1 = sendArduinoCommand(2);
 	signed char add2 = sendArduinoCommand(3);
 	short MPUheading = add1 | (add2 << 8);
+	if(MPUheading < 0)
+	{
+		MPUheading += 360;
+	}
 	return MPUheading;
 }
 
@@ -63,30 +67,18 @@ short getMPUrot()
 
 task main()
 {
-	/*int heading = 0;
+	int heading = 0;
   wait10Msec(50);
-  int init = getMPUHeading();
+  int init = getMPUHeading() * -1;
   displayCenteredBigTextLine(0, "init:%d", init);
-  heading -= init;
+  heading += init;
   wait10Msec(50);
-	while(true){
+	while(heading < 90){
 			displayCenteredBigTextLine(2, "%d", heading);
     	displayCenteredBigTextLine(4, "%d", getMPUHeading());
-    	heading = (getMPUHeading() - init); //% 360; //accomodate for going over 360
-    	if(heading < 360)
-    	{
-				heading = (getMPUHeading() - init); //% 360; //accomodate for going over 360
-			}
-	    else if(getMPUHeading() + init > 360 ||getMPUHeading() - init < 0)
-	    {
-	    		heading = (getMPUHeading() - init) + 360;
-	    		displayCenteredBigTextLine(6, "roll over");
-	  	}
+    	heading = (getMPUHeading() + init);
+    	if(heading < 0)//accomodate for rollover
+    		heading = (getMPUHeading() + init) + 360;
       wait1Msec(5);
-	}*/
-
-	while(true)
-	{
-		displayCenteredBigTextLine(4, "%d", getMPUHeading());
 	}
 }
