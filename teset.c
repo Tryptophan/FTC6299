@@ -6,10 +6,10 @@
 #pragma config(Sensor, S4,     ,               sensorI2CMuxController)
 #pragma config(Motor,  mtr_S4_C1_1,     motorFL,       tmotorTetrix, openLoop, reversed, encoder)
 #pragma config(Motor,  mtr_S4_C1_2,     motorFR,       tmotorTetrix, openLoop, encoder)
-#pragma config(Motor,  mtr_S4_C2_1,     motorBL,       tmotorTetrix, openLoop, reversed)
-#pragma config(Motor,  mtr_S4_C2_2,     motorBR,       tmotorTetrix, openLoop)
-#pragma config(Motor,  mtr_S4_C3_1,     liftL,         tmotorTetrix, openLoop)
-#pragma config(Motor,  mtr_S4_C3_2,     liftR,         tmotorTetrix, openLoop, reversed)
+#pragma config(Motor,  mtr_S4_C2_1,     motorBL,       tmotorTetrix, openLoop, reversed, encoder)
+#pragma config(Motor,  mtr_S4_C2_2,     motorBR,       tmotorTetrix, openLoop, encoder)
+#pragma config(Motor,  mtr_S4_C3_1,     liftL,         tmotorTetrix, openLoop, encoder)
+#pragma config(Motor,  mtr_S4_C3_2,     liftR,         tmotorTetrix, openLoop, reversed, encoder)
 #pragma config(Motor,  mtr_S4_C4_1,     flip,          tmotorTetrix, openLoop, encoder)
 #pragma config(Motor,  mtr_S4_C4_2,     motorI,        tmotorTetrix, openLoop)
 #pragma config(Servo,  srvo_S3_C1_1,    servoL,               tServoStandard)
@@ -34,6 +34,7 @@ task main()
 			displayTextLine(1, "");
 			displayTextLine(2, "");
 			displayTextLine(3, "");
+			displayTextLine(4, "");
 			while (nNxtButtonPressed == 1) {
 				motor[liftL] = 100;
 				motor[liftR] = 100;
@@ -51,8 +52,10 @@ task main()
 		}
 		while (base == 1) {
 			displayTextLine(0, "Base");
-			displayTextLine(1, "EncoderL: %6i", nMotorEncoder[motorFL]);
-			displayTextLine(2, "EncoderR: %6i", nMotorEncoder[motorFR]);
+			displayTextLine(1, "EncoderFL: %6i", nMotorEncoder[motorFL]);
+			displayTextLine(2, "EncoderFR: %6i", nMotorEncoder[motorFR]);
+			displayTextLine(3, "EncoderBL: %6i", nMotorEncoder[motorBL]);
+			displayTextLine(4, "EncoderBR: %6i", nMotorEncoder[motorBR]);
 			while (nNxtButtonPressed == 1) {
 				motor[motorFL] = 100;
 				motor[motorFR] = 100;
@@ -80,6 +83,7 @@ task main()
 			displayTextLine(1, "Flip: %6i", nMotorEncoder[flip]);
 			displayTextLine(2, "");
 			displayTextLine(3, "");
+			displayTextLine(4, "");
 			while (nNxtButtonPressed == 1) {
 				motor[flip] = 10;
 			}
@@ -97,6 +101,7 @@ task main()
 			displayTextLine(1, "");
 			displayTextLine(2, "");
 			displayTextLine(3, "");
+			displayTextLine(4, "");
 			if (nNxtButtonPressed == 1) {
 				servo[liftServoL] = 100;
 				servo[liftServoR] = 155;
