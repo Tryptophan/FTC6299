@@ -69,16 +69,19 @@ task main()
 {
 	int heading = 0;
   wait10Msec(50);
-  int init = getMPUHeading() * -1;
+  int init = getMPUHeading();
   displayCenteredBigTextLine(0, "init:%d", init);
   //heading += init;
-  wait10Msec(50);
+  wait10Msec(100);
+  displayCenteredBigTextLine(2, "init:%d", heading);
 	while(true){
 			displayCenteredBigTextLine(2, "%d", heading);
     	displayCenteredBigTextLine(4, "%d", getMPUHeading());
-    	heading = abs((getMPUHeading() + init));
-    	if(heading < 0)//accomodate for rollover
-    		heading = (getMPUHeading() + init) + 360;
+    	heading = abs((getMPUHeading() - init));
+    	if(getMPUheading() < init)//accomodate for rollover
+    	{
+    		heading = (getMPUHeading() + 360) - init;
+    	}
       wait1Msec(5);
 	}
 }

@@ -172,46 +172,50 @@ void turn(int power, int deg, int time = 5000) {
   }*/
 
 	heading = 0;
-  delay(500);
-  int init = getMPUHeading() * -1;
+  wait10Msec(50);
+  int init = getMPUHeading();
   displayCenteredBigTextLine(0, "init:%d", init);
-  displayCenteredBigTextLine(2, "MPU:%d", getMPUHeading());
-  displayCenteredBigTextLine(4, "hd1:%d", heading);
-  delay(500);
+  //heading += init;
+  wait10Msec(100);
+  displayCenteredBigTextLine(2, "init:%d", heading);
 
   clearTimer(T1);
 
-  if (deg < 180) {
-    while (time1[T1] < time && abs(heading) <= abs(deg)) {
-    	displayCenteredBigTextLine(4, "MPU2%d", getMPUHeading());
-    	MPUheading = getMPUHeading();
-    	heading =(MPUheading + init);
-    	if (heading < 0)//accomodate for rollover
+  //if (deg < 180) {
+    while (/*time1[T1] < time &&*/ heading <= deg) {
+    	setMotors(power, -power);
+    	displayCenteredBigTextLine(2, "%d", heading);
+    	displayCenteredBigTextLine(4, "%d", getMPUHeading());
+    	heading = abs((getMPUHeading() - init));
+    	if(getMPUheading() < init)//accomodate for rollover
     	{
-    		heading = (MPUheading + init) + 360;/*%180*/
-    		displayCenteredBigTextLine(2, "rollover");
+    		heading = (getMPUHeading() + 360) - init;
     	}
-    	displayCenteredBigTextLine(6, "hd%d", heading);
-      setMotors(power, -power);
-     	//wait1Msec(10);
+    	else
+    	{
+    		heading = abs((getMPUHeading() - init));
+    	}
+     	//wait1Msec(5);
     }
     stopMotors();
 		wait10Msec(50);
-  }
+  //}
 
-  if (deg > 180) {
+  /*if (deg > 180) {
     while (time1[T1] < time && heading >= deg) {
     	displayCenteredBigTextLine(2, "%d", heading);
-    	//displayCenteredBigTextLine(4, "%d", getMPUHeading());
-    	heading = (getMPUHeading() + init);
-    	/*if(heading < 0)//accomodate for rollover
-    		heading = (getMPUHeading() + init) + 360;*/
+    	displayCenteredBigTextLine(4, "%d", getMPUHeading());
+    	heading = abs((getMPUHeading() - init));
+    	if(getMPUheading() < init)//accomodate for rollover
+    	{
+    		heading = (getMPUHeading() + 360) - init;
+    	}
       setMotors(-power, power);
-      //wait1Msec(10);
+     	wait1Msec(5);
     }
     stopMotors();
     wait1Msec(10);
-  }
+  }*/
 
   stopMotors();
 }
