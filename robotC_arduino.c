@@ -71,12 +71,12 @@ task main()
   wait10Msec(50);
   int init = getMPUHeading() * -1;
   displayCenteredBigTextLine(0, "init:%d", init);
-  heading += init;
+  //heading += init;
   wait10Msec(50);
-	while(heading < 90){
+	while(true){
 			displayCenteredBigTextLine(2, "%d", heading);
     	displayCenteredBigTextLine(4, "%d", getMPUHeading());
-    	heading = (getMPUHeading() + init);
+    	heading = abs((getMPUHeading() + init));
     	if(heading < 0)//accomodate for rollover
     		heading = (getMPUHeading() + init) + 360;
       wait1Msec(5);

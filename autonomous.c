@@ -1,4 +1,4 @@
-#pragma config(Hubs,  S1, HTMotor,  none,     none,     none)
+ #pragma config(Hubs,  S1, HTMotor,  none,     none,     none)
 #pragma config(Sensor, S1,     ,               sensorI2CMuxController)
 #pragma config(Sensor, S2,     HTSPB,          sensorI2CCustom9V)
 #pragma config(Sensor, S4,     SENSOR_IR,      sensorI2CCustom)
@@ -14,7 +14,7 @@
 #include "drivers\JoystickDriver.c";
 
 task main(){
-	turn(10, 90);
-	turn(10, 90);
+	turn(10, 45);
+	turn(10, 45);
 	while(true){}
 }

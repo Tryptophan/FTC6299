@@ -45,6 +45,10 @@ short getMPUHeading()
 	signed char add1 = sendArduinoCommand(2);
 	signed char add2 = sendArduinoCommand(3);
 	short MPUheading = add1 | (add2 << 8);
+	if(MPUheading < 0)
+	{
+		MPUheading += 360;
+	}
 	return MPUheading;
 }
 
@@ -175,32 +179,32 @@ void turn(int power, int deg, int time = 5000) {
 
   clearTimer(T1);
 
-  if (deg <= 180) {
-    while (time1[T1] < time && heading < deg) {
-    	heading = (getMPUHeading() - init);
-    	if(heading < 0)//accomodate for rollover
-    	{
-    		heading = (getMPUHeading() + init) + 360;
-    	}
-      setMotors(power, -power);
-     	wait1Msec(10);
-     	displayCenteredBigTextLine(2, "%d", heading);
-    	displayCenteredBigTextLine(4, "%d", getMPUHeading());
-    }
-    stopMotors();
-		wait1Msec(50);
-  }
-
-
-  if (deg >= 181) {
-    while (time1[T1] < time && heading < deg) {
+  if (deg < 180) {
+    while (time1[T1] < time && abs(heading) <= abs(deg)) {
     	displayCenteredBigTextLine(2, "%d", heading);
     	displayCenteredBigTextLine(4, "%d", getMPUHeading());
     	heading = (getMPUHeading() + init);
-    	if(heading < 0)//accomodate for rollover
-    		heading = (getMPUHeading() + init) + 360;
+    	if (heading < 0)//accomodate for rollover
+    	{
+    		heading = (getMPUHeading() + init) + 360;/*%180*/
+    		displayCenteredBigTextLine(6, "rollover");
+    	}
+      setMotors(power, -power);
+     	//wait1Msec(10);
+    }
+    stopMotors();
+		wait10Msec(50);
+  }
+
+  if (deg > 180) {
+    while (time1[T1] < time && heading >= deg) {
+    	displayCenteredBigTextLine(2, "%d", heading);
+    	//displayCenteredBigTextLine(4, "%d", getMPUHeading());
+    	heading = (getMPUHeading() + init);
+    	/*if(heading < 0)//accomodate for rollover
+    		heading = (getMPUHeading() + init) + 360;*/
       setMotors(-power, power);
-      //wait1Msec(5);
+      //wait1Msec(10);
     }
     stopMotors();
     wait1Msec(10);
