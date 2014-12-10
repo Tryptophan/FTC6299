@@ -3,6 +3,7 @@
 #include "drivers\hitechnic-superpro.h";
 
 int heading; // = 0;
+int MPUheading = 0;
 
 /*
 												sendArduinoCommand():
@@ -174,21 +175,23 @@ void turn(int power, int deg, int time = 5000) {
   delay(500);
   int init = getMPUHeading() * -1;
   displayCenteredBigTextLine(0, "init:%d", init);
-  displayCenteredBigTextLine(2, "hd:%d", heading);
+  displayCenteredBigTextLine(2, "MPU:%d", getMPUHeading());
+  displayCenteredBigTextLine(4, "hd1:%d", heading);
   delay(500);
 
   clearTimer(T1);
 
   if (deg < 180) {
     while (time1[T1] < time && abs(heading) <= abs(deg)) {
-    	displayCenteredBigTextLine(2, "%d", heading);
-    	displayCenteredBigTextLine(4, "%d", getMPUHeading());
-    	heading = (getMPUHeading() + init);
+    	displayCenteredBigTextLine(4, "MPU2%d", getMPUHeading());
+    	MPUheading = getMPUHeading();
+    	heading =(MPUheading + init);
     	if (heading < 0)//accomodate for rollover
     	{
-    		heading = (getMPUHeading() + init) + 360;/*%180*/
-    		displayCenteredBigTextLine(6, "rollover");
+    		heading = (MPUheading + init) + 360;/*%180*/
+    		displayCenteredBigTextLine(2, "rollover");
     	}
+    	displayCenteredBigTextLine(6, "hd%d", heading);
       setMotors(power, -power);
      	//wait1Msec(10);
     }
