@@ -240,13 +240,11 @@ void latch(bool position) {
 
 int getPos() {
 	wait1Msec(175);
-	if(HTIRS2readACDir(SENSOR_IR) == 0)
-		return 1;
-	if(HTIRS2readACDir(SENSOR_IR) == 4)
-		return 2;
-	if(HTIRS2readACDir(SENSOR_IR) == 5)
+	if(HTIRS2readACDir(SENSOR_IR) > 3)
 		return 3;
-	return 0;
+	if(HTIRS2readACDir(SENSOR_IR) <= 3 && HTIRS2readACDir(SENSOR_IR) >= 1)
+		return 2;
+	return 1;
 }
 
 void lift(int power, int time) {
