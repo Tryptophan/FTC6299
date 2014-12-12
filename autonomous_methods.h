@@ -29,22 +29,22 @@ void bare(int s, int position) {
 	}
 	if (position == 0) {  //Ramp
 		playSound(soundBeepBeep);
-		moveTo(-20, -4895, 1.5, 4000);
+		moveTo(-10, -4895, 1.5, 4000);
 		turn(20, -45);
-		moveTo(-30, -4000);
-		turn(-20, -80);
-		moveTo(-30, -6000, 2.0);
+		moveTo(-20, -400);
+		turn(-20, -90);
+		moveTo(-20, -800, 2.0);
 		latch(true);
-		moveTo(30, 700);
-		turn(20, 165);
+		moveTo(20, 1000);
+		turn(30, 165);
 		moveTo(-80, -5516, 2.0);
-		lift(60, 2100);
-		basket('x');
+		//lift(60, 2100);
+		//basket('x');
 		latch(false);
 	}
 }
 
-void autoFrontDump(int s) {
+void center(int s, int position) {
 	delay(s * 100);
 	basket('x');
 }

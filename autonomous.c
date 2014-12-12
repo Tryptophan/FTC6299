@@ -36,8 +36,8 @@ task main(){
 
 	//Starts Autonomous Chooser
 	startTask(chooser);
-	waitForStart();
-	//delay(5000);
+	//waitForStart();
+	delay(5000);
 	stopTask(chooser);
 	wait1Msec(500);
 	HTGYROstartCal(SENSOR_GYRO);
@@ -48,10 +48,10 @@ task main(){
 		bare(suspend, begin);
 		break;
 	case 1 :
-		autoFrontDump(suspend);
+		center(suspend, begin);
 	case 2 :
 		test(suspend);
-		break;
+	break;
 	}
 	while(true){}
 }

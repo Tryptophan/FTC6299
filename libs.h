@@ -50,8 +50,10 @@ void stopMotors() {
 
 void moveTo(int power, int deg, float threshold = 2.0, long time = 100000, float cor = 4.0) {
 	heading = 0;
+	nMotorEncoder[motorBL] = 0;
 	nMotorEncoder[motorFL] = 0;
 	nMotorEncoder[motorFR] = 0;
+	nMotorEncoder[motorBR] = 0;
 	wait1Msec(250);
 	clearTimer(T1);
 	if (power > 0) {
