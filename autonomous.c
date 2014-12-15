@@ -15,6 +15,5 @@
 
 task main(){
 	turn(10, 90);
-	turn(10, 90);
 	while(true){}
 }

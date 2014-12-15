@@ -47,6 +47,7 @@ short getMPUHeading()
 	{
 		MPUheading += 360;
 	}
+	wait1Msec(50);
 	return MPUheading;
 }
 

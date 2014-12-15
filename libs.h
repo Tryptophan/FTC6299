@@ -50,6 +50,7 @@ short getMPUHeading()
 	{
 		MPUheading += 360;
 	}
+	wait1Msec(5);
 	return MPUheading;
 }
 
@@ -173,20 +174,21 @@ void turn(int power, int deg, int time = 5000) {
 
 	heading = 0;
   wait10Msec(50);
-  int init = getMPUHeading();
+  int init = 0;
+  init = getMPUHeading();
   displayCenteredBigTextLine(0, "init:%d", init);
   //heading += init;
-  wait10Msec(100);
+  //wait10Msec(100);
   displayCenteredBigTextLine(2, "init:%d", heading);
 
   clearTimer(T1);
 
   //if (deg < 180) {
-    while (/*time1[T1] < time &&*/ heading <= deg) {
-    	setMotors(power, -power);
-    	displayCenteredBigTextLine(2, "%d", heading);
-    	displayCenteredBigTextLine(4, "%d", getMPUHeading());
-    	heading = abs((getMPUHeading() - init));
+  	setMotors(power, -power);
+  	wait1Msec(50);
+    while (/*time1[T1] < time && */heading < deg) {
+
+    	//heading = abs((getMPUHeading() - init));
     	if(getMPUheading() < init)//accomodate for rollover
     	{
     		heading = (getMPUHeading() + 360) - init;
@@ -195,10 +197,11 @@ void turn(int power, int deg, int time = 5000) {
     	{
     		heading = abs((getMPUHeading() - init));
     	}
-     	//wait1Msec(5);
+			displayCenteredBigTextLine(2, "%d", heading);
+    	displayCenteredBigTextLine(4, "%d", getMPUHeading());
     }
     stopMotors();
-		wait10Msec(50);
+
   //}
 
   /*if (deg > 180) {
