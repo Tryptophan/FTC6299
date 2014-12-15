@@ -17,6 +17,7 @@ bool isInRange(float heading, float targetHeading, float threshold = 1.0) {
 	return abs(heading - targetHeading) <= threshold;
 }
 
+
 int getEncoderAverage() {
 	int divide = 4;
 	if (nMotorEncoder[motorFL] == 0) {
@@ -241,12 +242,43 @@ void latch(bool position) {
 }
 
 int getPos() {
-	wait1Msec(175);
-	if(HTIRS2readACDir(SENSOR_IR) > 3)
+	delay(450);
+	/*int count[5] = {0, 0, 0, 0, 0};
+	for (int j = 0; j < 20; j++) {
+		if (HTIRS2readACDir(SENSOR_IR) == 0) {
+			count[0] += 1;
+		}
+		if (HTIRS2readACDir(SENSOR_IR) == 1) {
+			count[1] += 1;
+		}
+		if (HTIRS2readACDir(SENSOR_IR) == 2) {
+			count[2] += 1;
+		}
+		if (HTIRS2readACDir(SENSOR_IR) == 3) {
+			count[3] += 1;
+		}
+		if (HTIRS2readACDir(SENSOR_IR) == 4) {
+			count[4] += 1;
+		}
+		delay(20);
+	}
+	int big = count[0];*/
+	int spot = HTIRS2readACDir(SENSOR_IR);
+	/*for (int j = 1; j < 5; j++) {
+		if (count[j] > big) {
+			spot = j;
+			big = count[j];
+		}
+	}*/
+	if (spot > 3) {
 		return 3;
-	if(HTIRS2readACDir(SENSOR_IR) <= 3 && HTIRS2readACDir(SENSOR_IR) >= 1)
+	}
+	else if (spot <= 3 && spot >= 1) {
 		return 2;
-	return 1;
+	}
+	else {
+		return 1;
+	}
 }
 
 void lift(int power, int time) {

@@ -31,7 +31,7 @@ void bare(int s, int position) {
 		playSound(soundBeepBeep);
 		moveTo(-10, -4895, 1.5, 4000);
 		turn(20, -45);
-		moveTo(-20, -400);
+		moveTo(-20, -550);
 		turn(-20, -90);
 		moveTo(-20, -800, 2.0);
 		latch(true);
@@ -47,6 +47,10 @@ void bare(int s, int position) {
 void center(int s, int position) {
 	delay(s * 100);
 	basket('x');
+	if (position == 0) {
+		moveTo(10, 2300, 0.2);
+		displayTextLine(0, "%1i", getPos());
+	}
 }
 
 void test(int suspend){
