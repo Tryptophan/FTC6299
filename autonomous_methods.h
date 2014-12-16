@@ -48,8 +48,16 @@ void center(int s, int position) {
 	delay(s * 100);
 	basket('x');
 	if (position == 0) {
-		moveTo(10, 2300, 0.2);
+		moveTo(15, 2300, 0.2);
 		displayTextLine(0, "%1i", getPos());
+		if (getPos() == 3) {
+			moveTo(-15, -300, 0.4);
+			turn(20, -90);
+			moveTo(15, 650, 0.4);
+			turn(20, -80);
+			moveTo(-15, -1200, 90.0, 1500);
+			moveTo(10, 450, 0.4);
+		}
 	}
 }
 
