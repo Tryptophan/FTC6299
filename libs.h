@@ -17,6 +17,16 @@ bool isInRange(float heading, float targetHeading, float threshold = 1.0) {
 	return abs(heading - targetHeading) <= threshold;
 }
 
+int getLiftAverage() {
+	int divide = 2;
+	if (nMotorEncoder[liftL] == 0) {
+		divide--;
+	}
+	if (nMotorEncoder[liftR] == 0) {
+		divide--;
+	}
+	return ((nMotorEncoder[liftL] + nMotorEncoder[liftR]) / divide);
+}
 
 int getEncoderAverage() {
 	int divide = 4;
@@ -281,10 +291,12 @@ int getPos() {
 	}
 }
 
-void lift(int power, int time) {
+void lift(int power, int deg, int time = 6000) {
+	nMotorEncoder[liftL] = 0;
+	nMotorEncoder[liftR] = 0;
 	int t = 0;
 	wait1Msec(250);
-	while (t < time) {
+	while (t < time && getLiftAverage() < deg) {
 		motor[liftL] = power;
 		motor[liftR] = power;
 		t += 20;
