@@ -58,17 +58,19 @@ short getMPUAccelX()
 	return raw | (raw2 << 8);
 }
 
-short getMPUrot()
+/*short getMPUrot()
 {
 	signed char third1 = sendArduinoCommand(6);
 	signed char third2 = sendArduinoCommand(7);
 	signed char third3 = sendArduinoCommand(8);
 	return third1 | (third2 << 8) | (third3 << 16);
-}
+}*/
 
 task main()
 {
 	int heading = 0;
+	int oldHeading;
+	int filteredHeading;
   wait10Msec(50);
   int init = getMPUHeading();
   displayCenteredBigTextLine(0, "init:%d", init);
@@ -76,13 +78,16 @@ task main()
   wait10Msec(100);
   displayCenteredBigTextLine(2, "init:%d", heading);
 	while(true){
-			displayCenteredBigTextLine(2, "%d", heading);
-    	displayCenteredBigTextLine(4, "%d", getMPUHeading());
-    	heading = abs((getMPUHeading() - init));
+			heading = (abs((getMPUHeading() - init));
+			filteredHeading = oldHeading + (heading / 4);
     	if(getMPUheading() < init)//accomodate for rollover
     	{
-    		heading = (getMPUHeading() + 360) - init;
+    		heading =(getMPUHeading() + 360);
+    		filteredHeading = oldHeading + (heading / 4);
     	}
+    	oldHeading = (3 * heading) / 4;
+			displayCenteredBigTextLine(2, "%d", heading);
+    	displayCenteredBigTextLine(4, "%d", getMPUHeading());
       wait1Msec(5);
 	}
 }
