@@ -172,33 +172,42 @@ void turn(int power, int deg, int time = 5000) {
     deg = modifier;
   }*/
 
-	heading = 0;
-  wait10Msec(50);
-  int init = 0;
-  init = getMPUHeading();
-  displayCenteredBigTextLine(0, "init:%d", init);
-  //heading += init;
-  //wait10Msec(100);
-  displayCenteredBigTextLine(2, "init:%d", heading);
+	int heading = 0;
+	int MPUheading = 0;
+	int diff;
+	int oldHeading;
 
+  wait10Msec(100);
+  int init = getMPUHeading();
+  oldHeading = init;
+  displayCenteredBigTextLine(0, "init:%d", init);
+  wait10Msec(100);
   clearTimer(T1);
 
   //if (deg < 180) {
   	setMotors(power, -power);
   	wait1Msec(50);
-    while (/*time1[T1] < time && */heading < deg) {
+    while (true/*time1[T1] < time && heading < deg*/) {
+			MPUheading = getMPUHeading();
+			diff = abs(MPUheading - oldHeading);
 
-    	//heading = abs((getMPUHeading() - init));
-    	if(getMPUheading() < init)//accomodate for rollover
-    	{
-    		heading = (getMPUHeading() + 360) - init;
-    	}
-    	else
-    	{
-    		heading = abs((getMPUHeading() - init));
-    	}
-			displayCenteredBigTextLine(2, "%d", heading);
-    	displayCenteredBigTextLine(4, "%d", getMPUHeading());
+			if ((diff < 60) || (360 - diff < 60)){
+				heading = MPUheading - init;
+	    	if(MPUheading < init)//accomodate for rollover
+	    	{
+	    		heading = (MPUheading + 360) - init;
+	    	}
+	    	oldHeading = MPUheading;
+				displayCenteredBigTextLine(2, "%d", heading);
+				displayCenteredBigTextLine(6, "%d", oldHeading);
+		 		displayCenteredBigTextLine(4, "%d", MPUheading);
+	 		}
+	 		else{
+	 			displayCenteredBigTextLine(2, "bad %d", heading);
+	 			displayCenteredBigTextLine(6, "%d", oldHeading);
+		 		displayCenteredBigTextLine(4, "%d", MPUheading);
+		}
+	 	 	wait1Msec(5);
     }
     stopMotors();
 

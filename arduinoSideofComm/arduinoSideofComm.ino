@@ -98,21 +98,9 @@ void hiSP()
       case 3: 
         data = heading >> 8; 
         break;
-      case 4: 
-        data = accel;
+      default: 
+        data = 0; 
         break;
-     case 5: 
-        data = accel >> 8;
-        break;
-     case 6: 
-       data = GyZ;
-       break;
-     case 7: 
-       data = GyZ >> 8;
-       break;
-     case 8: // test with even bigger numbers
-       data = GyZ >> 16;
-       break;
     }
      
   for (int i = 0; i < DATA_WIDTH; i++)
