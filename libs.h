@@ -176,10 +176,11 @@ void turn(int power, int deg, int time = 5000) {
 	int MPUheading = 0;
 	int diff;
 	int oldHeading;
+	int filteredHeading;
 
   wait10Msec(100);
   int init = getMPUHeading();
-  oldHeading = init;
+  oldHeading = filteredHeading = init;
   displayCenteredBigTextLine(0, "init:%d", init);
   wait10Msec(100);
   clearTimer(T1);
@@ -189,8 +190,21 @@ void turn(int power, int deg, int time = 5000) {
   	wait1Msec(50);
     while (true/*time1[T1] < time && heading < deg*/) {
 			MPUheading = getMPUHeading();
-			diff = abs(MPUheading - oldHeading);
+			diff = abs(MPUheading - filteredHeading);
+			if (filteredHeading < 90 && MPUheading > 270)
+			{
+				MPUheading += 360;
+				filteredHeading = (3 * filteredHeading / 4) + (MPUheading / 4);
+			}
+			else if (filteredHeading > 270 && MPUheading < 90)
+			{
+				filteredHeading += 360;
+				filteredHeading = (3 * filteredHeading / 4) + (MPUheading / 4);
+			}
+			else
+				filteredHeading = (3 * filteredHeading / 4) + (MPUheading / 4);
 
+			//Continue to calculate heading if the values aren't bad ones
 			if ((diff < 60) || (360 - diff < 60)){
 				heading = MPUheading - init;
 	    	if(MPUheading < init)//accomodate for rollover
