@@ -25,6 +25,7 @@
 task flipperFlapper() {
 	//displayTextLine(0, "%7i", -12 % 10);
 	//nMotorEncoder[flip] = 0;
+	bool flipin = false;
 	while (true) {
 		while (joy1Btn(07) == 1) {
 			motor[flip] = 100;
@@ -33,8 +34,19 @@ task flipperFlapper() {
 			motor[flip] = -100;
 		}
 		delay(50);
+		if (!flipin && joy1Btn(03) == 1) {
+			flipin = true;
+			delay(100);
+		}
+		while (flipin) {
+			motor[flip] = -100;
+			if (joy1Btn(03) == 1 || joy1Btn(07) == 1 || joy1Btn(08) == 1) {
+				flipin = false;
+				delay(100);
+			}
+		}
 		motor[flip] = 0;
-		if (joystick.joy1_TopHat == 4) {
+		/*if (joystick.joy1_TopHat == 4) {
 			int move = nMotorEncoder[flip] % 570;
 			move = 570 - move;
 			nMotorEncoder[flip] = 0;
@@ -43,7 +55,7 @@ task flipperFlapper() {
 				displayTextLine(0, "%7i", nMotorEncoder[flip]);
 				wait1Msec(5);
 			}
-		}
+		}*/
 		//displayTextLine(0, "%7i", nMotorEncoder[flip]);
 	}
 }
