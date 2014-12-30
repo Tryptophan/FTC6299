@@ -10,7 +10,7 @@
 #pragma config(Motor,  mtr_S4_C2_2,     motorBR,       tmotorTetrix, openLoop, encoder)
 #pragma config(Motor,  mtr_S4_C3_1,     liftL,         tmotorTetrix, openLoop, encoder)
 #pragma config(Motor,  mtr_S4_C3_2,     liftR,         tmotorTetrix, openLoop, reversed, encoder)
-#pragma config(Motor,  mtr_S4_C4_1,     flip,          tmotorTetrix, openLoop, encoder)
+#pragma config(Motor,  mtr_S4_C4_1,     flip,          tmotorTetrix, openLoop, reversed, encoder)
 #pragma config(Motor,  mtr_S4_C4_2,     motorI,        tmotorTetrix, openLoop)
 #pragma config(Servo,  srvo_S3_C1_1,    servoL,               tServoStandard)
 #pragma config(Servo,  srvo_S3_C1_2,    servoR,               tServoStandard)
@@ -90,10 +90,10 @@ task main()
 			displayTextLine(5, "");
 			displayTextLine(6, "");
 			while (nNxtButtonPressed == 1) {
-				motor[flip] = 10;
+				motor[flip] = 100;
 			}
 			while (nNxtButtonPressed == 2) {
-				motor[flip] = -10;
+				motor[flip] = -100;
 			}
 			motor[flip] = 0;
 			if (nNxtButtonPressed == 3) {

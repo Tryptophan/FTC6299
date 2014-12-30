@@ -10,7 +10,7 @@
 #pragma config(Motor,  mtr_S4_C2_2,     motorBR,       tmotorTetrix, openLoop, reversed, encoder)
 #pragma config(Motor,  mtr_S4_C3_1,     liftL,         tmotorTetrix, openLoop, encoder)
 #pragma config(Motor,  mtr_S4_C3_2,     liftR,         tmotorTetrix, openLoop, reversed, encoder)
-#pragma config(Motor,  mtr_S4_C4_1,     flip,          tmotorTetrix, openLoop, encoder)
+#pragma config(Motor,  mtr_S4_C4_1,     flip,          tmotorTetrix, openLoop, reversed, encoder)
 #pragma config(Motor,  mtr_S4_C4_2,     motorI,        tmotorTetrix, openLoop)
 #pragma config(Servo,  srvo_S3_C1_1,    servoL,               tServoStandard)
 #pragma config(Servo,  srvo_S3_C1_2,    servoR,               tServoStandard)
@@ -23,14 +23,14 @@
 #include "JoystickDriver.c";
 #include "libs.h";
 task flipperFlapper() {
-	displayTextLine(0, "%7i", -12 % 10);
-	nMotorEncoder[flip] = 0;
+	//displayTextLine(0, "%7i", -12 % 10);
+	//nMotorEncoder[flip] = 0;
 	while (true) {
 		while (joy1Btn(07) == 1) {
-			motor[flip] = 40;
+			motor[flip] = 100;
 		}
 		while (joy1Btn(08) == 1) {
-			motor[flip] = -40;
+			motor[flip] = -100;
 		}
 		delay(50);
 		motor[flip] = 0;
