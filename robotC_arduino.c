@@ -40,6 +40,7 @@ signed int sendArduinoCommand(unsigned char command)
 //Get the current heading from the MPU6050 gyro
 short getMPUHeading()
 {
+	hogCPU();
 	unsigned char add1 = sendArduinoCommand(2);
 	signed char add2 = sendArduinoCommand(3);
 	short MPUheading = add1 | (add2 << 8);
@@ -48,6 +49,7 @@ short getMPUHeading()
 		MPUheading += 360;
 	}
 	//wait1Msec(50);
+	releaseCPU();
 	return MPUheading;
 }
 
