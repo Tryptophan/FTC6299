@@ -8,8 +8,8 @@
 #pragma config(Motor,  mtr_S4_C1_2,     motorFR,       tmotorTetrix, openLoop, reversed, encoder)
 #pragma config(Motor,  mtr_S4_C2_1,     motorBL,       tmotorTetrix, openLoop, encoder)
 #pragma config(Motor,  mtr_S4_C2_2,     motorBR,       tmotorTetrix, openLoop, reversed, encoder)
-#pragma config(Motor,  mtr_S4_C3_1,     liftL,         tmotorTetrix, openLoop, reversed, encoder)
-#pragma config(Motor,  mtr_S4_C3_2,     liftR,         tmotorTetrix, openLoop, encoder)
+#pragma config(Motor,  mtr_S4_C3_1,     liftL,         tmotorTetrix, openLoop, encoder)
+#pragma config(Motor,  mtr_S4_C3_2,     liftR,         tmotorTetrix, openLoop, reversed, encoder)
 #pragma config(Motor,  mtr_S4_C4_1,     flip,          tmotorTetrix, openLoop, encoder)
 #pragma config(Motor,  mtr_S4_C4_2,     motorI,        tmotorTetrix, openLoop)
 #pragma config(Servo,  srvo_S3_C1_1,    servoL,               tServoStandard)
@@ -128,23 +128,23 @@ task servos() {
 		// BTN01 = X
 		if (joy2Btn(01) == 1) {
 			servo[liftServoL] = 100;
-			servo[liftServoR] = 155;
+			servo[liftServoR] = 145;
 		}
 
 		// BTN04 = Y
 		if (joy2Btn(04) == 1) {
 			servo[liftServoL] = 240;
-			servo[liftServoR] = 15;
+			servo[liftServoR] = 05;
 		}
 		// BTN02 = A
 		if (joy2Btn(02) == 1) {
 			servo[liftServoL] = 220;
-			servo[liftServoR] = 35;
+			servo[liftServoR] = 25;
 		}
 		// BTN03 = B
 		if (joy2Btn(03) == 1) {
 			servo[liftServoL] = 120;
-			servo[liftServoR] = 135;
+			servo[liftServoR] = 125;
 		}
 	}
 }
