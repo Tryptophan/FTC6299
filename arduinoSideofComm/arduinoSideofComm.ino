@@ -98,10 +98,8 @@ void hiSP()
       case 3: 
         data = heading >> 8; 
         break;
-      case 4: 
-        data = 42; // a test to look at sending values
       default: 
-        data = 0; 
+        data = 6; 
         break;
     }
      

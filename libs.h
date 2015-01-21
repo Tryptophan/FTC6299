@@ -56,20 +56,6 @@ short getMPUHeading()
 	return MPUheading;
 }
 
-short getMPUAccelX()
-{
-	signed char raw = sendArduinoCommand(4);
-	signed char raw2 = sendArduinoCommand(5);
-	return raw | (raw2 << 8);
-}
-
-short getMPUrot()
-{
-	signed char half1 = sendArduinoCommand(6);
-	signed char half2 = sendArduinoCommand(7);
-	return half1 | (half2 << 8);
-}
-
 float valInRange(float val, float threshold = 1.0) {
   return (abs(val) <= threshold) ? 0 : val;
 }
@@ -187,10 +173,29 @@ void turn(int power, int deg, int time = 5000) {
   wait10Msec(100);
   clearTimer(T1);
 
+	setMotors(power, -power);
+  while (heading < deg)
+	{
+			MPUheading = getMPUHeading();
+			diff = abs(MPUheading - oldHeading);
+			if ((diff < 60)||(360 - diff < 60)){
+				heading = MPUheading - init;
+	    	if(MPUheading < init)//accomodate for rollover
+	    	{
+	    		heading = (MPUheading + 360) - init;
+	    	}
+	    	oldHeading = MPUheading;
+				displayCenteredBigTextLine(2, "%d", heading);
+	    	displayCenteredBigTextLine(4, "%d", MPUheading);
+	 		}
+	 	 	wait1Msec(5);
+		 }
+	stopMotors();
+
   //if (deg < 180) {
   	/*setMotors(power, -power);
   	wait1Msec(50);
-    while (heading < deg/*time1[T1] < time && heading < deg*/) {
+    while (heading < deg/*time1[T1] < time && heading < deg*///) {
 			/*MPUheading = getMPUHeading();
 			diff = abs(MPUheading - filteredHeading);
 			if (filteredHeading < 90 && MPUheading > 270)
@@ -242,11 +247,10 @@ void turn(int power, int deg, int time = 5000) {
      	wait1Msec(5);
     }
     stopMotors();
-    wait1Msec(10);
-  }*/
+    wait1Msec(10);*/
+    stopMotors();
+  }
 
-  stopMotors();
-}
 
 void arcTurn(int power, int deg, int time = 2000) {
 
