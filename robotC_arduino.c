@@ -53,6 +53,14 @@ short getMPUHeading()
 	return MPUheading;
 }
 
+short getTest()
+{
+	hogCPU();
+	short testNum = sendArduinoCommand(4);
+	return testNum;
+	releaseCPU();
+}
+
 /*short getMPUAccelX()
 {
 	unsigned char raw = sendArduinoCommand(4);
@@ -70,6 +78,21 @@ short getMPUrot()
 
 task main()
 {
+	/*int test = 0;
+	while(true)
+	{
+		test = getTest();
+		displayCenteredBigTextLine(0, "test:%d", test);
+	}*/
+
+	/*int test = 0;
+	while(true)
+	{
+		test = getMPUHeading();
+		displayCenteredBigTextLine(0, "test:%d", test);
+		wait10Msec(1);
+	}*/
+
 	int heading = 0;
 	int MPUheading = 0;
 	int diff;

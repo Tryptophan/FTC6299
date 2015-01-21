@@ -43,7 +43,6 @@ signed int sendArduinoCommand(unsigned char command)
 //Get the current heading from the MPU6050 gyro
 short getMPUHeading()
 {
-
 	hogCPU();
 	unsigned char add1 = sendArduinoCommand(2);
 	signed char add2 = sendArduinoCommand(3);
@@ -189,10 +188,10 @@ void turn(int power, int deg, int time = 5000) {
   clearTimer(T1);
 
   //if (deg < 180) {
-  	setMotors(power, -power);
+  	/*setMotors(power, -power);
   	wait1Msec(50);
-    while (true/*time1[T1] < time && heading < deg*/) {
-			MPUheading = getMPUHeading();
+    while (heading < deg/*time1[T1] < time && heading < deg*/) {
+			/*MPUheading = getMPUHeading();
 			diff = abs(MPUheading - filteredHeading);
 			if (filteredHeading < 90 && MPUheading > 270)
 			{
@@ -226,7 +225,7 @@ void turn(int power, int deg, int time = 5000) {
 		}
 	 	 	wait1Msec(5);
     }
-    stopMotors();
+    stopMotors();*/
 
   //}
 
