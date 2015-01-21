@@ -49,9 +49,10 @@ task main(){
 		break;
 	case 1 :
 		center(suspend, begin);
+		break;
 	case 2 :
 		test(suspend);
-	break;
+		break;
 	}
 	while(true){}
 }
