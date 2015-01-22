@@ -160,22 +160,20 @@ void turn(int power, int deg, int time = 5000) {
     deg = modifier;
   }*/
 
-	int heading = 0;
+int heading = 0;
 	int MPUheading = 0;
 	int diff;
 	int oldHeading;
-	int filteredHeading;
 
   wait10Msec(100);
   int init = getMPUHeading();
-  oldHeading = filteredHeading = init;
+  oldHeading = init;
   displayCenteredBigTextLine(0, "init:%d", init);
   wait10Msec(100);
-  clearTimer(T1);
+  //displayCenteredBigTextLine(2, "init:%d", heading);
 
-	setMotors(power, -power);
-  while (heading < deg)
-	{
+  setMotors(power, -power);
+	while(heading < deg){
 			MPUheading = getMPUHeading();
 			diff = abs(MPUheading - oldHeading);
 			if ((diff < 60)||(360 - diff < 60)){
@@ -189,7 +187,7 @@ void turn(int power, int deg, int time = 5000) {
 	    	displayCenteredBigTextLine(4, "%d", MPUheading);
 	 		}
 	 	 	wait1Msec(5);
-		 }
+	}
 	stopMotors();
 
   //if (deg < 180) {
