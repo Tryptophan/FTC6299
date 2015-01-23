@@ -32,12 +32,14 @@ Made by Team 6299 QuadX
 - Linnea May
 */
 
+
 task main(){
 
 	//Starts Autonomous Chooser
+	nVolume = 4;
 	startTask(chooser);
-	//waitForStart();
-	delay(5000);
+	waitForStart();
+	//delay(5000);
 	stopTask(chooser);
 	wait1Msec(500);
 	HTGYROstartCal(SENSOR_GYRO);
@@ -45,13 +47,13 @@ task main(){
 	// Set and run desired autonomous program
 	switch(i) {
 	case 0 :
-		bare(suspend, begin);
+		bare(suspend, begin, tube);
 		break;
 	case 1 :
 		center(suspend, begin);
 		break;
 	case 2 :
-		test(suspend);
+		kick(suspend);
 		break;
 	}
 	while(true){}

@@ -7,41 +7,64 @@ void initializeRobot() {
 }
 
 // Finds the ir beacon, dumps the block, and parks on the ramp
-void bare(int s, int position) {
+void bare(int s, int position, int tube) {
 	delay(s * 1000);
-	if (position == 1) {  //Parking Zone
-		playSound(soundBeepBeep);
-		moveTo(-15, -1243, 1.5);
-		turn(-20, -21);
-		moveTo(-15, -3885, 1.5);
-		turn(-20, -50);
-		moveTo(-15, -1709, 1.5, 2250);
-		moveTo(15, 1010);
-		turn(-20, 55);
-		moveTo(-15, -1554);
-		latch(true);
-		moveTo(15, 1087, 1.5);
-		turn(20, 190);
-		moveTo(-15, -5439, 1.5);
-		lift(60, 2000);
-		basket('x');
-		latch(false);
+	if (tube == 2) {
+		if (position == 1) {  //Parking Zone
+			playSound(soundBeepBeep);
+			moveTo(-25, -1243, 1.5);
+			turn(-25, -21);
+			moveTo(-25, -3885, 1.5);
+			turn(-20, -50);
+			moveTo(-25, -3900, 10.0, 2250);
+			moveTo(25, 1010);
+			turn(-25, 55);
+			moveTo(-20, -1700, 1.5);
+			latch(true);
+			moveTo(20, 1087, 1.5);
+			turn(25, 190);
+			moveTo(-50, -5439, 1.5);
+			lift(60, 2000);
+			basket('x');
+			delay(1700);
+			latch(false);
+		}
+		if (position == 0) {  //Ramp
+			playSound(soundBeepBeep);
+			moveTo(-15, -5050, 1.25, 4000);
+			turn(25, -45);
+			moveTo(-30, -875);
+			turn(-25, -90);
+			moveTo(-25, -1300, 1.5);
+			latch(true);
+			moveTo(25, 1000, 1.5);
+			turn(30, 165);
+			moveTo(-80, -5625);
+			lift(60, 2000);
+			basket('x');
+			latch(false);
+		}
 	}
-	if (position == 0) {  //Ramp
-		playSound(soundBeepBeep);
-		moveTo(-10, -4895, 1.5, 4000);
-		turn(20, -45);
-		moveTo(-20, -550);
-		turn(-20, -90);
-		moveTo(-20, -800, 2.0);
-		latch(true);
-		moveTo(20, 1000);
-		turn(30, 165);
-		moveTo(-80, -5516, 2.0);
-		lift(60, 6500);
-		//basket('x');
-		latch(false);
+	if (tube == 1) {
+		if (position == 0) {
+			playSound(soundBeepBeep);
+			moveTo(-15, -5050, 1.25, 4000);
+			turn(25, -45);
+			moveTo(-30, -1870, 1.0);
+			turn(25, 46);
+			moveTo(-25, -1600, 1.0);
+			latch(true);
+			moveTo(30, 4000, 1.0);
+			turn(25, 60);
+			moveTo(25, 375, 1.0);
+			turn(25, 145);
+			moveTo(-80, -3799, 1.5);
+			lift(60, 1270);
+			basket('x');
+			latch(false);
+		}
 	}
+	playSound(soundDownwardTones);
 }
 
 void center(int s, int position) {
@@ -71,7 +94,7 @@ void center(int s, int position) {
 	}
 }
 
-void test(int suspend){
+void kick(int suspend){
 	delay(suspend * 100);
 
 }

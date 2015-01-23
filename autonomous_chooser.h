@@ -14,7 +14,7 @@ int tube = 2;
 string sides[2] = {"Ramp", "Zone"};
 string side = sides[0];
 
-string programs[3] = {"Autonomous", "Center", "test"};
+string programs[3] = {"Autonomous", "Center", "Kick"};
 string file = programs[0];
 
 int toggle = 0;
