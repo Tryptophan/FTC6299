@@ -296,7 +296,7 @@ void lift(int power, int deg, int time = 6000) {
 	nMotorEncoder[liftR] = 0;
 	int t = 0;
 	wait1Msec(250);
-	while (t < time && getLiftAverage() < deg) {
+	while (t < time && abs(getLiftAverage()) < deg) {
 		motor[liftL] = power;
 		motor[liftR] = power;
 		t += 20;
