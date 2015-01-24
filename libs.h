@@ -122,7 +122,7 @@ void moveTo(int power, int deg, float threshold = 2.0, long time = 5000, float c
   else {
     while (time1[T1] < time && getEncoderAverage(nMotorEncoder[motorL], nMotorEncoder[motorR]) > deg) {
       // Reads gyros rate of turn, mulitplies it by the time passed (20ms), and adds it to the current heading
-      heading += (getMPUrot()) * (20 / 1000);
+      //heading += (getMPUrot()) * (20 / 1000);
 
       // Checks if the gyro is outside of the specified threshold (1.0)
       if (isInRange(heading, 0, threshold)) {
@@ -160,7 +160,7 @@ void turn(int power, int deg, int time = 5000) {
     deg = modifier;
   }*/
 
-int heading = 0;
+	int heading = 0;
 	int MPUheading = 0;
 	int diff;
 	int oldHeading;
@@ -173,7 +173,7 @@ int heading = 0;
   //displayCenteredBigTextLine(2, "init:%d", heading);
 
   setMotors(power, -power);
-	while(heading < deg){
+	while(heading < deg && heading < 400){
 			MPUheading = getMPUHeading();
 			diff = abs(MPUheading - oldHeading);
 			if ((diff < 60)||(360 - diff < 60)){
