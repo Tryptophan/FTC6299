@@ -31,23 +31,26 @@ void bare(int s, int position, int tube) {
 			playSound(soundBeepBeep);
 			moveTo(-15, -5050, 1.25, 4000);
 			turn(50, -45);
-			moveTo(-50, -875);
+			moveTo(-30, -875);
 			turn(-50, -90);
-			moveTo(-30, -1300, 1.5);
+			moveTo(-30, -1000, 1.5);
 			latch(true);
 			moveTo(50, 1000, 1.5);
 			turn(50, 165);
-			moveTo(-80, -5625);
+			moveTo(-100, -5625);
 			lift(60, 2000);
 			basket('x');
 			delay(2000);
 			basket('y');
 			lift(-60, 2200);
 			latch(false);
-			moveTo(80, 5500);
+			moveTo(100, 5500);
 			turn(50, 165);
-			moveTo(-30, -1500);
+			manipulator(400);
+			moveTo(-100, -2200);
 			latch(true);
+			lift(60, 3400);
+			basket('x');
 		}
 	}
 	if (tube == 1) {

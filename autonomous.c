@@ -38,16 +38,16 @@ task main(){
 	// Starts Autonomous Chooser
 	nVolume = 4;
 	startTask(chooser);
-	//waitForStart();
-	delay(5000);
-	stopTask(chooser)
-	wait1Msec(500);
+	waitForStart();
+	//delay(5000);
+	stopTask(chooser);
+	wait1Msec(50);
 	HTGYROstartCal(SENSOR_GYRO);
-	wait1Msec(500);
+	wait1Msec(50);
 	// Set and run desired autonomous program
 	switch(i) {
 	case 0 :
-		bare(suspend, begin, tube)
+		bare(suspend, begin, tube);
 		break;
 	case 1 :
 		center(suspend, begin);

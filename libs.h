@@ -317,3 +317,9 @@ void basket(char position) {
 		servo[liftServoR] = 25;
 	}
 }
+
+void manipulator(int time) {
+	 motor[flip] = -100;
+	 delay(time);
+	 motor[flip] = 0;
+}
