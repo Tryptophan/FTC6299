@@ -31,13 +31,12 @@ void bare(int s, int position, int tube) {
 			playSound(soundBeepBeep);
 			moveTo(-15, -5050, 1.25, 4000);
 			turn(50, -45);
-			moveTo(-30, -875);
+			moveTo(-30, -750, 1.5);
 			turn(-50, -90);
-			moveTo(-30, -1000, 1.5);
-			latch(true);
+			grabMove(-25, -750, 700, 1.5);
 			moveTo(50, 1000, 1.5);
 			turn(50, 165);
-			moveTo(-100, -5625);
+			moveTo(-100, -5425);
 			lift(60, 2000);
 			basket('x');
 			delay(2000);
@@ -45,10 +44,11 @@ void bare(int s, int position, int tube) {
 			lift(-60, 2200);
 			latch(false);
 			moveTo(100, 5500);
-			turn(50, 165);
-			manipulator(400);
-			moveTo(-100, -2200);
-			latch(true);
+			turn(50, 190);
+			manipulator(600);
+			moveTo(-30, -670, 1.5);
+			turn(30, -45);
+			grabMove(-75, -1100, 950, 1.5);
 			lift(60, 3400);
 			basket('x');
 		}
