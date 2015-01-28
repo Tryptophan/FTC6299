@@ -53,7 +53,7 @@ task flipperFlapper() {
 			while (abs(nMotorEncoder[flip]) < move) {
 				motor[flip] = -35;
 				displayTextLine(0, "%7i", nMotorEncoder[flip]);
-				wait1Msec(5);
+				delay(5);
 			}
 		}*/
 		//displayTextLine(0, "%7i", nMotorEncoder[flip]);
@@ -100,17 +100,18 @@ task driveControl() {
 						setMotors(power, (power / 4));
 					}
 				}
-				wait1Msec(20);
+				delay(20);
 			}
 		}
 		if(!slowmo && joystick.joy1_TopHat == 2) {
 			slowmo = true;
-			wait1Msec(300);
+			delay(600);
 		}
 		if(slowmo && joystick.joy1_TopHat == 2) {
 			slowmo = false;
-			wait1Msec(300);
+			delay(600);
 		}
+		delay(30);
 	}
 }
 
@@ -162,10 +163,10 @@ task slide()
 }
 task main () {
 	waitForStart();
-	wait1Msec(50);
+	delay(50);
 	HTGYROstartCal(SENSOR_GYRO);
 	heading = 0;
-	wait1Msec(50);
+	delay(50);
 	startTask(driveControl);
 	startTask(servos);
 	startTask(flipperFlapper);
