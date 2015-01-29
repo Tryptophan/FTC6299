@@ -8,8 +8,8 @@
 #pragma config(Motor,  mtr_S4_C1_2,     motorFR,       tmotorTetrix, openLoop, reversed, encoder)
 #pragma config(Motor,  mtr_S4_C2_1,     motorBL,       tmotorTetrix, openLoop, encoder)
 #pragma config(Motor,  mtr_S4_C2_2,     motorBR,       tmotorTetrix, openLoop, reversed, encoder)
-#pragma config(Motor,  mtr_S4_C3_1,     liftL,         tmotorTetrix, openLoop, encoder)
-#pragma config(Motor,  mtr_S4_C3_2,     liftR,         tmotorTetrix, openLoop, reversed, encoder)
+#pragma config(Motor,  mtr_S4_C3_1,     liftL,         tmotorTetrix, openLoop, reversed, encoder)
+#pragma config(Motor,  mtr_S4_C3_2,     liftR,         tmotorTetrix, openLoop, encoder)
 #pragma config(Motor,  mtr_S4_C4_1,     flip,          tmotorTetrix, openLoop, encoder)
 #pragma config(Motor,  mtr_S4_C4_2,     motorI,        tmotorTetrix, openLoop)
 #pragma config(Servo,  srvo_S3_C1_1,    servoL,               tServoStandard)
@@ -153,9 +153,33 @@ task servos() {
 task slide()
 {
 	while(true){
-		while(abs(joystick.joy2_y1) >= 10){
-			motor[liftL] = joystick.joy2_y1 / -1.28;
-			motor[liftR] = joystick.joy2_y1 / -1.28;
+		if (abs(joystick.joy2_y1) >= 10){
+			motor[liftL] = joystick.joy2_y1 / 1.28;
+			motor[liftR] = joystick.joy2_y1 / 1.28;
+		}
+		else {
+			int liftEncoderAverage = (nMotorEncoder[liftL]) + abs(nMotorEncoder[liftR]) / 2;
+
+			if (valInRange(nMotorEncoder[liftL], 200) > liftEncoderAverage) {
+				while (nMotorEncoder[liftL] > liftEncoderAverage) {
+					motor[liftL] = -30;
+				}
+			}
+			if (valInRange(nMotorEncoder[liftL], 200) < liftEncoderAverage) {
+				while (nMotorEncoder[liftL] < liftEncoderAverage) {
+					motor[liftL] = 60;
+				}
+			}
+			if (valInRange(nMotorEncoder[liftR], 200) > liftEncoderAverage) {
+				while (nMotorEncoder[liftR] > liftEncoderAverage) {
+					motor[liftR] = -30;
+				}
+			}
+			if (valInRange(nMotorEncoder[liftR], 200) < liftEncoderAverage) {
+				while (nMotorEncoder[liftR] < liftEncoderAverage) {
+					motor[liftR] = 60;
+				}
+			}
 		}
 		motor[liftL] = 0;
 		motor[liftR] = 0;
