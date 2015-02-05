@@ -29,9 +29,9 @@ void bare(int s, int position, int tube) {
 		}
 		if (position == 0) {  //Ramp
 			playSound(soundBeepBeep);
-			moveTo(-22, -5050, 1.25, 4000);
+			moveTo(-35, -4800, 1.5);
 			turn(50, -45);
-			moveTo(-30, -750, 1.5);
+			moveTo(-30, -900, 1.5);
 			turn(-50, -90);
 			grabMove(-25, -750, 700, 1.5);
 			moveTo(50, 200, 1.5);
@@ -44,7 +44,7 @@ void bare(int s, int position, int tube) {
 			moveTo(-40, -300, 1.5);
 			latch(false);
 			moveTo(40, 200, 1.5);
-			turn(-35, -185);
+			turn(-70, -185);
 			grabMove(-40, -850, 750, 1.5);
 			manipulator(600);
 			lift(60, 3400);
@@ -54,7 +54,7 @@ void bare(int s, int position, int tube) {
 			lift(-60, 3600);
 			moveTo(50, 800);
 			turn(-40, -195);
-			moveTo(-70, -5550);
+			moveTo(-100, -6000);
 			/*moveTo(-15, -5050, 1.25, 4000);
 			turn(50, -45);
 			moveTo(-30, -750, 1.5);
