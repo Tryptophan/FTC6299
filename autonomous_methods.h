@@ -34,14 +34,13 @@ void bare(int s, int position, int tube) {
 			moveTo(-30, -900, 1.5);
 			turn(-50, -90);
 			grabMove(-25, -750, 700, 1.5);
+			startTask(liftTaskB);
 			moveTo(50, 200, 1.5);
 			turn(-45, -115);
-			lift(60, 2000);
-			basket('x');
 			delay(2000);
 			basket('y');
-			lift(-60, 2200);
 			moveTo(-40, -300, 1.5);
+			lift(-60, 2200);
 			latch(false);
 			moveTo(40, 400, 1.5);
 			turn(-60, 60);
@@ -50,11 +49,11 @@ void bare(int s, int position, int tube) {
 			turn(-30, 85);
 			grabMove(-40, -850, 750, 1.5);
 			moveTo(50, 800);
-			turn(-40, 135);
-			startTask(liftTask);
+			turn(-42, 135);
+			startTask(liftTaskC);
 			moveTo(-100, -6800);
+			delay(500);
 			basket('x');
-			delay(2000);
 		}
 	}
 	if (tube == 1) {

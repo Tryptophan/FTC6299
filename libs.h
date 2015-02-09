@@ -446,10 +446,14 @@ void liftMove(int power, int deg, float threshold = 2.0, long time = 100000, flo
 	stopMotors();
 }
 
-task liftTask() {
+task liftTaskC() {
 	manipulator(600);
 	lift(60, 3600);
+	stopTask(liftTaskC);
+}
+
+task liftTaskB() {
+	lift(60, 2200);
 	basket('x');
-	delay(2000);
-	stopTask(liftTask);
+	stopTask(liftTaskB);
 }
