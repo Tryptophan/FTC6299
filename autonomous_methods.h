@@ -79,19 +79,19 @@ void bare(int s, int position, int tube) {
 }
 
 void center(int s, int position) {
-	delay(s * 100);
-	basket('x');
 	if (position == 0) {
-		moveTo(15, 2300, 0.4);
+		moveTo(15, 2000, 0.4);
 		displayTextLine(0, "%1i", getPos());
 		if (getPos() == 3) {
-			moveTo(-15, -300, 0.4);
-			turn(20, -90);
-			moveTo(15, 650, 0.4);
-			turn(20, -80);
-			moveTo(-15, -1200, 90.0, 1500);
-			moveTo(10, 400, 0.4);
-			//lift(60, 10000);
+			moveTo(-50, -300, 0.4);
+			turn(30, -90);
+			moveTo(50, 300, 0.4);
+			turn(30, -80);
+			moveTo(-50, -1200, 90.0, 1500);
+			moveTo(50, 50, 0.4);
+			lift(60, 4500);
+			basket('x');
+			//delay(s * 100);
 		}
 		if (getPos() == 2) {
 			playSound(soundFastUpwardTones);
@@ -101,6 +101,7 @@ void center(int s, int position) {
 			moveTo(-15, -700, 0.4);
 			moveTo(15, 400, 0.4);
 			//lift(60, 10000);
+			//delay(s * 100);
 		}
 	}
 }
