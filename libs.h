@@ -313,7 +313,7 @@ void basket(char position) {
 		servo[liftServoR] = 155;
 	}
 	if (position == 'y') {
-		servo[liftServoL] = 230;
+		servo[liftServoL] = 220;
 		servo[liftServoR] = 25;
 	}
 }
