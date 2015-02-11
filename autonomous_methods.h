@@ -44,7 +44,7 @@ void bare(int s, int position, int tube) {
 			latch(false);
 			moveTo(40, 400, 1.5);
 			turn(-60, 60);
-			moveTo(-50, -800, 30.0);
+			moveTo(-50, -1100, 30.0);
 			moveTo(40, 100);
 			turn(-30, 85);
 			grabMove(-40, -850, 750, 1.5);
