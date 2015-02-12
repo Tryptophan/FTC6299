@@ -31,9 +31,9 @@ void bare(int s, int position, int tube) {
 			playSound(soundBeepBeep);
 			moveTo(-35, -4800, 1.5);
 			turn(50, -45);
-			moveTo(-30, -900, 1.5);
+			moveTo(-30, -1200, 1.5);
 			turn(-50, -90);
-			grabMove(-25, -750, 700, 1.5);
+			grabMove(-25, -1000, 870, 1.5);
 			startTask(liftTaskB);
 			moveTo(50, 200, 1.5);
 			turn(-45, -115);
