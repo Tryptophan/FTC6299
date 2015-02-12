@@ -32,11 +32,21 @@ Made by Team 6299 QuadX
 - Linnea May
 */
 
+task debug(){
+	while(true) {
+		writeDebugStreamLine("%6i", nMotorEncoder[motorFL]);
+		writeDebugStreamLine("%6i", nMotorEncoder[motorFR]);
+		writeDebugStreamLine("%6i", nMotorEncoder[motorBL]);
+		writeDebugStreamLine("%6i", nMotorEncoder[motorBR]);
+		wait10Msec(10);
+	}
+}
 
 task main(){
 
 	// Starts Autonomous Chooser
 	nVolume = 4;
+	startTask(debug);
 	startTask(chooser);
 	waitForStart();
 	stopTask(chooser);

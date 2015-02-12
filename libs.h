@@ -25,7 +25,7 @@ int getLiftAverage() {
 	if (nMotorEncoder[liftR] == 0) {
 		divide--;
 	}
-	return ((nMotorEncoder[liftL] + nMotorEncoder[liftR]) / divide);
+	return /*((*/nMotorEncoder[liftL]/* + nMotorEncoder[liftR]) / divide)*/;
 }
 
 int getEncoderAverage() {
