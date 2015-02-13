@@ -25,7 +25,7 @@ int getLiftAverage() {
 	if (nMotorEncoder[liftR] == 0) {
 		divide--;
 	}
-	return /*((*/nMotorEncoder[liftL]/* + nMotorEncoder[liftR]) / divide)*/;
+	return /*((nMotorEncoder[liftL] + */nMotorEncoder[liftR]/*) / divide)*/;
 }
 
 int getEncoderAverage() {
@@ -388,62 +388,6 @@ void grabMove(int power, int deg, int lat, float threshold = 2.0, long time = 10
 	if(lat > getEncoderAverage()) {
 		latch(true);
 	}
-}
-
-void liftMove(int power, int deg, float threshold = 2.0, long time = 100000, float cor = 4.0) {
-	heading = 0;
-	nMotorEncoder[motorBL] = 0;
-	nMotorEncoder[motorFL] = 0;
-	nMotorEncoder[motorFR] = 0;
-	nMotorEncoder[motorBR] = 0;
-	wait1Msec(250);
-	clearTimer(T1);
-	if (power > 0) {
-		while (time1[T1] < time && getEncoderAverage() < deg) {
-			// Reads gyros rate of turn, mulitplies it by the time passed (20ms), and adds it to the current heading
-			heading += valInRange(HTGYROreadRot(SENSOR_GYRO), threshold) * (float)(20 / 1000.0);
-			// Checks if the gyro is outside of the specified threshold (1.0)
-			if (isInRange(heading, 0, threshold)) {
-				setMotors(power, power);
-			}
-
-			// If not, lower the speed of the required side of the robot to adjust back to 0
-			else {
-				if (heading > 0) {
-					setMotors((power / cor), power);
-				}
-				if (heading < 0) {
-					setMotors(power, (power / cor));
-				}
-			}
-			wait1Msec(20);
-		}
-	}
-
-	else {
-		while (time1[T1] < time && getEncoderAverage() > deg) {
-			// Reads gyros rate of turn, mulitplies it by the time passed (20ms), and adds it to the current heading
-			heading += valInRange(HTGYROreadRot(SENSOR_GYRO), threshold) * (float)(20 / 1000.0);
-			// Checks if the gyro is outside of the specified threshold (1.0)
-			if (isInRange(heading, 0, threshold)) {
-				setMotors(power, power);
-			}
-
-			// If not, lower the speed of the required side of the robot to adjust back to 0
-			else {
-				if (heading > 0) {
-					setMotors(power, (power / cor));
-				}
-				if (heading < 0) {
-					setMotors((power / cor), power);
-				}
-			}
-
-			wait1Msec(20);
-		}
-	}
-
-	stopMotors();
 }
 
 task liftTaskC() {

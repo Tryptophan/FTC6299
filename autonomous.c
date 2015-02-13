@@ -34,10 +34,15 @@ Made by Team 6299 QuadX
 
 task debug(){
 	while(true) {
-		writeDebugStreamLine("%6i", nMotorEncoder[motorFL]);
-		writeDebugStreamLine("%6i", nMotorEncoder[motorFR]);
-		writeDebugStreamLine("%6i", nMotorEncoder[motorBL]);
-		writeDebugStreamLine("%6i", nMotorEncoder[motorBR]);
+		writeDebugStreamLine("BaseFL: %6i", nMotorEncoder[motorFL]);
+		writeDebugStreamLine("BaseFR: %6i", nMotorEncoder[motorFR]);
+		writeDebugStreamLine("BaseBL: %6i", nMotorEncoder[motorBL]);
+		writeDebugStreamLine("BaseBR: %6i", nMotorEncoder[motorBR]);
+
+		writeDebugStreamLine("LiftL: %6i", nMotorEncoder[liftL]);
+		writeDebugStreamLine("LiftR: %6i", nMotorEncoder[liftR]);
+
+		writeDebugStreamLine("\n");
 		wait10Msec(10);
 	}
 }

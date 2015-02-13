@@ -88,25 +88,28 @@ void center(int s, int position) {
 			moveTo(50, 300, 0.4);
 			turn(30, -80);
 			moveTo(-50, -1200, 90.0, 1500);
-			moveTo(50, 50, 0.4);
-			lift(60, 4500);
-			basket('x');
-			//delay(s * 100);
 		}
-		if (getPos() == 2) {
-			playSound(soundFastUpwardTones);
-			arcTurn(-20, -140);
-			moveTo(-15, -1000, 0.4);
-			turn(20, 90);
-			moveTo(-15, -700, 0.4);
-			moveTo(15, 400, 0.4);
-			basket('x');
+		else if (getPos() == 2) {
+			arcTurn(-50, -120);
+			moveTo(-40, -1540, 0.4);
+			turn(35, 80);
+			moveTo(-30, -1100);
+			moveTo(50, 125, 0.4);
 		}
-		if (getPos() == 1) {
-			turn(-35, -90);
-			moveTo(35, 2000);
-			turn(-35, -90);
+		else if (getPos() == 1) {
+			turn(-35, -110);
+			moveTo(-35, -3000, 0.4);
+			turn(-35, -50);
+			moveTo(-50, -600, 0.4);
+			turn(35, 80);
+			moveTo(-70, -600);
+			moveTo(50, 70, 0.4);
 		}
+		lift(60, 5000, 3500);
+		basket('x');
+		delay(2500);
+		basket('y');
+		lift(-60, 5000);
 	}
 }
 
