@@ -103,11 +103,11 @@ task driveControl() {
 				delay(20);
 			}
 		}
-		if(!slowmo && joystick.joy1_TopHat == 2) {
+		if(!slowmo && joy1Btn(01) == 2) {
 			slowmo = true;
 			delay(600);
 		}
-		if(slowmo && joystick.joy1_TopHat == 2) {
+		if(slowmo && joy1Btn(01) == 2) {
 			slowmo = false;
 			delay(600);
 		}
