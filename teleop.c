@@ -105,11 +105,11 @@ task driveControl() {
 		}
 		if(!slowmo && joy1Btn(01) == 2) {
 			slowmo = true;
-			delay(600);
+			delay(250);
 		}
 		if(slowmo && joy1Btn(01) == 2) {
 			slowmo = false;
-			delay(600);
+			delay(250);
 		}
 		delay(30);
 	}
