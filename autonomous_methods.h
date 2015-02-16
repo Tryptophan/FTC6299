@@ -97,13 +97,10 @@ void center(int s, int position) {
 			moveTo(50, 125, 0.4);
 		}
 		else if (getPos() == 1) {
-			turn(-35, -110);
-			moveTo(-35, -3000, 0.4);
-			turn(-35, -50);
-			moveTo(-50, -600, 0.4);
-			turn(35, 80);
-			moveTo(-70, -600);
-			moveTo(50, 70, 0.4);
+			turn(-35, -130);
+			moveTo(-35, -2600, 0.4);
+			turn(-35, -95);
+			moveTo(-40, -500);
 		}
 		lift(60, 5000, 3500);
 		basket('x');
