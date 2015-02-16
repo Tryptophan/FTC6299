@@ -4,13 +4,13 @@
 #pragma config(Sensor, S2,     SENSOR_GYRO,    sensorI2CHiTechnicGyro)
 #pragma config(Sensor, S3,     ,               sensorI2CMuxController)
 #pragma config(Sensor, S4,     ,               sensorI2CMuxController)
-#pragma config(Motor,  mtr_S4_C1_1,     motorFL,       tmotorTetrix, openLoop, reversed, encoder)
-#pragma config(Motor,  mtr_S4_C1_2,     motorFR,       tmotorTetrix, openLoop, encoder)
-#pragma config(Motor,  mtr_S4_C2_1,     motorBL,       tmotorTetrix, openLoop, reversed)
-#pragma config(Motor,  mtr_S4_C2_2,     motorBR,       tmotorTetrix, openLoop)
-#pragma config(Motor,  mtr_S4_C3_1,     liftL,         tmotorTetrix, openLoop)
-#pragma config(Motor,  mtr_S4_C3_2,     liftR,         tmotorTetrix, openLoop, reversed)
-#pragma config(Motor,  mtr_S4_C4_1,     flip,          tmotorTetrix, openLoop)
+#pragma config(Motor,  mtr_S4_C1_1,     motorFL,       tmotorTetrix, openLoop, encoder)
+#pragma config(Motor,  mtr_S4_C1_2,     motorFR,       tmotorTetrix, openLoop, reversed, encoder)
+#pragma config(Motor,  mtr_S4_C2_1,     motorBL,       tmotorTetrix, openLoop, encoder)
+#pragma config(Motor,  mtr_S4_C2_2,     motorBR,       tmotorTetrix, openLoop, reversed, encoder)
+#pragma config(Motor,  mtr_S4_C3_1,     liftL,         tmotorTetrix, openLoop, reversed, encoder)
+#pragma config(Motor,  mtr_S4_C3_2,     liftR,         tmotorTetrix, openLoop, encoder)
+#pragma config(Motor,  mtr_S4_C4_1,     flip,          tmotorTetrix, openLoop, encoder)
 #pragma config(Motor,  mtr_S4_C4_2,     motorI,        tmotorTetrix, openLoop)
 #pragma config(Servo,  srvo_S3_C1_1,    servoL,               tServoStandard)
 #pragma config(Servo,  srvo_S3_C1_2,    servoR,               tServoStandard)
@@ -32,25 +32,42 @@ Made by Team 6299 QuadX
 - Linnea May
 */
 
+task debug(){
+	while(true) {
+		writeDebugStreamLine("BaseFL: %6i", nMotorEncoder[motorFL]);
+		writeDebugStreamLine("BaseFR: %6i", nMotorEncoder[motorFR]);
+		writeDebugStreamLine("BaseBL: %6i", nMotorEncoder[motorBL]);
+		writeDebugStreamLine("BaseBR: %6i", nMotorEncoder[motorBR]);
+
+		writeDebugStreamLine("LiftL: %6i", nMotorEncoder[liftL]);
+		writeDebugStreamLine("LiftR: %6i", nMotorEncoder[liftR]);
+
+		writeDebugStreamLine("\n");
+		wait10Msec(10);
+	}
+}
+
 task main(){
 
-	//Starts Autonomous Chooser
+	// Starts Autonomous Chooser
+	nVolume = 4;
+	startTask(debug);
 	startTask(chooser);
 	waitForStart();
-	//delay(6000);
 	stopTask(chooser);
-	wait1Msec(500);
+	wait1Msec(50);
 	HTGYROstartCal(SENSOR_GYRO);
-	wait1Msec(500);
+	wait1Msec(50);
 	// Set and run desired autonomous program
 	switch(i) {
 	case 0 :
-		bare(suspend, begin);
+		bare(suspend, begin, tube);
 		break;
 	case 1 :
-		autoFrontDump(suspend);
+		center(suspend, begin);
+		break;
 	case 2 :
-		test(suspend);
+		kick(suspend);
 		break;
 	}
 	while(true){}
