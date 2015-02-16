@@ -98,11 +98,12 @@ void center(int s, int position) {
 		}
 		else if (getPos() == 1) {
 			turn(-35, -130);
-			moveTo(-35, -2600, 0.4);
+			moveTo(-35, -2200, 0.4);
 			turn(-35, -95);
 			moveTo(-40, -500);
+			moveTo(50, 80, 1.5);
 		}
-		lift(60, 5000, 3500);
+		lift(60, 4000, 3500);
 		basket('x');
 		delay(2500);
 		basket('y');
