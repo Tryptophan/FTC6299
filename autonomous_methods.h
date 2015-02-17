@@ -80,27 +80,30 @@ void bare(int s, int position, int tube) {
 
 void center(int s, int position) {
 	if (position == 0) {
-		moveTo(15, 2000, 0.4);
+		moveTo(15, 1800, 0.4);
 		displayTextLine(0, "%1i", getPos());
 		if (getPos() == 3) {
+			turn(30, 80);
 			moveTo(-50, -300, 0.4);
-			turn(30, -90);
-			moveTo(50, 300, 0.4);
-			turn(30, -80);
-			moveTo(-50, -1200, 90.0, 1500);
+			turn(30, 70);
+			moveTo(-50, -1200);
+			moveTo(50, 170, 0.4);
 		}
 		else if (getPos() == 2) {
 			arcTurn(-50, -120);
 			moveTo(-40, -1540, 0.4);
-			turn(35, 80);
-			moveTo(-30, -1100);
-			moveTo(50, 125, 0.4);
+			turn(30, 75);
+			moveTo(-30, -1200);
+			moveTo(50, 155, 0.4);
 		}
 		else if (getPos() == 1) {
-			turn(-35, -130);
-			moveTo(-35, -2600, 0.4);
-			turn(-35, -95);
-			moveTo(-40, -500);
+			turn(-35, -100);
+			moveTo(-50, -2700, 0.4);
+			turn(-35, -40);
+			moveTo(-35, -800, 0.4);
+			turn(35, 70);
+			moveTo(-40, -700);
+			moveTo(50, 100, 0.4);
 		}
 		lift(60, 5000, 3500);
 		basket('x');
