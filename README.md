@@ -26,12 +26,10 @@
 
 <code>turn(int power, int deg, int time = 5000)</code>
 * The robot will turn for the degrees given in the deg parameter on a point at the power of the power parameter
-* <b>The turn method only turns 45° and 90° currently<b>
 * If the method runs for more than the time parameter the method will stop for a failsafe if the gyro fails
  
 <code>arcTurn(int power, int deg, int time = 2000)</code>
 * Turns on one stopped motor for the degrees given in the deg parameter at the power of the power parameter
-* <b>The turn method only turns 45° and 90° currently<b>
 * If the method runs for more than the time parameter the method will stop for a failsafe in the gyro fails
 
 <code>getIR()</code>
@@ -50,14 +48,12 @@
 <ol>
  <ol>
   <li>Command = 1: Tell the arduino to blink its LED (mostly for debug)</li>
-  <li>Command = 2: Tell Arduino to send current heading from the MPU6050 gyro</li>
-  <li>Command = 3: Tell the Arduino to send raw acceleration on the x-axis</li>
+  <li>Command = 2: Tell the Arduino to send the first 8 bits of the heading from the MPU</li>
+  <li>Command = 3: Tell the Arduino to send the second 8 bits of the heading from the MPU</li>
   </ol>
 </ol>
 
 <code>getMPUHeading()</code>
 * Reads and returns the current heading from the MPU6050
 
-<code>getMPUAccelX()</code>
-* Reads and returns the current x acceleration from the MPU6050
 
