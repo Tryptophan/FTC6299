@@ -252,7 +252,6 @@ void latch(bool position) {
 }
 
 int getPos() {
-	delay(450);
 	/*int count[5] = {0, 0, 0, 0, 0};
 	for (int j = 0; j < 20; j++) {
 	if (HTIRS2readACDir(SENSOR_IR) == 0) {
