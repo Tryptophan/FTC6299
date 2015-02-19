@@ -80,37 +80,42 @@ void bare(int s, int position, int tube) {
 
 void center(int s, int position) {
 	if (position == 0) {
-		moveTo(15, 1800, 0.4);
+		moveTo(15, 1600, 0.4);
 		displayTextLine(0, "%1i", getPos());
 		if (getPos() == 3) {
 			turn(30, 80);
-			moveTo(-50, -300, 0.4);
+			moveTo(-50, -500, 0.4);
 			turn(30, 70);
-			moveTo(-50, -1200);
-			moveTo(50, 170, 0.4);
+			moveTo(-50, -1400);
+			moveTo(50, 100);
 		}
 		else if (getPos() == 2) {
 			arcTurn(-50, -120);
 			moveTo(-40, -1540, 0.4);
 			turn(30, 75);
 			moveTo(-30, -1200);
-			moveTo(50, 155, 0.4);
+			moveTo(50, 155);
 		}
 		else if (getPos() == 1) {
 			turn(-35, -100);
 			moveTo(-50, -2700, 0.4);
-			turn(-35, -40);
-			moveTo(-35, -800, 0.4);
+			turn(-35, -45);
+			moveTo(-35, -1000, 0.4);
 			turn(35, 70);
-			moveTo(-40, -700);
-			moveTo(50, 100, 0.4);
+			moveTo(-40, -850);
+			moveTo(50, 100);
 		}
 		lift(60, 5000, 3500);
 		basket('x');
 		delay(2500);
 		basket('y');
 		lift(-60, 5000);
+		arcTurn(50, -90);
+		moveTo(30, 200);
+		arcTurn(50, -95);
+		moveTo(80, 1500);
 	}
+	writeDebugStreamLine("End");
 }
 
 void kick(int suspend){
