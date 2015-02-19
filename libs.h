@@ -280,10 +280,10 @@ int getPos() {
 	big = count[j];
 	}
 	}*/
-	if (spot > 3) {
+	if (spot >= 5) {
 		return 3;
 	}
-	else if (spot <= 3 && spot >= 1) {
+	else if (spot < 5 && spot >= 1) {
 		return 2;
 	}
 	else {
