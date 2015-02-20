@@ -40,7 +40,7 @@ void bare(int s, int position, int tube) {
 			delay(2000);
 			basket('y');
 			moveTo(-40, -300, 1.5);
-			lift(-60, 2200);
+			lift(-60, 2500);
 			latch(false);
 			moveTo(40, 400, 1.5);
 			turn(-60, 30);
@@ -49,7 +49,7 @@ void bare(int s, int position, int tube) {
 			turn(-30, 85);
 			grabMove(-40, -750, 650, 1.5);
 			moveTo(50, 800);
-			turn(-42, 145);
+			turn(-42, 125);
 			startTask(liftTaskC);
 			moveTo(-100, -6800);
 			delay(500);

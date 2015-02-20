@@ -30,19 +30,35 @@ int getLiftAverage() {
 
 int getEncoderAverage() {
 	int divide = 4;
-	if (nMotorEncoder[motorFL] == 0) {
+	int exclude[4] = {0, 0, 0, 0};
+	int encoders[4] = {nMotorEncoder[motorFL], nMotorEncoder[motorFR], nMotorEncoder[motorBL], nMotorEncoder[motorBR]};
+
+	/*if (nMotorEncoder[motorFL] < 40 && nMotorEncoder[motorFL] > -40) {
 		divide--;
+		exclude[0] = 1;
 	}
-	if (nMotorEncoder[motorBL] == 0) {
+	if (nMotorEncoder[motorFR] < 40 && nMotorEncoder[motorFR] > -40) {
 		divide--;
+		exclude[1] = 1;
 	}
-	if (nMotorEncoder[motorFR] == 0) {
+	if (nMotorEncoder[motorBL] < 40 && nMotorEncoder[motorBL] > -40) {
 		divide--;
+		exclude[2] = 1;
 	}
-	if (nMotorEncoder[motorBR] == 0) {
+	if (nMotorEncoder[motorBR] < 40 && nMotorEncoder[motorBR] > -40) {
 		divide--;
+		exclude[3] = 1;
+	}*/
+
+	int sum = 0;
+
+	for (int j = 0; j < 4; j++) {
+		if (exclude[j] == 0) {
+			sum += encoders[j];
+		}
 	}
-	return (nMotorEncoder[motorFL] + nMotorEncoder[motorBL] + nMotorEncoder[motorFR] + nMotorEncoder[motorBR]) / divide;
+
+	return sum / divide;
 }
 
 void setMotors(int left, int right) {
