@@ -418,16 +418,21 @@ task liftTaskB() {
 }
 
 task debug(){
+	float timee = 0;
 	while(true) {
+		writeDebegStreamLine("Time: %4f", timee);
+		writeDebugStreamLine("\n");
 		writeDebugStreamLine("BaseFL: %6i", nMotorEncoder[motorFL]);
 		writeDebugStreamLine("BaseFR: %6i", nMotorEncoder[motorFR]);
 		writeDebugStreamLine("BaseBL: %6i", nMotorEncoder[motorBL]);
 		writeDebugStreamLine("BaseBR: %6i", nMotorEncoder[motorBR]);
+		writeDebugStreamLine("\n");
 
 		writeDebugStreamLine("LiftL: %6i", nMotorEncoder[liftL]);
 		writeDebugStreamLine("LiftR: %6i", nMotorEncoder[liftR]);
 
-		writeDebugStreamLine("\n");
+		writeDebugStreamLine("\n\n");
 		wait10Msec(10);
+		timee += .01;
 	}
 }
