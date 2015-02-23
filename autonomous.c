@@ -55,5 +55,7 @@ task main(){
 		kick(suspend);
 		break;
 	}
+	stopTask(debug);
+	writeDebugStreamLine("---------------------------End---------------------------");
 	while(true){}
 }
