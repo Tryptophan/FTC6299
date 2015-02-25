@@ -40,7 +40,7 @@ void bare(int s, int position, int tube) {
 			delay(2000);
 			basket('y');
 			moveTo(-40, -300, 1.5);
-			lift(-60, 2200);
+			lift(-60, 1200);
 			latch(false);
 			moveTo(40, 400, 1.5);
 			turn(-60, 30);
@@ -49,11 +49,9 @@ void bare(int s, int position, int tube) {
 			turn(-30, 85);
 			grabMove(-40, -750, 650, 1.5);
 			moveTo(50, 800);
-			turn(-42, 145);
+			turn(-42, 140);
 			startTask(liftTaskC);
-			moveTo(-100, -6800);
-			delay(500);
-			basket('x');
+			moveTo(-100, -5500);
 		}
 	}
 	if (tube == 1) {
@@ -80,34 +78,49 @@ void bare(int s, int position, int tube) {
 
 void center(int s, int position) {
 	if (position == 0) {
-		moveTo(15, 2000, 0.4);
+		moveTo(15, 1600, 0.4);
+		int irPosition = getPos();
+		if(irPosition == 3 || irPosition == 1) {
+			moveTo(15, 600, 0.4);
+			if (getPos() == 3) {
+				moveTo(-15, -600, 0.4);
+			}
+		}
 		displayTextLine(0, "%1i", getPos());
 		if (getPos() == 3) {
-			moveTo(-50, -300, 0.4);
-			turn(30, -90);
-			moveTo(50, 300, 0.4);
-			turn(30, -80);
-			moveTo(-50, -1200, 90.0, 1500);
+			turn(30, 80);
+			moveTo(-50, -350, 0.4);
+			turn(30, 70);
+			moveTo(-50, -1400);
+			moveTo(50, 100);
 		}
 		else if (getPos() == 2) {
 			arcTurn(-50, -120);
-			moveTo(-40, -1540, 0.4);
-			turn(35, 80);
-			moveTo(-30, -1100);
-			moveTo(50, 125, 0.4);
+			moveTo(-40, -1625, 0.4);
+			turn(30, 75);
+			moveTo(-30, -1200);
+			moveTo(50, 60);
 		}
 		else if (getPos() == 1) {
-			turn(-35, -130);
-			moveTo(-35, -2600, 0.4);
-			turn(-35, -95);
-			moveTo(-40, -500);
+			turn(-35, -100);
+			moveTo(-50, -2700, 0.4);
+			turn(-35, -45);
+			moveTo(-35, -500, 0.4);
+			turn(35, 70);
+			moveTo(-40, -850);
+			moveTo(50, 120);
 		}
 		lift(60, 5000, 3500);
 		basket('x');
 		delay(2500);
 		basket('y');
-		lift(-60, 5000);
+		lift(-60, 5000, 3500);
+		arcTurn(50, -90);
+		moveTo(30, 200);
+		arcTurn(50, -95);
+		moveTo(80, 1500);
 	}
+	writeDebugStreamLine("End");
 }
 
 void kick(int suspend){

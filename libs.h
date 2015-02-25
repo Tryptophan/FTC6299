@@ -25,24 +25,40 @@ int getLiftAverage() {
 	if (nMotorEncoder[liftR] == 0) {
 		divide--;
 	}
-	return /*((nMotorEncoder[liftL] + */nMotorEncoder[liftR]/*) / divide)*/;
+	return ((nMotorEncoder[liftL] + nMotorEncoder[liftR]) / divide);
 }
 
 int getEncoderAverage() {
 	int divide = 4;
-	if (nMotorEncoder[motorFL] == 0) {
+	int exclude[4] = {0, 0, 0, 0};
+	int encoders[4] = {nMotorEncoder[motorFL], nMotorEncoder[motorFR], nMotorEncoder[motorBL], nMotorEncoder[motorBR]};
+
+	/*if (nMotorEncoder[motorFL] < 40 && nMotorEncoder[motorFL] > -40) {
 		divide--;
+		exclude[0] = 1;
 	}
-	if (nMotorEncoder[motorBL] == 0) {
+	if (nMotorEncoder[motorFR] < 40 && nMotorEncoder[motorFR] > -40) {
 		divide--;
+		exclude[1] = 1;
 	}
-	if (nMotorEncoder[motorFR] == 0) {
+	if (nMotorEncoder[motorBL] < 40 && nMotorEncoder[motorBL] > -40) {
 		divide--;
+		exclude[2] = 1;
 	}
-	if (nMotorEncoder[motorBR] == 0) {
+	if (nMotorEncoder[motorBR] < 40 && nMotorEncoder[motorBR] > -40) {
 		divide--;
+		exclude[3] = 1;
+	}*/
+
+	int sum = 0;
+
+	for (int j = 0; j < 4; j++) {
+		if (exclude[j] == 0) {
+			sum += encoders[j];
+		}
 	}
-	return (nMotorEncoder[motorFL] + nMotorEncoder[motorBL] + nMotorEncoder[motorFR] + nMotorEncoder[motorBR]) / divide;
+
+	return sum / divide;
 }
 
 void setMotors(int left, int right) {
@@ -252,7 +268,6 @@ void latch(bool position) {
 }
 
 int getPos() {
-	delay(450);
 	/*int count[5] = {0, 0, 0, 0, 0};
 	for (int j = 0; j < 20; j++) {
 	if (HTIRS2readACDir(SENSOR_IR) == 0) {
@@ -280,10 +295,10 @@ int getPos() {
 	big = count[j];
 	}
 	}*/
-	if (spot > 3) {
+	if (spot >= 5) {
 		return 3;
 	}
-	else if (spot <= 3 && spot >= 1) {
+	else if (spot < 5 && spot >= 1) {
 		return 2;
 	}
 	else {
@@ -400,4 +415,24 @@ task liftTaskB() {
 	lift(60, 2200);
 	basket('x');
 	stopTask(liftTaskB);
+}
+
+task debug(){
+	float timee = 0;
+	while(true) {
+		writeDebugStreamLine("Time: %4f", timee);
+		writeDebugStreamLine("\n");
+		writeDebugStreamLine("BaseFL: %6i", nMotorEncoder[motorFL]);
+		writeDebugStreamLine("BaseFR: %6i", nMotorEncoder[motorFR]);
+		writeDebugStreamLine("BaseBL: %6i", nMotorEncoder[motorBL]);
+		writeDebugStreamLine("BaseBR: %6i", nMotorEncoder[motorBR]);
+		writeDebugStreamLine("\n");
+
+		writeDebugStreamLine("LiftL: %6i", nMotorEncoder[liftL]);
+		writeDebugStreamLine("LiftR: %6i", nMotorEncoder[liftR]);
+
+		writeDebugStreamLine("\n\n");
+		wait10Msec(10);
+		timee += .01;
+	}
 }
