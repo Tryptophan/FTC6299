@@ -420,7 +420,7 @@ task liftTaskB() {
 task debug(){
 	float timee = 0;
 	while(true) {
-		writeDebegStreamLine("Time: %4f", timee);
+		writeDebugStreamLine("Time: %4f", timee);
 		writeDebugStreamLine("\n");
 		writeDebugStreamLine("BaseFL: %6i", nMotorEncoder[motorFL]);
 		writeDebugStreamLine("BaseFR: %6i", nMotorEncoder[motorFR]);
