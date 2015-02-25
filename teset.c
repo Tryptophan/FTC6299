@@ -25,6 +25,7 @@
 task main()
 {
 	int base = 0;
+	string basektpos = "Disactivated";
 	nMotorEncoder[motorFL] = 0;
 	nMotorEncoder[motorFR] = 0;
 	nMotorEncoder[flip] = 0;
@@ -103,7 +104,7 @@ task main()
 		}
 		while (base == 3) {
 			displayTextLine(0, "Servo");
-			displayTextLine(1, "");
+			displayTextLine(1, "%5s", basektpos);
 			displayTextLine(2, "");
 			displayTextLine(3, "");
 			displayTextLine(4, "");
@@ -112,15 +113,36 @@ task main()
 			if (nNxtButtonPressed == 1) {
 				servo[liftServoL] = 100;
 				servo[liftServoR] = 155;
+				basektpos = "X";
 			}
 			if (nNxtButtonPressed == 2) {
 				servo[liftServoL] = 230;
 				servo[liftServoR] = 25;
+				basektpos = "A";
+			}
+			if (nNxtButtonPressed == 3) {
+				base++;
+				delay(500);
+			}
+		while (base == 4) {
+			displayTextLine(0, "Servo Latches");
+			displayTextLine(1, "");
+			displayTextLine(2, "");
+			displayTextLine(3, "");
+			displayTextLine(4, "");
+			displayTextLine(5, "");
+			displayTextLine(6, "");
+			if (nNxtButtonPressed == 1) {
+				latch(true);
+			}
+			if (nNxtButtonPressed == 2) {
+				latch(false);
 			}
 			if (nNxtButtonPressed == 3) {
 				base = 0;
 				delay(500);
 			}
+		}
 		}
 	}
 	while(true){}
