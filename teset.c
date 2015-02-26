@@ -133,10 +133,11 @@ task main()
 			displayTextLine(5, "");
 			displayTextLine(6, "");
 			if (nNxtButtonPressed == 1) {
-				latch(true);
+				latch(false);
+
 			}
 			if (nNxtButtonPressed == 2) {
-				latch(false);
+				latch(true);
 			}
 			if (nNxtButtonPressed == 3) {
 				base = 0;
