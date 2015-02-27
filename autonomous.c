@@ -36,10 +36,10 @@ task main(){
 
 	// Starts Autonomous Chooser
 	nVolume = 4;
-	startTask(debug);
 	startTask(chooser);
 	waitForStart();
 	stopTask(chooser);
+	startTask(debug);
 	wait1Msec(50);
 	HTGYROstartCal(SENSOR_GYRO);
 	wait1Msec(50);

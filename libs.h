@@ -25,7 +25,7 @@ int getLiftAverage() {
 	if (nMotorEncoder[liftR] == 0) {
 		divide--;
 	}
-	return ((nMotorEncoder[liftL] + nMotorEncoder[liftR]) / divide);
+	return (((nMotorEncoder[liftL] + nMotorEncoder[liftR]) / divide) * -1);
 }
 
 int getEncoderAverage() {
@@ -419,8 +419,9 @@ task liftTaskB() {
 
 task debug(){
 	float timee = 0;
+		writeDebugStreamLine("--------------------------Start--------------------------");
 	while(true) {
-		writeDebugStreamLine("Time: %4f", timee);
+		writeDebugStreamLine("Time: %2f", timee);
 		writeDebugStreamLine("\n");
 		writeDebugStreamLine("BaseFL: %6i", nMotorEncoder[motorFL]);
 		writeDebugStreamLine("BaseFR: %6i", nMotorEncoder[motorFR]);
@@ -433,6 +434,6 @@ task debug(){
 
 		writeDebugStreamLine("\n\n");
 		wait10Msec(10);
-		timee += .01;
+		timee += .1;
 	}
 }
