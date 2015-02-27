@@ -10,7 +10,7 @@ void initializeRobot() {
 void bare(int s, int position, int tube) {
 	delay(s * 1000);
 	if (tube == 2) {
-		if (position == 1) {  //Parking Zone
+		/*if (position == 1) {  //Parking Zone
 			playSound(soundBeepBeep);
 			moveTo(-25, -1243, 1.5);
 			turn(-25, -21);
@@ -26,7 +26,7 @@ void bare(int s, int position, int tube) {
 			moveTo(-50, -5439, 1.5);
 			lift(60, 2000);
 			basket('x');
-		}
+		}*/
 		if (position == 0) {  //Ramp
 			playSound(soundBeepBeep);
 			moveTo(-35, -4800, 1.5);
@@ -55,7 +55,7 @@ void bare(int s, int position, int tube) {
 		}
 	}
 	if (tube == 1) {
-		if (position == 0) {
+		/*if (position == 0) {
 			playSound(soundBeepBeep);
 			moveTo(-15, -5050, 1.25, 4000);
 			turn(25, -45);
@@ -71,7 +71,7 @@ void bare(int s, int position, int tube) {
 			lift(60, 1270);
 			basket('x');
 			latch(false);
-		}
+		}*/
 	}
 	playSound(soundDownwardTones);
 }
