@@ -53,6 +53,7 @@ short getMPUHeading()
 	}
 	//wait1Msec(50);
 	releaseCPU();
+	//displayCenteredBigTextLine(2, "%d", MPUheading);
 	return MPUheading;
 }
 
@@ -160,7 +161,7 @@ void turn(int power, int deg, int time = 5000) {
     deg = modifier;
   }*/
 
-	int heading = 0;
+int heading = 0;
 	int MPUheading = 0;
 	int diff;
 	int oldHeading;
@@ -173,7 +174,7 @@ void turn(int power, int deg, int time = 5000) {
   //displayCenteredBigTextLine(2, "init:%d", heading);
 
   setMotors(power, -power);
-	while(heading < deg && heading < 400){
+	while(heading < deg){
 			MPUheading = getMPUHeading();
 			diff = abs(MPUheading - oldHeading);
 			if ((diff < 60)||(360 - diff < 60)){
@@ -186,7 +187,7 @@ void turn(int power, int deg, int time = 5000) {
 				displayCenteredBigTextLine(2, "%d", heading);
 	    	displayCenteredBigTextLine(4, "%d", MPUheading);
 	 		}
-	 	 	wait1Msec(5);
+	 	 	//wait1Msec(5);
 	}
 	stopMotors();
 

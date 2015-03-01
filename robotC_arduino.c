@@ -91,7 +91,7 @@ task main()
   wait10Msec(100);
   //displayCenteredBigTextLine(2, "init:%d", heading);
 
-	while(heading < 90){
+	while(true){
 			MPUheading = getMPUHeading();
 			diff = abs(MPUheading - oldHeading);
 			if ((diff < 60)||(360 - diff < 60)){
@@ -104,7 +104,7 @@ task main()
 				//displayCenteredBigTextLine(2, "%d", heading);
 	    	//displayCenteredBigTextLine(4, "%d", MPUheading);
 	 		}
-	 	 	wait1Msec(5);
+	 	 	//wait1Msec(5);
 	}
 	while(true){}
 }

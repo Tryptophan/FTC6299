@@ -90,6 +90,7 @@ void hiSP()
   //if command is 2 or greater, send back a specified value
   if (command >= 2)
   {
+    //heading = -300;
     switch(command)
     {
       case 2:
