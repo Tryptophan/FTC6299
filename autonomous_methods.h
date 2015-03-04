@@ -49,7 +49,7 @@ void bare(int s, int position, int tube) {
 			turn(-30, 85);
 			grabMove(-40, -750, 600, 1.5);
 			moveTo(50, 800);
-			turn(-35, 140); //42
+			turn(-35, 135); //42
 			startTask(liftTaskC);
 			moveTo(-100, -5800);
 			delay(500);
@@ -57,7 +57,7 @@ void bare(int s, int position, int tube) {
 			delay(2000);//1500
 			moveTo(-100, -600);
 			basket('y');
-			lift(-60, 3800);
+			lift(-60, 3900);
 		}
 	}
 	if (tube == 1) {
@@ -98,23 +98,23 @@ void center(int s, int position) {
 			moveTo(-50, -350, 0.4);
 			turn(30, 70);
 			moveTo(-50, -1400);
-			moveTo(50, 100);
+			moveTo(50, 50);
 		}
 		else if (getPos() == 2) {
 			arcTurn(-50, -120);
-			moveTo(-40, -1625, 0.4);
+			moveTo(-40, -1425, 0.4);
 			turn(30, 75);
 			moveTo(-30, -1200);
 			moveTo(50, 60);
 		}
 		else if (getPos() == 1) {
 			turn(-35, -100);
-			moveTo(-50, -2700, 0.4);
+			moveTo(-50, -2800, 0.4); //2700
 			turn(-35, -45);
 			moveTo(-35, -500, 0.4);
 			turn(35, 70);
 			moveTo(-40, -850);
-			moveTo(50, 120);
+			moveTo(50, 100); //120
 		}
 		lift(60, 5000, 3500);
 		basket('x');
