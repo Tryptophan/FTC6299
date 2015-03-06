@@ -116,7 +116,7 @@ void center(int s, int position) {
 			moveTo(-40, -850);
 			moveTo(50, 100); //120
 		}
-		lift(60, 5000, 3500);
+		lift(60, 4500, 3500);
 		basket('x');
 		delay(2500);
 		basket('y');
