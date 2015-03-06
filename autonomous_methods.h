@@ -95,7 +95,7 @@ void center(int s, int position) {
 		displayTextLine(0, "%1i", getPos());
 		if (getPos() == 3) {
 			turn(30, 80);
-			moveTo(-50, -350, 0.4);
+			moveTo(-50, -350, 0.4); //350
 			turn(30, 70);
 			moveTo(-50, -1400);
 			moveTo(50, 50);
@@ -109,9 +109,9 @@ void center(int s, int position) {
 		}
 		else if (getPos() == 1) {
 			turn(-35, -100);
-			moveTo(-50, -2800, 0.4); //2700
+			moveTo(-50, -2800, 0.4);
 			turn(-35, -45);
-			moveTo(-35, -500, 0.4);
+			moveTo(-35, -400, 0.4); //500
 			turn(35, 70);
 			moveTo(-40, -850);
 			moveTo(50, 100); //120
