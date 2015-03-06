@@ -102,10 +102,10 @@ void center(int s, int position) {
 		}
 		else if (getPos() == 2) {
 			arcTurn(-50, -120);
-			moveTo(-40, -1425, 0.4);
+			moveTo(-40, -1715, 0.4);
 			turn(30, 75);
 			moveTo(-30, -1200);
-			moveTo(50, 60);
+			moveTo(53, 60);
 		}
 		else if (getPos() == 1) {
 			turn(-35, -100);
