@@ -121,6 +121,7 @@ task servos() {
 			servo[servoL] = 250;
 			servo[servoR] = 0;
 		}
+
 		if (joy1Btn(06) == 1) {
 			servo[servoL] = 160;
 			servo[servoR] = 90;
@@ -128,24 +129,24 @@ task servos() {
 
 		// BTN01 = X
 		if (joy2Btn(01) == 1) {
-			servo[liftServoL] = 80;
-			servo[liftServoR] = 165;
+			servo[liftServoL] = 100;
+			servo[liftServoR] = 155;
 		}
 
 		// BTN04 = Y
 		if (joy2Btn(04) == 1) {
-			servo[liftServoL] = 240;
-			servo[liftServoR] = 05;
+			servo[liftServoL] = 175;
+			servo[liftServoR] = 190;
 		}
 		// BTN02 = A
 		if (joy2Btn(02) == 1) {
-			servo[liftServoL] = 220;
+			servo[liftServoL] = 230;
 			servo[liftServoR] = 25;
 		}
 		// BTN03 = B
 		if (joy2Btn(03) == 1) {
 			servo[liftServoL] = 120;
-			servo[liftServoR] = 125;
+			servo[liftServoR] = 135;
 		}
 	}
 }
