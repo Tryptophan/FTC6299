@@ -86,13 +86,15 @@ void center(int s, int position) {
 	if (position == 0) {
 		moveTo(15, 1600, 0.4);
 		int irPosition = getPos();
+		//writeDebugStreamLine("%1i", irPosition);
 		if(irPosition == 3 || irPosition == 1) {
+			//writeDebugStreamLine("%1i", getPos();
 			moveTo(15, 600, 0.4);
 			if (getPos() == 3) {
-				moveTo(-15, -600, 0.4);
+				moveTo(-15, -800, 0.4);
 			}
 		}
-		displayTextLine(0, "%1i", getPos());
+		//displayTextLine(0, "%1i", getPos());
 		if (getPos() == 3) {
 			turn(30, 80);
 			moveTo(-50, -350, 0.4); //350
