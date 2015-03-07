@@ -289,6 +289,7 @@ int getPos() {
 	}
 	int big = count[0];*/
 	int spot = HTIRS2readACDir(SENSOR_IR);
+	nxtDisplayTextLine(0, "%1i", spot);
 	/*for (int j = 1; j < 5; j++) {
 	if (count[j] > big) {
 	spot = j;
