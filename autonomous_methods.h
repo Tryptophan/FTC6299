@@ -89,9 +89,12 @@ void center(int s, int position) {
 		//writeDebugStreamLine("%1i", irPosition);
 		if(irPosition == 3 || irPosition == 1) {
 			//writeDebugStreamLine("%1i", getPos();
-			moveTo(15, 600, 0.4);
+			moveTo(15, 1200, 0.4);
 			if (getPos() == 3) {
-				moveTo(-15, -800, 0.4);
+				moveTo(-15, -600, 0.4);
+			}
+			else if (getPos() == 1) {
+				moveTo(-15, -600, 0.4);
 			}
 		}
 		//displayTextLine(0, "%1i", getPos());
@@ -115,7 +118,7 @@ void center(int s, int position) {
 			turn(-35, -45);
 			moveTo(-35, -400, 0.4); //500
 			turn(35, 70);
-			moveTo(-40, -850);
+			moveTo(-40, -1050);
 			moveTo(50, 100); //120
 		}
 		lift(60, 4500, 3500);
