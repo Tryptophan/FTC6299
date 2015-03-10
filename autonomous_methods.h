@@ -29,18 +29,19 @@ void bare(int s, int position, int tube) {
 		}*/
 		if (position == 0) {  //Ramp
 			playSound(soundBeepBeep);
-			moveTo(-35, -4800, 1.5);
+			moveTo(-30, -4800, 1.0);
+			turn(40, (heading * -1));
 			turn(50, -45);
-			moveTo(-30, -1200, 1.5);
+			moveTo(-30, -1000, 1.5);
 			turn(-50, -90);
-			grabMove(-25, -1000, 870, 1.5);
+			grabMove(-25, -850, 800, 1.5);
 			startTask(liftTaskB);
 			moveTo(50, 200, 1.5);
 			turn(-45, -75);
 			delay(2000);
 			basket('y');
 			moveTo(-40, -300, 1.5);
-			lift(-60, 2300); //2400
+			lift(-60, 2100); //2400
 			latch(false);
 			moveTo(40, 400, 1.5);
 			turn(-60, 30);
@@ -49,7 +50,7 @@ void bare(int s, int position, int tube) {
 			turn(-30, 85);
 			grabMove(-40, -750, 600, 1.5);
 			moveTo(50, 800);
-			turn(-35, 135); //42
+			turn(-35, 140); //42
 			startTask(liftTaskC);
 			moveTo(-100, -5800);
 			delay(500);
@@ -57,7 +58,7 @@ void bare(int s, int position, int tube) {
 			delay(2000);//1500
 			moveTo(-100, -600);
 			basket('y');
-			lift(-60, 3900);
+			lift(-60, 3600);
 		}
 	}
 	if (tube == 1) {

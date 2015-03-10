@@ -125,12 +125,12 @@ void moveTo(int power, int deg, float threshold = 2.0, long time = 100000, float
 					setMotors((power / cor), power);
 				}
 			}
-
 			wait1Msec(20);
 		}
 	}
 
 	stopMotors();
+	//nxtDisplayBigTextLine(1, "%4i",heading);
 }
 
 void turn(int power, int deg, int time = 6000) {
@@ -408,12 +408,12 @@ void grabMove(int power, int deg, int lat, float threshold = 2.0, long time = 10
 
 task liftTaskC() {
 	manipulator(600);
-	lift(60, 3600);
+	lift(60, 3450);
 	stopTask(liftTaskC);
 }
 
 task liftTaskB() {
-	lift(60, 2050);
+	lift(60, 1975);
 	basket('x');
 	stopTask(liftTaskB);
 }
