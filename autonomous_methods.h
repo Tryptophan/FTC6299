@@ -91,14 +91,16 @@ void center(int s, int position) {
 			//writeDebugStreamLine("%1i", getPos();
 			moveTo(15, 1200, 0.4);
 			if (getPos() == 3) {
-				moveTo(-15, -600, 0.4);
+				moveTo(-15, -1200, 0.4);
+				irPosition = 3;
 			}
 			else if (getPos() == 1) {
 				moveTo(-15, -600, 0.4);
+				irPosition = 1;
 			}
 		}
 		//displayTextLine(0, "%1i", getPos());
-		if (getPos() == 3) {
+		if (irPosition == 3) {
 			turn(30, 80);
 			moveTo(-50, -350, 0.4); //350
 			turn(30, 70);
@@ -107,18 +109,18 @@ void center(int s, int position) {
 		}
 		else if (getPos() == 2) {
 			arcTurn(-50, -120);
-			moveTo(-40, -1715, 0.4);
-			turn(30, 75);
+			moveTo(-40, -1765, 0.4);
+			turn(30, 85);
 			moveTo(-30, -1200);
-			moveTo(53, 60);
+			moveTo(50, 10);
 		}
-		else if (getPos() == 1) {
-			turn(-35, -100);
-			moveTo(-50, -2800, 0.4);
+		else if (irPosition == 1) {
+			turn(-35, -115);
+			moveTo(-50, -3000, 0.4);
 			turn(-35, -45);
 			moveTo(-35, -400, 0.4); //500
-			turn(35, 70);
-			moveTo(-40, -1050);
+			turn(35, 80);
+			moveTo(-40, -1100);
 			moveTo(50, 100); //120
 		}
 		lift(60, 4500, 3500);
