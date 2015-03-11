@@ -413,7 +413,7 @@ task liftTaskC() {
 }
 
 task liftTaskB() {
-	lift(60, 1975);
+	lift(60, 1725);
 	basket('x');
 	stopTask(liftTaskB);
 }
