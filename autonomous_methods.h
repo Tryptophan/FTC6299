@@ -90,9 +90,9 @@ void center(int s, int position) {
 		//writeDebugStreamLine("%1i", irPosition);
 		if(irPosition == 3 || irPosition == 1) {
 			//writeDebugStreamLine("%1i", getPos();
-			moveTo(15, 1200, 0.4);
+			moveTo(15, 725, 0.4);
 			if (getPos() == 3) {
-				moveTo(-15, -1200, 0.4);
+				moveTo(-15, -400, 0.4);
 				irPosition = 3;
 			}
 			else if (getPos() == 1) {
@@ -103,8 +103,8 @@ void center(int s, int position) {
 		//displayTextLine(0, "%1i", getPos());
 		if (irPosition == 3) {
 			turn(30, 80);
-			moveTo(-50, -350, 0.4); //350
-			turn(30, 70);
+			moveTo(-50, -450, 0.4); //350
+			turn(30, 80);
 			moveTo(-50, -1400);
 			moveTo(50, 50);
 		}
@@ -113,18 +113,18 @@ void center(int s, int position) {
 			moveTo(-40, -1765, 0.4);
 			turn(30, 85);
 			moveTo(-30, -1200);
-			moveTo(50, 10);
+			moveTo(20, 25);
 		}
 		else if (irPosition == 1) {
 			turn(-35, -115);
 			moveTo(-50, -3000, 0.4);
 			turn(-35, -45);
-			moveTo(-35, -400, 0.4); //500
-			turn(35, 80);
-			moveTo(-40, -1100);
+			moveTo(-35, -600, 0.4); //500
+			turn(35, 75);
+			moveTo(-40, -1000);
 			moveTo(50, 100); //120
 		}
-		lift(60, 4500, 3500);
+		lift(60, 4775, 3500);
 		basket('x');
 		delay(2500);
 		basket('y');
