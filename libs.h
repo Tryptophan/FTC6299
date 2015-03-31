@@ -159,10 +159,10 @@ void moveTo(int power, int deg, float threshold = 2.0, long time = 100000, float
 	int correction = heading * -1;
 
 	if (heading > 0) {
-		turn(40 * -1, correction);
+		turn(40, correction / 2);
 	}
 	else {
-		turn(40, correction);
+		turn(40, (correction * -1) / 2);
 	}
 	//nxtDisplayBigTextLine(1, "%4i",heading);
 }
@@ -433,14 +433,28 @@ void fLatch(bool left, bool right) {
 task liftTaskC() {
 	manipulator(600);
 	lift(60, 3450);
+	basket('x');
 	stopTask(liftTaskC);
 }
 
+task retractTaskC() {
+	delay(1500);
+	basket('y');
+	lift(-60, 3650);
+	stopTask(retractTaskC);
+}
+
 task liftTaskB() {
-	lift(60, 1725);
+	lift(60, 1880);
 	basket('x');
 	stopTask(liftTaskB);
 }
+
+task retractTaskB() {
+	basket('y');
+	lift(-60, 2200);
+}
+
 
 task debug(){
 	float timee = 0;
