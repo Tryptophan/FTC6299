@@ -75,6 +75,32 @@ void stopMotors() {
 	motor[motorBR] = 0;
 }
 
+
+void turn(int power, int deg, int time = 6000) {
+
+	heading = 0;
+	wait1Msec(250);
+	clearTimer(T1);
+
+	if (deg > 0) {
+		while (time1[T1] < time && abs(heading) < abs(deg)) {
+			heading += HTGYROreadRot(SENSOR_GYRO) * (float)(20 / 1000.0);
+			setMotors(power, -power);
+			wait1Msec(20);
+		}
+	}
+
+	if (deg < 0) {
+		while (time1[T1] < time && abs(heading) < abs(deg)) {
+			heading += HTGYROreadRot(SENSOR_GYRO) * (float)(20 / 1000.0);
+			setMotors(-power, power);
+			wait1Msec(20);
+		}
+	}
+
+	stopMotors();
+}
+
 void moveTo(int power, int deg, float threshold = 2.0, long time = 100000, float cor = 4.0) {
 	heading = 0;
 	nMotorEncoder[motorBL] = 0;
@@ -130,32 +156,15 @@ void moveTo(int power, int deg, float threshold = 2.0, long time = 100000, float
 	}
 
 	stopMotors();
+	int correction = heading * -1;
+
+	if (heading > 0) {
+		turn(40 * -1, correction);
+	}
+	else {
+		turn(40, correction);
+	}
 	//nxtDisplayBigTextLine(1, "%4i",heading);
-}
-
-void turn(int power, int deg, int time = 6000) {
-
-	heading = 0;
-	wait1Msec(250);
-	clearTimer(T1);
-
-	if (deg > 0) {
-		while (time1[T1] < time && abs(heading) < abs(deg)) {
-			heading += HTGYROreadRot(SENSOR_GYRO) * (float)(20 / 1000.0);
-			setMotors(power, -power);
-			wait1Msec(20);
-		}
-	}
-
-	if (deg < 0) {
-		while (time1[T1] < time && abs(heading) < abs(deg)) {
-			heading += HTGYROreadRot(SENSOR_GYRO) * (float)(20 / 1000.0);
-			setMotors(-power, power);
-			wait1Msec(20);
-		}
-	}
-
-	stopMotors();
 }
 
 void arcTurn(int power, int deg, int time = 7000) {
@@ -403,6 +412,21 @@ void grabMove(int power, int deg, int lat, float threshold = 2.0, long time = 10
 	stopMotors();
 	if(lat > getEncoderAverage()) {
 		latch(true);
+	}
+}
+
+void fLatch(bool left, bool right) {
+	if (left) {
+		servo[kickL] = 235;
+	}
+	if (right) {
+		servo[kickR] = 20;
+	}
+	if (!left) {
+		servo[kickL] = 0;
+	}
+	if (!right) {
+		servo[kickR] = 235;
 	}
 }
 

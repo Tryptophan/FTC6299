@@ -4,6 +4,7 @@ void initializeRobot() {
 	nVolume = 4;
 	latch(false);
 	basket('y');
+	fLatch(false, false);
 }
 
 // Finds the ir beacon, dumps the block, and parks on the ramp
@@ -30,35 +31,12 @@ void bare(int s, int position, int tube) {
 		if (position == 0) {  //Ramp
 			playSound(soundBeepBeep);
 			moveTo(-30, -4800, 1.0);
-			turn(40, (heading * -1));
 			turn(50, -45);
 			moveTo(-30, -1000, 1.5);
-			turn(-50, -90);
+			turn(50, 90);
 			grabMove(-25, -850, 800, 1.5);
 			startTask(liftTaskB);
-			moveTo(50, 200, 1.5);
-			turn(-45, -75);
-			delay(2000);
-			basket('y');
-			moveTo(-40, -300, 1.5);
-			lift(-60, 2100, 2000); //2400
-			latch(false);
-			moveTo(40, 400, 1.5);
-			turn(-60, 30);
-			moveTo(-50, -1100, 30.0);
-			moveTo(40, 100);
-			turn(-30, 85);
-			grabMove(-40, -750, 600, 1.5);
-			moveTo(50, 800);
-			turn(-35, 140); //42
-			startTask(liftTaskC);
-			moveTo(-100, -5600);
-			delay(500);
-			basket('x');
-			delay(2000);//1500
-			moveTo(-100, -600);
-			basket('y');
-			lift(-60, 3600);
+			turn(50, -60);
 		}
 	}
 	if (tube == 1) {
