@@ -25,7 +25,7 @@ int getLiftAverage() {
 	if (nMotorEncoder[liftR] == 0) {
 		divide--;
 	}
-	return ((nMotorEncoder[liftL] + nMotorEncoder[liftR]) / divide);
+	return (((nMotorEncoder[liftL] + nMotorEncoder[liftR]) / divide) * -1);
 }
 
 int getEncoderAverage() {
@@ -73,6 +73,32 @@ void stopMotors() {
 	motor[motorBL] = 0;
 	motor[motorFR] = 0;
 	motor[motorBR] = 0;
+}
+
+
+void turn(int power, int deg, int time = 6000) {
+
+	heading = 0;
+	wait1Msec(250);
+	clearTimer(T1);
+
+	if (deg > 0) {
+		while (time1[T1] < time && abs(heading) < abs(deg)) {
+			heading += HTGYROreadRot(SENSOR_GYRO) * (float)(20 / 1000.0);
+			setMotors(power, -power);
+			wait1Msec(20);
+		}
+	}
+
+	if (deg < 0) {
+		while (time1[T1] < time && abs(heading) < abs(deg)) {
+			heading += HTGYROreadRot(SENSOR_GYRO) * (float)(20 / 1000.0);
+			setMotors(-power, power);
+			wait1Msec(20);
+		}
+	}
+
+	stopMotors();
 }
 
 void moveTo(int power, int deg, float threshold = 2.0, long time = 100000, float cor = 4.0) {
@@ -125,37 +151,20 @@ void moveTo(int power, int deg, float threshold = 2.0, long time = 100000, float
 					setMotors((power / cor), power);
 				}
 			}
-
 			wait1Msec(20);
 		}
 	}
 
 	stopMotors();
-}
+	int correction = heading * -1;
 
-void turn(int power, int deg, int time = 6000) {
-
-	heading = 0;
-	wait1Msec(250);
-	clearTimer(T1);
-
-	if (deg > 0) {
-		while (time1[T1] < time && abs(heading) < abs(deg)) {
-			heading += HTGYROreadRot(SENSOR_GYRO) * (float)(20 / 1000.0);
-			setMotors(power, -power);
-			wait1Msec(20);
-		}
+	if (heading > 0) {
+		turn(40, correction / 2);
 	}
-
-	if (deg < 0) {
-		while (time1[T1] < time && abs(heading) < abs(deg)) {
-			heading += HTGYROreadRot(SENSOR_GYRO) * (float)(20 / 1000.0);
-			setMotors(-power, power);
-			wait1Msec(20);
-		}
+	else {
+		turn(40, (correction * -1) / 2);
 	}
-
-	stopMotors();
+	//nxtDisplayBigTextLine(1, "%4i",heading);
 }
 
 void arcTurn(int power, int deg, int time = 7000) {
@@ -289,6 +298,7 @@ int getPos() {
 	}
 	int big = count[0];*/
 	int spot = HTIRS2readACDir(SENSOR_IR);
+	nxtDisplayTextLine(0, "%1i", spot);
 	/*for (int j = 1; j < 5; j++) {
 	if (count[j] > big) {
 	spot = j;
@@ -328,7 +338,7 @@ void basket(char position) {
 		servo[liftServoR] = 155;
 	}
 	if (position == 'y') {
-		servo[liftServoL] = 220;
+		servo[liftServoL] = 230;
 		servo[liftServoR] = 25;
 	}
 }
@@ -405,22 +415,52 @@ void grabMove(int power, int deg, int lat, float threshold = 2.0, long time = 10
 	}
 }
 
+void fLatch(bool left, bool right) {
+	if (left) {
+		servo[kickL] = 235;
+	}
+	if (right) {
+		servo[kickR] = 20;
+	}
+	if (!left) {
+		servo[kickL] = 0;
+	}
+	if (!right) {
+		servo[kickR] = 235;
+	}
+}
+
 task liftTaskC() {
 	manipulator(600);
-	lift(60, 3600);
+	lift(60, 3450);
+	basket('x');
 	stopTask(liftTaskC);
 }
 
+task retractTaskC() {
+	delay(1500);
+	basket('y');
+	lift(-60, 3650);
+	stopTask(retractTaskC);
+}
+
 task liftTaskB() {
-	lift(60, 2200);
+	lift(60, 1880);
 	basket('x');
 	stopTask(liftTaskB);
 }
 
+task retractTaskB() {
+	basket('y');
+	lift(-60, 2200);
+}
+
+
 task debug(){
 	float timee = 0;
+		writeDebugStreamLine("--------------------------Start--------------------------");
 	while(true) {
-		writeDebugStreamLine("Time: %4f", timee);
+		writeDebugStreamLine("Time: %2f", timee);
 		writeDebugStreamLine("\n");
 		writeDebugStreamLine("BaseFL: %6i", nMotorEncoder[motorFL]);
 		writeDebugStreamLine("BaseFR: %6i", nMotorEncoder[motorFR]);
@@ -433,6 +473,6 @@ task debug(){
 
 		writeDebugStreamLine("\n\n");
 		wait10Msec(10);
-		timee += .01;
+		timee += .1;
 	}
 }

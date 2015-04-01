@@ -4,13 +4,14 @@ void initializeRobot() {
 	nVolume = 4;
 	latch(false);
 	basket('y');
+	fLatch(false, false);
 }
 
 // Finds the ir beacon, dumps the block, and parks on the ramp
 void bare(int s, int position, int tube) {
 	delay(s * 1000);
 	if (tube == 2) {
-		if (position == 1) {  //Parking Zone
+		/*if (position == 1) {  //Parking Zone
 			playSound(soundBeepBeep);
 			moveTo(-25, -1243, 1.5);
 			turn(-25, -21);
@@ -26,36 +27,33 @@ void bare(int s, int position, int tube) {
 			moveTo(-50, -5439, 1.5);
 			lift(60, 2000);
 			basket('x');
-		}
+		}*/
 		if (position == 0) {  //Ramp
 			playSound(soundBeepBeep);
-			moveTo(-35, -4800, 1.5);
+			moveTo(-30, -4800, 1.0);
 			turn(50, -45);
-			moveTo(-30, -1200, 1.5);
-			turn(-50, -90);
-			grabMove(-25, -1000, 870, 1.5);
+			moveTo(-30, -800, 1.5);
+			turn(50, 90);
+			grabMove(-25, -1000, 900, 1.5);
 			startTask(liftTaskB);
-			moveTo(50, 200, 1.5);
-			turn(-45, -75);
-			delay(2000);
-			basket('y');
-			moveTo(-40, -300, 1.5);
-			lift(-60, 1200);
+			delay(3000);
+			startTask(retractTaskB);
+			turn(50, -80);
+			moveTo(-30, -900, 1.5);
 			latch(false);
-			moveTo(40, 400, 1.5);
-			turn(-60, 30);
-			moveTo(-50, -1100, 30.0);
-			moveTo(40, 100);
-			turn(-30, 85);
-			grabMove(-40, -750, 650, 1.5);
-			moveTo(50, 800);
-			turn(-42, 140);
+			moveTo(30, 980, 1.5);
+			turn(40, 55);
+			grabMove(-35, -1000, 900, 1.5);
 			startTask(liftTaskC);
-			moveTo(-100, -5500);
+			arcTurn(40, 95);
+			fLatch(true, false);
+			arcTurn(50, 20);
+			fLatch(true, true);
+			startTask(retractTaskC);
 		}
 	}
 	if (tube == 1) {
-		if (position == 0) {
+		/*if (position == 0) {
 			playSound(soundBeepBeep);
 			moveTo(-15, -5050, 1.25, 4000);
 			turn(25, -45);
@@ -71,7 +69,7 @@ void bare(int s, int position, int tube) {
 			lift(60, 1270);
 			basket('x');
 			latch(false);
-		}
+		}*/
 	}
 	playSound(soundDownwardTones);
 }
@@ -80,37 +78,44 @@ void center(int s, int position) {
 	if (position == 0) {
 		moveTo(15, 1600, 0.4);
 		int irPosition = getPos();
+		//writeDebugStreamLine("%1i", irPosition);
 		if(irPosition == 3 || irPosition == 1) {
-			moveTo(15, 600, 0.4);
+			//writeDebugStreamLine("%1i", getPos();
+			moveTo(15, 725, 0.4);
 			if (getPos() == 3) {
+				moveTo(-15, -400, 0.4);
+				irPosition = 3;
+			}
+			else if (getPos() == 1) {
 				moveTo(-15, -600, 0.4);
+				irPosition = 1;
 			}
 		}
-		displayTextLine(0, "%1i", getPos());
-		if (getPos() == 3) {
+		//displayTextLine(0, "%1i", getPos());
+		if (irPosition == 3) {
 			turn(30, 80);
-			moveTo(-50, -350, 0.4);
-			turn(30, 70);
+			moveTo(-50, -450, 0.4); //350
+			turn(30, 80);
 			moveTo(-50, -1400);
-			moveTo(50, 100);
+			moveTo(50, 60);
 		}
 		else if (getPos() == 2) {
 			arcTurn(-50, -120);
-			moveTo(-40, -1625, 0.4);
-			turn(30, 75);
+			moveTo(-40, -1765, 0.4);
+			turn(30, 85);
 			moveTo(-30, -1200);
-			moveTo(50, 60);
+			moveTo(20, 25);
 		}
-		else if (getPos() == 1) {
-			turn(-35, -100);
-			moveTo(-50, -2700, 0.4);
+		else if (irPosition == 1) {
+			turn(-35, -115);
+			moveTo(-50, -3000, 0.4);
 			turn(-35, -45);
-			moveTo(-35, -500, 0.4);
-			turn(35, 70);
-			moveTo(-40, -850);
-			moveTo(50, 120);
+			moveTo(-35, -600, 0.4); //500
+			turn(35, 75);
+			moveTo(-40, -1000);
+			moveTo(50, 100); //120
 		}
-		lift(60, 5000, 3500);
+		lift(60, 4775, 3500);
 		basket('x');
 		delay(2500);
 		basket('y');
