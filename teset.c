@@ -135,7 +135,7 @@ task main()
 			displayTextLine(6, "");
 			if (nNxtButtonPressed == 2) {
 				latch(false);
-				servo[kickL] = 235;
+				servo[kickL] = 250;
 				servo[kickR] = 20;
 			}
 			if (nNxtButtonPressed == 1) {

@@ -123,7 +123,7 @@ task servos() {
 	while (true) {
 		// Down
 		if (joy1Btn(04) == 1 && !leftK && !rightK) {
-			servo[kickL] = 235;
+			servo[kickL] = 250;
 			servo[kickR] = 20;
 			leftK = true;
 			rightK = true;
@@ -157,7 +157,7 @@ task servos() {
 		}
 
 		if (joystick.joy1_TopHat == 6 && !leftK) {
-			servo[kickL] = 235;
+			servo[kickL] = 250;
 			leftK = true;
 			delay(200);
 		}
