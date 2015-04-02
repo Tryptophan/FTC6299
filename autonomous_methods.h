@@ -81,30 +81,31 @@ void center(int s, int position) {
 		//writeDebugStreamLine("%1i", irPosition);
 		if(irPosition == 3 || irPosition == 1) {
 			//writeDebugStreamLine("%1i", getPos();
-			moveTo(25, 725, 0.4);
-			if (getPos() == 3) {
+			moveTo(25, 600, 0.4);
+			if (HTIRS2readACDir(SENSOR_IR) <= 5) {
 				moveTo(-25, -400, 0.4);
 				irPosition = 3;
 			}
 			else if (getPos() == 1) {
-				moveTo(-25, -600, 0.4);
+				moveTo(-25, -720, 0.4);
 				irPosition = 1;
 			}
 		}
 		//displayTextLine(0, "%1i", getPos());
 		if (irPosition == 3) {
-			turn(30, 80);
-			moveTo(-50, -450, 0.4); //350
-			turn(30, 80);
-			moveTo(-50, -1400);
-			moveTo(50, 60);
+			turn(30, 90);
+			moveTo(-50, -750, 0.4); //350
+			turn(30, 90);
+			moveTo(-50, -1400, false);
+			moveTo(50, 100);
 		}
 		else if (getPos() == 2) {
+			moveTo(40, 200, 0.4);
 			arcTurn(-50, -120);
-			moveTo(-40, -1765, 0.4);
-			turn(30, 85);
-			moveTo(-30, -1200);
-			moveTo(20, 25);
+			moveTo(-40, -1890, 0.4);
+			turn(30, 100); //Turn perpendicular to goal
+			moveTo(-30, -1200, false); //Ram the goal
+			moveTo(20, 90); //Move back from the goal
 		}
 		else if (irPosition == 1) {
 			turn(-35, -115);
@@ -112,7 +113,7 @@ void center(int s, int position) {
 			turn(-35, -45);
 			moveTo(-35, -990, 0.4);
 			turn(35, 95);
-			moveTo(-40, -1150, false);
+			moveTo(-40, -1000, false);
 			moveTo(50, 200);
 		}
 		lift(60, 4775, 3500);
