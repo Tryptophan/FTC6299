@@ -419,7 +419,7 @@ void grabMove(int power, int deg, int lat, float threshold = 2.0, long time = 10
 
 void fLatch(bool left, bool right) {
 	if (left) {
-		servo[kickL] = 235;
+		servo[kickL] = 250;
 	}
 	if (right) {
 		servo[kickR] = 20;
