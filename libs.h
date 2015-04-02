@@ -101,7 +101,7 @@ void turn(int power, int deg, int time = 6000) {
 	stopMotors();
 }
 
-void moveTo(int power, int deg, float threshold = 2.0, long time = 100000, float cor = 4.0) {
+void moveTo(int power, int deg, float threshold = 2.0, long time = 100000, float cor = 4.0, bool adjust = true) {
 	heading = 0;
 	nMotorEncoder[motorBL] = 0;
 	nMotorEncoder[motorFL] = 0;
@@ -156,13 +156,15 @@ void moveTo(int power, int deg, float threshold = 2.0, long time = 100000, float
 	}
 
 	stopMotors();
-	int correction = heading * -1;
+	if (adjust) {
+		int correction = heading * -1;
 
-	if (heading > 0) {
-		turn(40, correction / 2);
-	}
-	else {
-		turn(40, (correction * -1) / 2);
+		if (heading > 0) {
+			turn(40, correction / 2);
+		}
+		else {
+			turn(40, (correction * -1) / 2);
+		}
 	}
 	//nxtDisplayBigTextLine(1, "%4i",heading);
 }
