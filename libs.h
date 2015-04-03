@@ -8,6 +8,8 @@ Made by Team 6299 QuadX
 - Linnea May
 */
 float heading = 0;
+float irVal;
+bool ready = false;
 
 float valInRange(float val, float threshold = 1.0) {
 return (abs(val) <= threshold) ? 0 : val;
@@ -430,6 +432,20 @@ void fLatch(bool left, bool right) {
 	if (!right) {
 		servo[kickR] = 235;
 	}
+}
+
+task irReads() {
+	float reads[20];
+	for (int j = 0; j < 20; j++) {
+		reads[j] = HTIRS2readACDir(SENSOR_IR);
+		writeDebugStreamLine("%1i", HTIRS2readACDir(SENSOR_IR));
+		delay(200);
+	}
+	for (int j = 0; j < 20; j++) {
+		irVal += reads[j];
+	}
+	irVal = irVal / 20;
+	ready = true;
 }
 
 task liftTaskC() {

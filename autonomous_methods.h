@@ -82,14 +82,25 @@ void center(int s, int position) {
 		if(irPosition == 3 || irPosition == 1) {
 			//writeDebugStreamLine("%1i", getPos();
 			moveTo(25, 600, 0.4);
-			if (HTIRS2readACDir(SENSOR_IR) <= 5) {
+			if (ready) {
+				displayTextLine(02, "%4f", irVal);
+				if (irVal >= 4.0) {
+					irPosition = 3;
+				}
+				else {
+					irPosition = 1;
+				}
+			}
+			/*if (HTIRS2readACDir(SENSOR_IR) >= 2) {
+				nxtDisplayTextLine(0, "%1i", HTIRS2readACDir(SENSOR_IR));
 				moveTo(-25, -400, 0.4);
 				irPosition = 3;
 			}
-			else if (getPos() == 1) {
+			else if (HTIRS2readACDir(SENSOR_IR) < 2) {
+				nxtDisplayTextLine(0, "%1i", HTIRS2readACDir(SENSOR_IR));
 				moveTo(-25, -720, 0.4);
 				irPosition = 1;
-			}
+			}*/
 		}
 		//displayTextLine(0, "%1i", getPos());
 		if (irPosition == 3) {
@@ -97,7 +108,7 @@ void center(int s, int position) {
 			moveTo(-50, -750, 0.4); //350
 			turn(30, 90);
 			moveTo(-50, -1400, false);
-			moveTo(50, 100);
+			moveTo(50, 150);
 		}
 		else if (getPos() == 2) {
 			moveTo(40, 200, 0.4);
@@ -111,10 +122,10 @@ void center(int s, int position) {
 			turn(-35, -115);
 			moveTo(-50, -3000, 0.4);
 			turn(-35, -45);
-			moveTo(-35, -990, 0.4);
+			moveTo(-35, -1100, 0.4);
 			turn(35, 95);
-			moveTo(-40, -1000, false);
-			moveTo(50, 200);
+			moveTo(-40, -900, false);
+			moveTo(50, 180);
 		}
 		lift(60, 4775, 3500);
 		basket('x');
@@ -123,8 +134,9 @@ void center(int s, int position) {
 		lift(-60, 5000, 3500);
 		arcTurn(50, -90);
 		moveTo(30, 200);
+		arcTurn(50, -100);
+		moveTo(80, 2300);
 		arcTurn(50, -95);
-		moveTo(80, 1500);
 	}
 	writeDebugStreamLine("End");
 }

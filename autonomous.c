@@ -39,6 +39,7 @@ task main(){
 	startTask(chooser);
 	waitForStart();
 	stopTask(chooser);
+	startTask(irReads);
 	startTask(debug);
 	wait1Msec(50);
 	HTGYROstartCal(SENSOR_GYRO);
