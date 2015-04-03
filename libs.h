@@ -8,6 +8,8 @@ Made by Team 6299 QuadX
 - Linnea May
 */
 float heading = 0;
+float irVal;
+bool ready = false;
 
 float valInRange(float val, float threshold = 1.0) {
 return (abs(val) <= threshold) ? 0 : val;
@@ -101,7 +103,7 @@ void turn(int power, int deg, int time = 6000) {
 	stopMotors();
 }
 
-void moveTo(int power, int deg, float threshold = 2.0, long time = 100000, float cor = 4.0) {
+void moveTo(int power, int deg, float threshold = 2.0, long time = 100000, float cor = 4.0, bool adjust = true) {
 	heading = 0;
 	nMotorEncoder[motorBL] = 0;
 	nMotorEncoder[motorFL] = 0;
@@ -156,13 +158,15 @@ void moveTo(int power, int deg, float threshold = 2.0, long time = 100000, float
 	}
 
 	stopMotors();
-	int correction = heading * -1;
+	if (adjust) {
+		int correction = heading * -1;
 
-	if (heading > 0) {
-		turn(40, correction / 2);
-	}
-	else {
-		turn(40, (correction * -1) / 2);
+		if (heading > 0) {
+			turn(40, correction / 2);
+		}
+		else {
+			turn(40, (correction * -1) / 2);
+		}
 	}
 	//nxtDisplayBigTextLine(1, "%4i",heading);
 }
@@ -417,17 +421,31 @@ void grabMove(int power, int deg, int lat, float threshold = 2.0, long time = 10
 
 void fLatch(bool left, bool right) {
 	if (left) {
-		servo[kickL] = 235;
+		servo[kickL] = 250;
 	}
 	if (right) {
-		servo[kickR] = 20;
+		servo[kickR] = 0;
 	}
 	if (!left) {
-		servo[kickL] = 0;
+		servo[kickL] = 35;
 	}
 	if (!right) {
-		servo[kickR] = 235;
+		servo[kickR] = 205;
 	}
+}
+
+task irReads() {
+	float reads[20];
+	for (int j = 0; j < 20; j++) {
+		reads[j] = HTIRS2readACDir(SENSOR_IR);
+		writeDebugStreamLine("%1i", HTIRS2readACDir(SENSOR_IR));
+		delay(200);
+	}
+	for (int j = 0; j < 20; j++) {
+		irVal += reads[j];
+	}
+	irVal = irVal / 20;
+	ready = true;
 }
 
 task liftTaskC() {

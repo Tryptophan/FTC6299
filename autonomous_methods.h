@@ -42,7 +42,7 @@ void bare(int s, int position, int tube) {
 			moveTo(-30, -900, 1.5);
 			latch(false);
 			moveTo(30, 980, 1.5);
-			turn(40, 55);
+			turn(40, 50);
 			grabMove(-35, -1000, 900, 1.5);
 			startTask(liftTaskC);
 			arcTurn(40, 95);
@@ -76,44 +76,56 @@ void bare(int s, int position, int tube) {
 
 void center(int s, int position) {
 	if (position == 0) {
-		moveTo(15, 1600, 0.4);
+		moveTo(25, 1600, 0.4);
 		int irPosition = getPos();
 		//writeDebugStreamLine("%1i", irPosition);
 		if(irPosition == 3 || irPosition == 1) {
 			//writeDebugStreamLine("%1i", getPos();
-			moveTo(15, 725, 0.4);
-			if (getPos() == 3) {
-				moveTo(-15, -400, 0.4);
+			moveTo(25, 600, 0.4);
+			if (ready) {
+				displayTextLine(02, "%4f", irVal);
+				if (irVal >= 4.0) {
+					irPosition = 3;
+				}
+				else {
+					irPosition = 1;
+				}
+			}
+			/*if (HTIRS2readACDir(SENSOR_IR) >= 2) {
+				nxtDisplayTextLine(0, "%1i", HTIRS2readACDir(SENSOR_IR));
+				moveTo(-25, -400, 0.4);
 				irPosition = 3;
 			}
-			else if (getPos() == 1) {
-				moveTo(-15, -600, 0.4);
+			else if (HTIRS2readACDir(SENSOR_IR) < 2) {
+				nxtDisplayTextLine(0, "%1i", HTIRS2readACDir(SENSOR_IR));
+				moveTo(-25, -720, 0.4);
 				irPosition = 1;
-			}
+			}*/
 		}
 		//displayTextLine(0, "%1i", getPos());
 		if (irPosition == 3) {
-			turn(30, 80);
-			moveTo(-50, -450, 0.4); //350
-			turn(30, 80);
-			moveTo(-50, -1400);
-			moveTo(50, 60);
+			turn(30, 90);
+			moveTo(-50, -750, 0.4); //350
+			turn(30, 90);
+			moveTo(-50, -1400, false);
+			moveTo(50, 150);
 		}
 		else if (getPos() == 2) {
+			moveTo(40, 200, 0.4);
 			arcTurn(-50, -120);
-			moveTo(-40, -1765, 0.4);
-			turn(30, 85);
-			moveTo(-30, -1200);
-			moveTo(20, 25);
+			moveTo(-40, -1890, 0.4);
+			turn(30, 100); //Turn perpendicular to goal
+			moveTo(-30, -1200, false); //Ram the goal
+			moveTo(20, 90); //Move back from the goal
 		}
 		else if (irPosition == 1) {
 			turn(-35, -115);
 			moveTo(-50, -3000, 0.4);
 			turn(-35, -45);
-			moveTo(-35, -600, 0.4); //500
-			turn(35, 75);
-			moveTo(-40, -1000);
-			moveTo(50, 100); //120
+			moveTo(-35, -1100, 0.4);
+			turn(35, 95);
+			moveTo(-40, -900, false);
+			moveTo(50, 180);
 		}
 		lift(60, 4775, 3500);
 		basket('x');
@@ -122,8 +134,9 @@ void center(int s, int position) {
 		lift(-60, 5000, 3500);
 		arcTurn(50, -90);
 		moveTo(30, 200);
+		arcTurn(50, -100);
+		moveTo(80, 2300);
 		arcTurn(50, -95);
-		moveTo(80, 1500);
 	}
 	writeDebugStreamLine("End");
 }
