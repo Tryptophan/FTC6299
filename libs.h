@@ -424,13 +424,13 @@ void fLatch(bool left, bool right) {
 		servo[kickL] = 250;
 	}
 	if (right) {
-		servo[kickR] = 20;
+		servo[kickR] = 0;
 	}
 	if (!left) {
-		servo[kickL] = 0;
+		servo[kickL] = 35;
 	}
 	if (!right) {
-		servo[kickR] = 235;
+		servo[kickR] = 205;
 	}
 }
 
