@@ -32,7 +32,7 @@ void bare(int s, int position, int tube) {
 			playSound(soundBeepBeep);
 			moveTo(-30, -4800, 1.0);
 			turn(50, -45);
-			moveTo(-30, -800, 1.5);
+			moveTo(-30, -850, 1.5);
 			turn(50, 90);
 			grabMove(-25, -1000, 900, 1.5);
 			startTask(liftTaskB);
