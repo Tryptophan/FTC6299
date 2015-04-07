@@ -135,13 +135,13 @@ task main()
 			displayTextLine(6, "");
 			if (nNxtButtonPressed == 2) {
 				latch(false);
-				servo[kickL] = 250;
-				servo[kickR] = 0;
+				servo[kickL] = 255;
+				servo[kickR] = 50;
 			}
 			if (nNxtButtonPressed == 1) {
 				latch(true);
 				servo[kickL] = 35;
-				servo[kickR] = 205;
+				servo[kickR] = 240;
 			}
 			if (nNxtButtonPressed == 3) {
 				base = 0;

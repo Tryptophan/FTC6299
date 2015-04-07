@@ -123,8 +123,8 @@ task servos() {
 	while (true) {
 		// Down
 		if (joy1Btn(04) == 1 && !leftK && !rightK) {
-			servo[kickL] = 250;
-			servo[kickR] = 0;
+			servo[kickL] = 255;
+			servo[kickR] = 50;
 			leftK = true;
 			rightK = true;
 			delay(200);
@@ -133,7 +133,7 @@ task servos() {
 		// Up
 		if (joy1Btn(04) == 1 && leftK && rightK) {
 			servo[kickL] = 35;
-			servo[kickR] = 205;
+			servo[kickR] = 240;
 			leftK = false;
 			rightK = false;
 			delay(200);
@@ -141,7 +141,7 @@ task servos() {
 
 		if (joy1Btn(04) == 1 && !leftK && rightK) {
 			servo[kickL] = 35;
-			servo[kickR] = 205;
+			servo[kickR] = 240;
 			leftK = false;
 			rightK = false;
 			delay(200);
@@ -150,14 +150,14 @@ task servos() {
 
 		if (joy1Btn(04) == 1 && leftK && !rightK) {
 			servo[kickL] = 35;
-			servo[kickR] = 205;
+			servo[kickR] = 240;
 			leftK = false;
 			rightK = false;
 			delay(200);
 		}
 
 		if (joystick.joy1_TopHat == 6 && !leftK) {
-			servo[kickL] = 250;
+			servo[kickL] = 255;
 			leftK = true;
 			delay(200);
 		}
@@ -169,13 +169,13 @@ task servos() {
 		}
 
 		if (joystick.joy1_TopHat == 2 && !rightK) {
-			servo[kickR] = 0;
+			servo[kickR] = 50;
 			rightK = true;
 			delay(200);
 		}
 
 		if (joystick.joy1_TopHat == 2 && rightK) {
-			servo[kickR] = 205;
+			servo[kickR] = 240;
 			rightK = false;
 			delay(200);
 		}
