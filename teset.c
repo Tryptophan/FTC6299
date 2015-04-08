@@ -125,29 +125,29 @@ task main()
 				base++;
 				delay(500);
 			}
-		while (base == 4) {
-			displayTextLine(0, "Servo Latches");
-			displayTextLine(1, "");
-			displayTextLine(2, "");
-			displayTextLine(3, "");
-			displayTextLine(4, "");
-			displayTextLine(5, "");
-			displayTextLine(6, "");
-			if (nNxtButtonPressed == 2) {
-				latch(false);
-				servo[kickL] = 255;
-				servo[kickR] = 50;
+			while (base == 4) {
+				displayTextLine(0, "Servo Latches");
+				displayTextLine(1, "");
+				displayTextLine(2, "");
+				displayTextLine(3, "");
+				displayTextLine(4, "");
+				displayTextLine(5, "");
+				displayTextLine(6, "");
+				if (nNxtButtonPressed == 2) {
+					latch(false);
+					servo[kickL] = 255;
+					servo[kickR] = 35;
+				}
+				if (nNxtButtonPressed == 1) {
+					latch(true);
+					servo[kickL] = 60;
+					servo[kickR] = 240;
+				}
+				if (nNxtButtonPressed == 3) {
+					base = 0;
+					delay(500);
+				}
 			}
-			if (nNxtButtonPressed == 1) {
-				latch(true);
-				servo[kickL] = 35;
-				servo[kickR] = 240;
-			}
-			if (nNxtButtonPressed == 3) {
-				base = 0;
-				delay(500);
-			}
-		}
 		}
 	}
 	while(true){}

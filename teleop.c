@@ -118,13 +118,13 @@ task driveControl() {
 task servos() {
 	bool leftK = false;
 	bool rightK = false;
-	servo[kickL] = 0;
-	servo[kickR] = 235;
+	servo[kickL] = 60;
+	servo[kickR] = 240;
 	while (true) {
 		// Down
 		if (joy1Btn(04) == 1 && !leftK && !rightK) {
 			servo[kickL] = 255;
-			servo[kickR] = 50;
+			servo[kickR] = 35;
 			leftK = true;
 			rightK = true;
 			delay(200);
@@ -132,7 +132,7 @@ task servos() {
 
 		// Up
 		if (joy1Btn(04) == 1 && leftK && rightK) {
-			servo[kickL] = 35;
+			servo[kickL] = 60;
 			servo[kickR] = 240;
 			leftK = false;
 			rightK = false;
@@ -140,7 +140,7 @@ task servos() {
 		}
 
 		if (joy1Btn(04) == 1 && !leftK && rightK) {
-			servo[kickL] = 35;
+			servo[kickL] = 60;
 			servo[kickR] = 240;
 			leftK = false;
 			rightK = false;
@@ -149,7 +149,7 @@ task servos() {
 
 
 		if (joy1Btn(04) == 1 && leftK && !rightK) {
-			servo[kickL] = 35;
+			servo[kickL] = 60;
 			servo[kickR] = 240;
 			leftK = false;
 			rightK = false;
@@ -163,13 +163,13 @@ task servos() {
 		}
 
 		if (joystick.joy1_TopHat == 6 && leftK) {
-			servo[kickL] = 35;
+			servo[kickL] = 60;
 			leftK = false;
 			delay(200);
 		}
 
 		if (joystick.joy1_TopHat == 2 && !rightK) {
-			servo[kickR] = 50;
+			servo[kickR] = 35;
 			rightK = true;
 			delay(200);
 		}
