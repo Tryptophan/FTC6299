@@ -453,7 +453,7 @@ task irReads() {
 task liftTaskC() {
 	manipulator(600);
 	lift(60, 3450);
-	while (!basketD){
+	while (!basketD) {
 		delay(05);
 	}
 	basket('x');
