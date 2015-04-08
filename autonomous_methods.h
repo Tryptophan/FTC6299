@@ -50,7 +50,7 @@ void bare(int s, int position, int tube) {
 			arcTurn(50, 20);
 			fLatch(true, true);
 			startTask(retractTaskC);
-			turn(50, -110);
+			turn(50, -100);
 			moveTo(100, 4000, 1.5);
 			fLatch(false, false);
 		}
