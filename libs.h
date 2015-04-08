@@ -1,6 +1,7 @@
 #include "drivers\hitechnic-gyro.h";
 #include "drivers\hitechnic-irseeker-v2.h"
 
+
 /*
 Made by Team 6299 QuadX
 - Jacob Greenway
@@ -10,6 +11,7 @@ Made by Team 6299 QuadX
 float heading = 0;
 float irVal;
 bool ready = false;
+bool basketD = false;
 
 float valInRange(float val, float threshold = 1.0) {
 return (abs(val) <= threshold) ? 0 : val;
@@ -421,16 +423,16 @@ void grabMove(int power, int deg, int lat, float threshold = 2.0, long time = 10
 
 void fLatch(bool left, bool right) {
 	if (left) {
-		servo[kickL] = 250;
+		servo[kickL] = 255;
 	}
 	if (right) {
-		servo[kickR] = 0;
+		servo[kickR] = 35;
 	}
 	if (!left) {
-		servo[kickL] = 35;
+		servo[kickL] = 60;
 	}
 	if (!right) {
-		servo[kickR] = 205;
+		servo[kickR] = 240;
 	}
 }
 
@@ -451,7 +453,11 @@ task irReads() {
 task liftTaskC() {
 	manipulator(600);
 	lift(60, 3450);
+	while (!basketD){
+		delay(05);
+	}
 	basket('x');
+	delay(1000);
 	stopTask(liftTaskC);
 }
 

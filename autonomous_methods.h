@@ -49,10 +49,12 @@ void bare(int s, int position, int tube) {
 			fLatch(true, false);
 			arcTurn(50, 20);
 			fLatch(true, true);
-			startTask(retractTaskC);
-			turn(50, -100);
-			moveTo(100, 4000, 1.5);
+			basketD = true;
+			turn(50, -90);
+			moveTo(100, 7000, 1.5);
 			fLatch(false, false);
+			turn(60, 160);
+			latch(false);
 		}
 	}
 	if (tube == 1) {
