@@ -32,16 +32,16 @@ void bare(int s, int position, int tube) {
 			playSound(soundBeepBeep);
 			moveTo(-30, -4800, 1.0);
 			turn(50, -45);
-			moveTo(-30, -850, 1.5);
+			moveTo(-30, -1000, 1.5);
 			turn(50, 90);
-			grabMove(-25, -1000, 900, 1.5);
+			grabMove(-25, -800, 700, 1.5);
 			startTask(liftTaskB);
 			delay(3000);
 			startTask(retractTaskB);
-			turn(50, -80);
+			turn(50, -90);
 			moveTo(-30, -900, 1.5);
 			latch(false);
-			moveTo(30, 980, 1.5);
+			moveTo(30, 900, 1.5);
 			turn(40, 50);
 			grabMove(-35, -1000, 900, 1.5);
 			startTask(liftTaskC);
@@ -50,6 +50,9 @@ void bare(int s, int position, int tube) {
 			arcTurn(50, 20);
 			fLatch(true, true);
 			startTask(retractTaskC);
+			turn(50, -110);
+			moveTo(100, 4000, 1.5);
+			fLatch(false, false);
 		}
 	}
 	if (tube == 1) {
