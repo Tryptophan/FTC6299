@@ -193,8 +193,8 @@ task servos() {
 
 		// BTN01 = X
 		if (joy2Btn(01) == 1) {
-			servo[liftServoL] = 100;
-			servo[liftServoR] = 155;
+			servo[liftServoL] = 85;
+			servo[liftServoR] = 170;
 		}
 
 		// BTN04 = Y
