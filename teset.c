@@ -112,8 +112,8 @@ task main()
 			displayTextLine(5, "");
 			displayTextLine(6, "");
 			if (nNxtButtonPressed == 1) {
-				servo[liftServoL] = 100;
-				servo[liftServoR] = 155;
+				servo[liftServoL] = 90;
+				servo[liftServoR] = 165;
 				basektpos = "X";
 			}
 			if (nNxtButtonPressed == 2) {
@@ -135,12 +135,12 @@ task main()
 				displayTextLine(6, "");
 				if (nNxtButtonPressed == 2) {
 					latch(false);
-					servo[kickL] = 255;
+					servo[kickL] = 205;
 					servo[kickR] = 35;
 				}
 				if (nNxtButtonPressed == 1) {
 					latch(true);
-					servo[kickL] = 60;
+					servo[kickL] = 0;
 					servo[kickR] = 240;
 				}
 				if (nNxtButtonPressed == 3) {
