@@ -50,7 +50,9 @@ void bare(int s, int position, int tube) {
 			arcTurn(50, 20);
 			fLatch(true, true);
 			basketD = true;
-			delay(1000);
+			while(!basketF) {
+				delay(05);
+			}
 			startTask(retractTaskC);
 			turn(50, -90);
 			moveTo(100, 7000, 1.5);

@@ -12,6 +12,7 @@ float heading = 0;
 float irVal;
 bool ready = false;
 bool basketD = false;
+bool basketF = false;
 
 float valInRange(float val, float threshold = 1.0) {
 return (abs(val) <= threshold) ? 0 : val;
@@ -457,7 +458,8 @@ task liftTaskC() {
 		delay(05);
 	}
 	basket('x');
-	delay(1000);
+	delay(1500);
+	basketF = true;
 	stopTask(liftTaskC);
 }
 
