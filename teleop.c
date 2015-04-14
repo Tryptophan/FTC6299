@@ -118,7 +118,7 @@ task driveControl() {
 task servos() {
 	bool leftK = false;
 	bool rightK = false;
-	servo[kickL] = 60;
+	servo[kickL] = 00;
 	servo[kickR] = 240;
 	while (true) {
 		// Down
