@@ -472,6 +472,9 @@ task retractTaskC() {
 
 task liftTaskB() {
 	lift(60, 1880);
+	motor[liftL] = 40;
+	delay(200);
+	motor[liftL] = 0;
 	basket('x');
 	stopTask(liftTaskB);
 }
