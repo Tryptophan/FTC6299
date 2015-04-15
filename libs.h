@@ -246,7 +246,7 @@ void accel(int power, int deg, float threshold = 2.0, long time = 100000, float 
 			// Reads gyros rate of turn, mulitplies it by the time passed (20ms), and adds it to the current heading
 			heading += valInRange(HTGYROreadRot(SENSOR_GYRO), threshold) * (float)(20 / 1000.0);
 			powerAdd += 10;
-			if (powerAdd >= 100) {
+			if (powerAdd < 100) {
 				power += 5;
 			}
 

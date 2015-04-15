@@ -20,16 +20,16 @@ void bare(int s, int position, int tube) {
 			startTask(liftTaskB);
 			delay(3000);
 			startTask(retractTaskB);
-			turn(50, -95);
+			turn(50, -100);
 			moveTo(-30, -900, 1.5);
 			latch(false);
 			moveTo(30, 900, 1.5);
 			turn(40, 42);
-			grabMove(-35, -1000, 900, 1.5);
+			grabMove(-50, -1000, 900, 1.5);
 			startTask(liftTaskC);
-			arcTurn(30, 95);
+			arcTurn(50, 95);
 			fLatch(true, false);
-			arcTurn(30, 20);
+			arcTurn(50, 20);
 			fLatch(true, true);
 			basketD = true;
 			while(!basketF) {
@@ -42,7 +42,6 @@ void bare(int s, int position, int tube) {
 			turn(60, 145);
 			latch(false);
 		}
-	}
 	playSound(soundDownwardTones);
 }
 
