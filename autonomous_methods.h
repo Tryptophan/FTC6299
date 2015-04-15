@@ -33,8 +33,8 @@ void bare(int s, int position, int tube) {
 			moveTo(-30, -4800, 1.0);
 			turn(50, -45);
 			moveTo(-30, -1200, 1.5);
-			turn(50, 90);
-			grabMove(-25, -800, 700, 1.5);
+			turn(50, 96);
+			grabMove(-25, -850, 750, 1.5);
 			startTask(liftTaskB);
 			delay(3000);
 			startTask(retractTaskB);
@@ -42,22 +42,22 @@ void bare(int s, int position, int tube) {
 			moveTo(-30, -900, 1.5);
 			latch(false);
 			moveTo(30, 900, 1.5);
-			turn(40, 50);
+			turn(40, 42);
 			grabMove(-35, -1000, 900, 1.5);
 			startTask(liftTaskC);
-			arcTurn(40, 95);
+			arcTurn(30, 95);
 			fLatch(true, false);
-			arcTurn(50, 20);
+			arcTurn(30, 20);
 			fLatch(true, true);
 			basketD = true;
 			while(!basketF) {
 				delay(05);
 			}
 			startTask(retractTaskC);
-			turn(50, -90);
-			moveTo(100, 7000, 1.5);
+			turn(50, -95);
+			accel(100, 7000, 1.5);
 			fLatch(false, false);
-			turn(60, 160);
+			turn(60, 145);
 			latch(false);
 		}
 	}
@@ -93,7 +93,7 @@ void center(int s, int position) {
 			moveTo(25, 600, 0.4);
 			if (ready) {
 				displayTextLine(02, "%4f", irVal);
-				if (irVal >= 4.0) {
+				if (irVal >= 4.55) {
 					irPosition = 3;
 				}
 				else {

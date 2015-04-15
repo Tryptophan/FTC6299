@@ -165,10 +165,10 @@ void moveTo(int power, int deg, float threshold = 2.0, long time = 100000, float
 		int correction = heading * -1;
 
 		if (heading > 0) {
-			turn(40, correction / 2);
+			turn(40, (correction * -1) / 2);
 		}
 		else {
-			turn(40, (correction * -1) / 2);
+			turn(40, (correction) / 2);
 		}
 	}
 	//nxtDisplayBigTextLine(1, "%4i",heading);
@@ -230,6 +230,81 @@ void arcTurn(int power, int deg, int time = 7000) {
 	}
 	stopMotors();
 }
+
+
+void accel(int power, int deg, float threshold = 2.0, long time = 100000, float cor = 4.0, bool adjust = true) {
+	heading = 0;
+	int powerAdd = 0;
+	nMotorEncoder[motorBL] = 0;
+	nMotorEncoder[motorFL] = 0;
+	nMotorEncoder[motorFR] = 0;
+	nMotorEncoder[motorBR] = 0;
+	wait1Msec(250);
+	clearTimer(T1);
+	if (power > 0) {
+		while (time1[T1] < time && getEncoderAverage() < deg) {
+			// Reads gyros rate of turn, mulitplies it by the time passed (20ms), and adds it to the current heading
+			heading += valInRange(HTGYROreadRot(SENSOR_GYRO), threshold) * (float)(20 / 1000.0);
+			powerAdd += 10;
+			if (powerAdd >= 100) {
+				power += 5;
+			}
+
+			// Checks if the gyro is outside of the specified threshold (1.0)
+			if (isInRange(heading, 0, threshold)) {
+				setMotors(power, power);
+			}
+
+			// If not, lower the speed of the required side of the robot to adjust back to 0
+			else {
+				if (heading > 0) {
+					setMotors((power / cor), power);
+				}
+				if (heading < 0) {
+					setMotors(power, (power / cor));
+				}
+			}
+			wait1Msec(20);
+		}
+	}
+
+	else {
+		while (time1[T1] < time && getEncoderAverage() > deg) {
+			// Reads gyros rate of turn, mulitplies it by the time passed (20ms), and adds it to the current heading
+			heading += valInRange(HTGYROreadRot(SENSOR_GYRO), threshold) * (float)(20 / 1000.0);
+
+			// Checks if the gyro is outside of the specified threshold (1.0)
+			if (isInRange(heading, 0, threshold)) {
+				setMotors(power, power);
+			}
+
+			// If not, lower the speed of the required side of the robot to adjust back to 0
+			else {
+				if (heading > 0) {
+					setMotors(power, (power / cor));
+				}
+				if (heading < 0) {
+					setMotors((power / cor), power);
+				}
+			}
+			wait1Msec(20);
+		}
+	}
+
+	stopMotors();
+	if (adjust) {
+		int correction = heading * -1;
+
+		if (heading > 0) {
+			turn(40, (correction * -1) / 2);
+		}
+		else {
+			turn(40, (correction) / 2);
+		}
+	}
+	//nxtDisplayBigTextLine(1, "%4i",heading);
+}
+
 
 void drift(int power, int deg, int angle, int time = 8000) {
 	heading = 0;
@@ -341,8 +416,8 @@ void lift(int power, int deg, int time = 6000) {
 void basket(char position) {
 
 	if (position == 'x') {
-		servo[liftServoL] = 100;
-		servo[liftServoR] = 155;
+		servo[liftServoL] = 90;
+		servo[liftServoR] = 165;
 	}
 	if (position == 'y') {
 		servo[liftServoL] = 230;
@@ -424,13 +499,13 @@ void grabMove(int power, int deg, int lat, float threshold = 2.0, long time = 10
 
 void fLatch(bool left, bool right) {
 	if (left) {
-		servo[kickL] = 255;
+		servo[kickL] = 205;
 	}
 	if (right) {
 		servo[kickR] = 35;
 	}
 	if (!left) {
-		servo[kickL] = 60;
+		servo[kickL] = 0;
 	}
 	if (!right) {
 		servo[kickR] = 240;
@@ -475,7 +550,8 @@ task liftTaskB() {
 	motor[liftL] = 40;
 	delay(200);
 	motor[liftL] = 0;
-	basket('x');
+	servo[liftServoL] = 100;
+	servo[liftServoR] = 155;
 	stopTask(liftTaskB);
 }
 
