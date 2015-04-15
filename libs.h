@@ -38,7 +38,7 @@ void stopMotors() {
 	motor[motorR] = 0;
 }
 
-void moveTo(int power, int deg, float threshold = 2.0, long time = 5000, float cor = 4.0) {
+void moveTo(int power, long long deg, float threshold = 2.0, long long time = 50000000000000000000000000, float cor = 4.0) {
 	heading = 0;
 	nMotorEncoder[motorL] = 0;
 	nMotorEncoder[motorR] = 0;
