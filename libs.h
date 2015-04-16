@@ -84,7 +84,7 @@ void stopMotors() {
 void turn(int power, int deg, int time = 6000) {
 
 	heading = 0;
-	wait1Msec(250);
+	wait1Msec(100);
 	clearTimer(T1);
 
 	if (deg > 0) {
@@ -112,7 +112,7 @@ void moveTo(int power, int deg, float threshold = 2.0, long time = 100000, float
 	nMotorEncoder[motorFL] = 0;
 	nMotorEncoder[motorFR] = 0;
 	nMotorEncoder[motorBR] = 0;
-	wait1Msec(250);
+	wait1Msec(100);
 	clearTimer(T1);
 	if (power > 0) {
 		while (time1[T1] < time && getEncoderAverage() < deg) {

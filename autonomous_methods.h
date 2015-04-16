@@ -15,7 +15,7 @@ void bare(int s, int position, int tube) {
 			moveTo(-30, -4800, 1.0);
 			moveTo(-30, -400);
 			arcTurn(-30, -45);
-			grabMove(-30, -300, 250, 1.0);
+			grabMove(-30, -250, 200, 1.0);
 			/*turn(50, -45);
 			moveTo(-30, -1000, 1.5);
 			turn(50, 100);
@@ -23,11 +23,11 @@ void bare(int s, int position, int tube) {
 			startTask(liftTaskB);
 			delay(3000);
 			startTask(retractTaskB);
-			turn(50, -85);
+			turn(50, -93);
 			moveTo(-30, -1000, 1.5);
 			latch(false);
-			moveTo(30, 1050, 1.5);
-			turn(40, 45);
+			moveTo(30, 950, 1.5);
+			turn(40, 60);
 			grabMove(-50, -1000, 900, 1.5);
 			startTask(liftTaskC);
 			arcTurn(50, 95);
@@ -39,8 +39,8 @@ void bare(int s, int position, int tube) {
 				delay(05);
 			}
 			startTask(retractTaskC);
-			turn(50, -115);
-			accel(100, 7000, 1.5);
+			turn(50, -105);
+			accel(30, 7300, 1.5);
 			fLatch(false, false);
 			turn(60, 165);
 			latch(false);
