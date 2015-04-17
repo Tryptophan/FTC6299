@@ -13,8 +13,8 @@ void bare(int s, int position, int tube) {
 		if (position == 0) {  //Ramp
 			playSound(soundBeepBeep);
 			moveTo(-30, -4800, 1.0);
-			moveTo(-30, -400);
-			arcTurn(-30, -45);
+			moveTo(-30, -421, 1.0);
+			arcTurn(-30, -25);
 			grabMove(-30, -250, 200, 1.0);
 			/*turn(50, -45);
 			moveTo(-30, -1000, 1.5);
@@ -23,7 +23,7 @@ void bare(int s, int position, int tube) {
 			startTask(liftTaskB);
 			delay(3000);
 			startTask(retractTaskB);
-			turn(50, -93);
+			turn(50, -85);
 			moveTo(-30, -1000, 1.5);
 			latch(false);
 			moveTo(30, 950, 1.5);
@@ -32,17 +32,18 @@ void bare(int s, int position, int tube) {
 			startTask(liftTaskC);
 			arcTurn(50, 95);
 			fLatch(true, false);
-			arcTurn(50, 20);
+			arcTurn(40, 15);
 			fLatch(true, true);
 			basketD = true;
 			while(!basketF) {
 				delay(05);
 			}
 			startTask(retractTaskC);
-			turn(50, -105);
-			accel(30, 7300, 1.5);
+			turn(50, -93);
+			accel(25, 7050, 1.5);
 			fLatch(false, false);
 			turn(60, 165);
+			moveTo(-40, -459, 1.0);
 			latch(false);
 		}
 	playSound(soundDownwardTones);

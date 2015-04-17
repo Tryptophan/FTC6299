@@ -247,7 +247,7 @@ void accel(int power, int deg, float threshold = 2.0, long time = 100000, float 
 			heading += valInRange(HTGYROreadRot(SENSOR_GYRO), threshold) * (float)(20 / 1000.0);
 			powerAdd += 10;
 			if (powerAdd < 100) {
-				power += 5;
+				power += 4;
 			}
 
 			// Checks if the gyro is outside of the specified threshold (1.0)
@@ -528,7 +528,7 @@ task irReads() {
 
 task liftTaskC() {
 	manipulator(600);
-	lift(60, 3450);
+	lift(60, 3420);
 	while (!basketD) {
 		delay(05);
 	}
@@ -546,7 +546,7 @@ task retractTaskC() {
 }
 
 task liftTaskB() {
-	lift(60, 1880);
+	lift(60, 1850);
 	motor[liftL] = 40;
 	delay(200);
 	motor[liftL] = 0;
