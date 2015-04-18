@@ -1,6 +1,7 @@
 #include "drivers\hitechnic-gyro.h";
 #include "drivers\hitechnic-irseeker-v2.h"
 
+
 /*
 Made by Team 6299 QuadX
 - Jacob Greenway
@@ -8,8 +9,12 @@ Made by Team 6299 QuadX
 - Linnea May
 */
 float heading = 0;
-float irVal;
+int irVal;
 bool ready = false;
+bool basketD = false;
+bool basketF = false;
+int irPosition;
+
 
 float valInRange(float val, float threshold = 1.0) {
 return (abs(val) <= threshold) ? 0 : val;
@@ -81,7 +86,7 @@ void stopMotors() {
 void turn(int power, int deg, int time = 6000) {
 
 	heading = 0;
-	wait1Msec(250);
+	wait1Msec(100);
 	clearTimer(T1);
 
 	if (deg > 0) {
@@ -103,13 +108,13 @@ void turn(int power, int deg, int time = 6000) {
 	stopMotors();
 }
 
-void moveTo(int power, int deg, float threshold = 2.0, long time = 100000, float cor = 4.0, bool adjust = true) {
+void moveTo(int power, int deg, float threshold = 2.0, long time = 100000, float cor = 4.0, int adjust = 1) {
 	heading = 0;
 	nMotorEncoder[motorBL] = 0;
 	nMotorEncoder[motorFL] = 0;
 	nMotorEncoder[motorFR] = 0;
 	nMotorEncoder[motorBR] = 0;
-	wait1Msec(250);
+	wait1Msec(100);
 	clearTimer(T1);
 	if (power > 0) {
 		while (time1[T1] < time && getEncoderAverage() < deg) {
@@ -158,15 +163,18 @@ void moveTo(int power, int deg, float threshold = 2.0, long time = 100000, float
 	}
 
 	stopMotors();
-	if (adjust) {
+	if (adjust == 1) {
 		int correction = heading * -1;
 
 		if (heading > 0) {
-			turn(40, correction / 2);
-		}
-		else {
 			turn(40, (correction * -1) / 2);
 		}
+		else {
+			turn(40, (correction) / 2);
+		}
+	}
+	else if(adjust = 0) {
+		playSound(soundDownwardTones);
 	}
 	//nxtDisplayBigTextLine(1, "%4i",heading);
 }
@@ -227,6 +235,81 @@ void arcTurn(int power, int deg, int time = 7000) {
 	}
 	stopMotors();
 }
+
+
+void accel(int power, int deg, float threshold = 2.0, long time = 100000, float cor = 4.0, bool adjust = true) {
+	heading = 0;
+	int powerAdd = 0;
+	nMotorEncoder[motorBL] = 0;
+	nMotorEncoder[motorFL] = 0;
+	nMotorEncoder[motorFR] = 0;
+	nMotorEncoder[motorBR] = 0;
+	wait1Msec(250);
+	clearTimer(T1);
+	if (power > 0) {
+		while (time1[T1] < time && getEncoderAverage() < deg) {
+			// Reads gyros rate of turn, mulitplies it by the time passed (20ms), and adds it to the current heading
+			heading += valInRange(HTGYROreadRot(SENSOR_GYRO), threshold) * (float)(20 / 1000.0);
+			powerAdd += 10;
+			if (powerAdd < 100) {
+				power += 4;
+			}
+
+			// Checks if the gyro is outside of the specified threshold (1.0)
+			if (isInRange(heading, 0, threshold)) {
+				setMotors(power, power);
+			}
+
+			// If not, lower the speed of the required side of the robot to adjust back to 0
+			else {
+				if (heading > 0) {
+					setMotors((power / cor), power);
+				}
+				if (heading < 0) {
+					setMotors(power, (power / cor));
+				}
+			}
+			wait1Msec(20);
+		}
+	}
+
+	else {
+		while (time1[T1] < time && getEncoderAverage() > deg) {
+			// Reads gyros rate of turn, mulitplies it by the time passed (20ms), and adds it to the current heading
+			heading += valInRange(HTGYROreadRot(SENSOR_GYRO), threshold) * (float)(20 / 1000.0);
+
+			// Checks if the gyro is outside of the specified threshold (1.0)
+			if (isInRange(heading, 0, threshold)) {
+				setMotors(power, power);
+			}
+
+			// If not, lower the speed of the required side of the robot to adjust back to 0
+			else {
+				if (heading > 0) {
+					setMotors(power, (power / cor));
+				}
+				if (heading < 0) {
+					setMotors((power / cor), power);
+				}
+			}
+			wait1Msec(20);
+		}
+	}
+
+	stopMotors();
+	if (adjust) {
+		int correction = heading * -1;
+
+		if (heading > 0) {
+			turn(40, (correction * -1) / 2);
+		}
+		else {
+			turn(40, (correction) / 2);
+		}
+	}
+	//nxtDisplayBigTextLine(1, "%4i",heading);
+}
+
 
 void drift(int power, int deg, int angle, int time = 8000) {
 	heading = 0;
@@ -301,14 +384,16 @@ int getPos() {
 	delay(20);
 	}
 	int big = count[0];*/
+
 	int spot = HTIRS2readACDir(SENSOR_IR);
-	nxtDisplayTextLine(0, "%1i", spot);
+	//nxtDisplayTextLine(0, "%1i", spot);
 	/*for (int j = 1; j < 5; j++) {
 	if (count[j] > big) {
 	spot = j;
 	big = count[j];
 	}
 	}*/
+	return spot;
 	if (spot >= 5) {
 		return 3;
 	}
@@ -338,8 +423,8 @@ void lift(int power, int deg, int time = 6000) {
 void basket(char position) {
 
 	if (position == 'x') {
-		servo[liftServoL] = 100;
-		servo[liftServoR] = 155;
+		servo[liftServoL] = 90;
+		servo[liftServoR] = 165;
 	}
 	if (position == 'y') {
 		servo[liftServoL] = 230;
@@ -421,37 +506,42 @@ void grabMove(int power, int deg, int lat, float threshold = 2.0, long time = 10
 
 void fLatch(bool left, bool right) {
 	if (left) {
-		servo[kickL] = 250;
+		servo[kickL] = 205;
 	}
 	if (right) {
-		servo[kickR] = 0;
+		servo[kickR] = 35;
 	}
 	if (!left) {
-		servo[kickL] = 35;
+		servo[kickL] = 0;
 	}
 	if (!right) {
-		servo[kickR] = 205;
+		servo[kickR] = 240;
 	}
 }
 
 task irReads() {
-	float reads[20];
+	/*float reads[20];
 	for (int j = 0; j < 20; j++) {
 		reads[j] = HTIRS2readACDir(SENSOR_IR);
-		writeDebugStreamLine("%1i", HTIRS2readACDir(SENSOR_IR));
-		delay(200);
+		//writeDebugStreamLine("%1i", HTIRS2readACDir(SENSOR_IR));
+		delay(209);
 	}
 	for (int j = 0; j < 20; j++) {
 		irVal += reads[j];
 	}
 	irVal = irVal / 20;
-	ready = true;
+	ready = true;*/
 }
 
 task liftTaskC() {
 	manipulator(600);
-	lift(60, 3450);
+	lift(60, 3420);
+	while (!basketD) {
+		delay(05);
+	}
 	basket('x');
+	delay(1500);
+	basketF = true;
 	stopTask(liftTaskC);
 }
 
@@ -463,8 +553,12 @@ task retractTaskC() {
 }
 
 task liftTaskB() {
-	lift(60, 1880);
-	basket('x');
+	lift(60, 1850);
+	motor[liftL] = 40;
+	delay(200);
+	motor[liftL] = 0;
+	servo[liftServoL] = 100;
+	servo[liftServoR] = 155;
 	stopTask(liftTaskB);
 }
 
