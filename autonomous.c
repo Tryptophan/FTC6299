@@ -32,6 +32,7 @@ Made by Team 6299 QuadX
 - Linnea May
 */
 
+
 task main(){
 
 	// Starts Autonomous Chooser
@@ -40,7 +41,7 @@ task main(){
 	waitForStart();
 	stopTask(chooser);
 	startTask(irReads);
-	startTask(debug);
+	//startTask(debug);
 	wait1Msec(50);
 	HTGYROstartCal(SENSOR_GYRO);
 	wait1Msec(50);
@@ -58,7 +59,7 @@ task main(){
 		kick(suspend);
 		break;
 	}
-	stopTask(debug);
+	//stopTask(debug);
 	writeDebugStreamLine("---------------------------End---------------------------");
 	while(true){}
-}
+}\

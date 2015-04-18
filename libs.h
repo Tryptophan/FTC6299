@@ -9,10 +9,12 @@ Made by Team 6299 QuadX
 - Linnea May
 */
 float heading = 0;
-float irVal;
+int irVal;
 bool ready = false;
 bool basketD = false;
 bool basketF = false;
+int irPosition;
+
 
 float valInRange(float val, float threshold = 1.0) {
 return (abs(val) <= threshold) ? 0 : val;
@@ -106,7 +108,7 @@ void turn(int power, int deg, int time = 6000) {
 	stopMotors();
 }
 
-void moveTo(int power, int deg, float threshold = 2.0, long time = 100000, float cor = 4.0, bool adjust = true) {
+void moveTo(int power, int deg, float threshold = 2.0, long time = 100000, float cor = 4.0, int adjust = 1) {
 	heading = 0;
 	nMotorEncoder[motorBL] = 0;
 	nMotorEncoder[motorFL] = 0;
@@ -161,7 +163,7 @@ void moveTo(int power, int deg, float threshold = 2.0, long time = 100000, float
 	}
 
 	stopMotors();
-	if (adjust) {
+	if (adjust == 1) {
 		int correction = heading * -1;
 
 		if (heading > 0) {
@@ -170,6 +172,9 @@ void moveTo(int power, int deg, float threshold = 2.0, long time = 100000, float
 		else {
 			turn(40, (correction) / 2);
 		}
+	}
+	else if(adjust = 0) {
+		playSound(soundDownwardTones);
 	}
 	//nxtDisplayBigTextLine(1, "%4i",heading);
 }
@@ -379,14 +384,16 @@ int getPos() {
 	delay(20);
 	}
 	int big = count[0];*/
+
 	int spot = HTIRS2readACDir(SENSOR_IR);
-	nxtDisplayTextLine(0, "%1i", spot);
+	//nxtDisplayTextLine(0, "%1i", spot);
 	/*for (int j = 1; j < 5; j++) {
 	if (count[j] > big) {
 	spot = j;
 	big = count[j];
 	}
 	}*/
+	return spot;
 	if (spot >= 5) {
 		return 3;
 	}
@@ -513,17 +520,17 @@ void fLatch(bool left, bool right) {
 }
 
 task irReads() {
-	float reads[20];
+	/*float reads[20];
 	for (int j = 0; j < 20; j++) {
 		reads[j] = HTIRS2readACDir(SENSOR_IR);
-		writeDebugStreamLine("%1i", HTIRS2readACDir(SENSOR_IR));
-		delay(200);
+		//writeDebugStreamLine("%1i", HTIRS2readACDir(SENSOR_IR));
+		delay(209);
 	}
 	for (int j = 0; j < 20; j++) {
 		irVal += reads[j];
 	}
 	irVal = irVal / 20;
-	ready = true;
+	ready = true;*/
 }
 
 task liftTaskC() {
